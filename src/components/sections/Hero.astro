@@ -15,25 +15,50 @@ interface Props {
 	primaryCta?: CtaLink;
 	secondaryCta?: CtaLink;
 	variant?: 'default' | 'compact';
+	tone?: 'dark' | 'light';
 }
 
-const { eyebrow, title, subtitle, primaryCta, secondaryCta, variant = 'default' } = Astro.props;
+const {
+	eyebrow,
+	title,
+	subtitle,
+	primaryCta,
+	secondaryCta,
+	variant = 'default',
+	tone = 'dark',
+} = Astro.props;
 
 const paddingClass = variant === 'compact' ? 'py-16 md:py-20' : 'py-20 md:py-32';
+const isDark = tone === 'dark';
+const sectionBg = isDark ? 'bg-primary' : 'bg-surface';
+const titleColor = isDark ? 'text-surface' : 'text-primary';
+const subtitleColor = isDark ? 'text-surface/70' : 'text-muted';
+const eyebrowColor = isDark ? 'text-surface' : 'text-primary';
 ---
 
-<section class={`bg-surface ${paddingClass}`}>
+<section class={`${sectionBg} ${paddingClass}`}>
 	<Container class="flex flex-col items-center gap-8 text-center">
-		{eyebrow && <span class="text-sm font-semibold uppercase tracking-wide text-accent">{eyebrow}</span>}
-		<h1 class="max-w-4xl font-display text-4xl leading-[1.5] text-primary md:text-6xl">
+		{
+			eyebrow && (
+				<span class={`flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide ${eyebrowColor}`}>
+					<span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+					{eyebrow}
+				</span>
+			)
+		}
+		<h1 class={`max-w-4xl font-display text-4xl leading-[1.5] md:text-6xl ${titleColor}`}>
 			{title}
 		</h1>
-		{subtitle && <p class="max-w-2xl text-lg leading-[1.5] text-muted md:text-xl">{subtitle}</p>}
+		{subtitle && <p class={`max-w-2xl text-lg leading-[1.5] md:text-xl ${subtitleColor}`}>{subtitle}</p>}
 		{
 			(primaryCta || secondaryCta) && (
 				<div class="mt-4 flex flex-col items-center gap-4 sm:flex-row">
 					{primaryCta && <ButtonPrimary href={primaryCta.href}>{primaryCta.label}</ButtonPrimary>}
-					{secondaryCta && <ButtonSecondary href={secondaryCta.href}>{secondaryCta.label}</ButtonSecondary>}
+					{secondaryCta && (
+						<ButtonSecondary href={secondaryCta.href} variant={isDark ? 'inverted' : 'default'}>
+							{secondaryCta.label}
+						</ButtonSecondary>
+					)}
 				</div>
 			)
 		}

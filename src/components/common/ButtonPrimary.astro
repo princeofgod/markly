@@ -11,8 +11,8 @@ const { href, type = 'button', class: className = '' } = Astro.props;
 
 const classes = cn(
 	'inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3',
-	'text-sm font-semibold text-primary',
-	'transition-all duration-300 ease-in-out hover:bg-emerald-400 active:scale-[0.98]',
+	'text-base font-semibold text-surface-alt',
+	'transition-all duration-300 ease-in-out hover:bg-primary active:scale-[0.98]',
 	'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
 	className,
 );

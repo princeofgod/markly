@@ -7,14 +7,14 @@
 */
 @theme {
 	/* Brand palette */
-	--color-brand-navy: #0a192f;
-	--color-brand-emerald: #10b981;
-	--color-brand-light: #f8fafc;
+	--color-brand-purple: #2d106c;
+	--color-brand-orange: #fe5f1b;
+	--color-brand-offwhite: #faf8ff;
 
 	/* Semantic color tokens */
-	--color-primary: var(--color-brand-navy);
-	--color-accent: var(--color-brand-emerald);
-	--color-surface: var(--color-brand-light);
+	--color-primary: var(--color-brand-purple);
+	--color-accent: var(--color-brand-orange);
+	--color-surface: var(--color-brand-offwhite);
 	--color-surface-alt: #ffffff;
 	--color-muted: #64748b;
 	--color-border-subtle: #e2e8f0;
