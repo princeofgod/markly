@@ -1,0 +1,138 @@
+---
+import type { NavigationItem } from '../../types';
+import ButtonPrimary from '../common/ButtonPrimary.astro';
+
+interface Props {
+	navigation: NavigationItem[];
+}
+
+const { navigation } = Astro.props;
+---
+
+<div class="md:hidden">
+	<button
+		id="mobile-menu-trigger"
+		type="button"
+		class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-primary transition-all duration-300 ease-in-out hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+		aria-expanded="false"
+		aria-controls="mobile-menu-panel"
+	>
+		<span class="sr-only">Open main menu</span>
+		<svg
+			id="mobile-menu-icon-open"
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="1.75"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="h-6 w-6"
+			aria-hidden="true"
+		>
+			<path d="M4 6h16M4 12h16M4 18h16" />
+		</svg>
+		<svg
+			id="mobile-menu-icon-close"
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="1.75"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="hidden h-6 w-6"
+			aria-hidden="true"
+		>
+			<path d="M6 6l12 12M18 6L6 18" />
+		</svg>
+	</button>
+</div>
+
+<div
+	id="mobile-menu-panel"
+	role="dialog"
+	aria-modal="true"
+	aria-label="Main menu"
+	class="fixed inset-x-0 top-20 z-40 hidden max-h-[calc(100vh-5rem)] overflow-y-auto border-b border-border-subtle bg-surface-alt px-4 pb-8 pt-4 shadow-md md:hidden"
+>
+	<ul class="flex flex-col gap-2">
+		{
+			navigation.map((item) => (
+				<li>
+					<a
+						href={item.href}
+						class="block rounded-lg px-4 py-3 text-base font-medium text-primary transition-all duration-300 ease-in-out hover:bg-surface hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+					>
+						{item.label}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+	<div class="mt-6">
+		<ButtonPrimary href="/contact" class="w-full">Book a Consultation</ButtonPrimary>
+	</div>
+</div>
+
+<script>
+	const trigger = document.getElementById('mobile-menu-trigger');
+	const panel = document.getElementById('mobile-menu-panel');
+	const iconOpen = document.getElementById('mobile-menu-icon-open');
+	const iconClose = document.getElementById('mobile-menu-icon-close');
+
+	if (trigger && panel && iconOpen && iconClose) {
+		const closeMenu = () => {
+			panel.classList.add('hidden');
+			trigger.setAttribute('aria-expanded', 'false');
+			iconOpen.classList.remove('hidden');
+			iconClose.classList.add('hidden');
+		};
+
+		const openMenu = () => {
+			panel.classList.remove('hidden');
+			trigger.setAttribute('aria-expanded', 'true');
+			iconOpen.classList.add('hidden');
+			iconClose.classList.remove('hidden');
+			const firstLink = panel.querySelector('a');
+			firstLink?.focus();
+		};
+
+		trigger.addEventListener('click', () => {
+			const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+			if (isOpen) {
+				closeMenu();
+			} else {
+				openMenu();
+			}
+		});
+
+		panel.addEventListener('keydown', (event) => {
+			if (!(event instanceof KeyboardEvent)) return;
+
+			if (event.key === 'Escape') {
+				closeMenu();
+				trigger.focus();
+				return;
+			}
+
+			if (event.key === 'Tab') {
+				const focusable = panel.querySelectorAll<HTMLElement>('a, button');
+				if (focusable.length === 0) return;
+
+				const first = focusable[0];
+				const last = focusable[focusable.length - 1];
+
+				if (event.shiftKey && document.activeElement === first) {
+					event.preventDefault();
+					last.focus();
+				} else if (!event.shiftKey && document.activeElement === last) {
+					event.preventDefault();
+					first.focus();
+				}
+			}
+		});
+
+		document.addEventListener('astro:page-load', closeMenu);
+	}
+</script>

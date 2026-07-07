@@ -1,0 +1,16 @@
+---
+import Container from '../layout/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import TestimonialCard from '../common/TestimonialCard.astro';
+import { testimonials } from '../../data/testimonials';
+---
+
+<section class="bg-surface-alt py-16 md:py-24">
+	<Container class="flex flex-col gap-12">
+		<SectionHeading eyebrow="Client Trust" title="Trusted by Founders and Compliance Teams" />
+
+		<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+			{testimonials.map((testimonial) => <TestimonialCard testimonial={testimonial} />)}
+		</div>
+	</Container>
+</section>

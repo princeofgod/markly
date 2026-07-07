@@ -1,0 +1,27 @@
+---
+import Card from './Card.astro';
+import Icon from '../icons/Icon.astro';
+import type { IconName } from '../../types';
+import { cn } from '../../utils/cn';
+
+interface Props {
+	title: string;
+	description: string;
+	icon?: IconName;
+	class?: string;
+}
+
+const { title, description, icon, class: className = '' } = Astro.props;
+---
+
+<Card class={cn('flex flex-col gap-4', className)}>
+	{
+		icon && (
+			<span class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
+				<Icon name={icon} class="h-6 w-6" />
+			</span>
+		)
+	}
+	<h3 class="font-display text-xl text-primary">{title}</h3>
+	<p class="leading-[1.5] text-muted">{description}</p>
+</Card>

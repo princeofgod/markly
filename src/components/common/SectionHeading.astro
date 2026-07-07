@@ -1,0 +1,22 @@
+---
+import { cn } from '../../utils/cn';
+
+interface Props {
+	eyebrow?: string;
+	title: string;
+	subtitle?: string;
+	as?: 'h1' | 'h2' | 'h3';
+	align?: 'left' | 'center';
+	class?: string;
+}
+
+const { eyebrow, title, subtitle, as: Tag = 'h2', align = 'center', class: className = '' } = Astro.props;
+
+const alignClass = align === 'center' ? 'items-center text-center mx-auto' : 'items-start text-left';
+---
+
+<div class={cn('flex max-w-3xl flex-col gap-4', alignClass, className)}>
+	{eyebrow && <span class="text-sm font-semibold uppercase tracking-wide text-accent">{eyebrow}</span>}
+	<Tag class="font-display text-3xl leading-[1.5] text-primary md:text-4xl">{title}</Tag>
+	{subtitle && <p class="text-lg leading-[1.5] text-muted">{subtitle}</p>}
+</div>

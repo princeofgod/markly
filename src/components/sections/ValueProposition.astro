@@ -1,0 +1,44 @@
+---
+import Container from '../layout/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import Card from '../common/Card.astro';
+import Icon from '../icons/Icon.astro';
+import { valuePropositions } from '../../data/valuePropositions';
+---
+
+<section class="bg-surface-alt py-16 md:py-24">
+	<Container class="flex flex-col gap-12">
+		<SectionHeading
+			eyebrow="Our Value"
+			title="Value Beyond Advisory"
+			subtitle="Three pillars guide every engagement, from first consultation to long-term partnership."
+		/>
+
+		<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+			{
+				valuePropositions.map((pillar) => (
+					<Card class="flex flex-col gap-4">
+						<span class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent">
+							<Icon name={pillar.icon} class="h-6 w-6" />
+						</span>
+						<h3 class="font-display text-xl text-primary">{pillar.title}</h3>
+						<dl class="flex flex-col gap-3 text-sm leading-[1.5] text-muted">
+							<div>
+								<dt class="font-semibold text-primary">The Challenge</dt>
+								<dd>{pillar.problem}</dd>
+							</div>
+							<div>
+								<dt class="font-semibold text-primary">Our Approach</dt>
+								<dd>{pillar.solution}</dd>
+							</div>
+							<div>
+								<dt class="font-semibold text-primary">The Outcome</dt>
+								<dd>{pillar.value}</dd>
+							</div>
+						</dl>
+					</Card>
+				))
+			}
+		</div>
+	</Container>
+</section>

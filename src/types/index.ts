@@ -1,0 +1,10 @@
+export type { IconName } from './icon';
+export type { NavigationItem } from './navigation';
+export type { Service } from './service';
+export type { Feature } from './feature';
+export type { Testimonial } from './testimonial';
+export type { FAQ } from './faq';
+export type { SocialLink, SocialPlatform } from './social';
+export type { CompanyInfo } from './company';
+export type { ValuePillar } from './valueProposition';
+export type { Differentiator } from './differentiator';

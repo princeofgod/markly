@@ -1,0 +1,14 @@
+---
+import { cn } from '../../utils/cn';
+
+interface Props {
+	class?: string;
+	as?: 'div' | 'section' | 'nav';
+}
+
+const { class: className = '', as: Tag = 'div' } = Astro.props;
+---
+
+<Tag class={cn('mx-auto w-full max-w-7xl px-4 sm:px-6 md:px-8', className)}>
+	<slot />
+</Tag>

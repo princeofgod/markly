@@ -1,11 +1,40 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import BrandPositioning from '../components/sections/BrandPositioning.astro';
+import ServicesOverview from '../components/sections/ServicesOverview.astro';
+import ValueProposition from '../components/sections/ValueProposition.astro';
+import WhyChooseUs from '../components/sections/WhyChooseUs.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import CTASection from '../components/sections/CTASection.astro';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout
+	title="Compliance, IP Protection & Business Advisory"
+	description="Markly Africa helps businesses, startups, and innovators navigate data protection, regulatory compliance, intellectual property, and business growth with practical, AI-driven solutions."
+>
+	<Hero
+		eyebrow="Markly"
+		title="Helping businesses stay compliant, secure their brands, and grow with confidence."
+		subtitle="Practical, AI-driven advisory across data protection, intellectual property, and business growth, reviewed and supervised by human experts at every step."
+		primaryCta={{ label: 'Explore Our Services', href: '/services' }}
+		secondaryCta={{ label: 'Book a Consultation', href: '/contact' }}
+	/>
+
+	<BrandPositioning />
+
+	<ServicesOverview />
+
+	<ValueProposition />
+
+	<WhyChooseUs />
+
+	<Testimonials />
+
+	<CTASection
+		title="Ready to Protect Your Business and Scale with Confidence?"
+		subtitle="Talk to our advisory team about compliance, intellectual property, and growth strategy tailored to your business."
+		ctaLabel="Contact Our Team"
+		ctaHref="/contact"
+	/>
+</MainLayout>

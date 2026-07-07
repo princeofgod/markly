@@ -1,0 +1,25 @@
+---
+import Container from '../layout/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import FeatureCard from '../common/FeatureCard.astro';
+import ButtonSecondary from '../common/ButtonSecondary.astro';
+import { services } from '../../data/services';
+---
+
+<section class="bg-surface py-16 md:py-24">
+	<Container class="flex flex-col gap-12">
+		<SectionHeading
+			eyebrow="What We Do"
+			title="Services Built for Compliance, Protection, and Growth"
+			subtitle="A full-service advisory practice covering the legal, regulatory, and strategic needs of modern businesses."
+		/>
+
+		<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{services.map((service) => <FeatureCard title={service.title} description={service.summary} icon={service.icon} />)}
+		</div>
+
+		<div class="flex justify-center">
+			<ButtonSecondary href="/services">Explore All Services</ButtonSecondary>
+		</div>
+	</Container>
+</section>
