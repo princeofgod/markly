@@ -1,49 +1,56 @@
 ---
 import Container from '../layout/Container.astro';
 import SectionHeading from '../common/SectionHeading.astro';
-import FeatureCard from '../common/FeatureCard.astro';
 import ButtonPrimary from '../common/ButtonPrimary.astro';
 import ButtonSecondary from '../common/ButtonSecondary.astro';
-import { capabilities } from '../../data/capabilities';
 import { company } from '../../data/company';
 ---
 
 <section class="bg-surface-alt py-16 md:py-24">
-	<Container class="flex flex-col gap-12">
-		<SectionHeading
-			eyebrow="Who We Are"
-			title="Protecting Innovation. Ensuring Compliance. Empowering Growth."
-			subtitle="Powered by AI. Supervised by Human Expertise."
-		/>
+	<Container>
+		<div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start lg:gap-16">
+			<div class="flex flex-col gap-6 lg:col-span-7">
+				<SectionHeading
+					eyebrow="Who We Are"
+					title="Protecting Innovation. Ensuring Compliance. Empowering Growth."
+					align="left"
+					class="mx-0"
+				/>
+				<p class="leading-[1.5] text-muted">
+					{company.description}
+				</p>
+				<p class="leading-[1.5] text-muted">
+					We provide practical, strategic, and AI-driven solutions that enable our clients to operate confidently,
+					protect valuable assets, and scale sustainably across Africa and global markets.
+				</p>
+				<p class="font-display text-lg italic text-primary">
+					Your trusted partner in compliance, innovation, and business success.
+				</p>
+				<div class="mt-2 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+					<ButtonPrimary href="/contact">Get Started Today</ButtonPrimary>
+					<ButtonSecondary href="/contact">Book a Consultation</ButtonSecondary>
+				</div>
+			</div>
 
-		<div class="mx-auto flex max-w-3xl flex-col gap-6 text-center">
-			<p class="leading-[1.5] text-muted">
-				{company.description}
-			</p>
-			<p class="leading-[1.5] text-muted">
-				We provide practical, strategic, and AI-driven solutions that enable our clients to operate confidently,
-				protect valuable assets, and scale sustainably across Africa and global markets.
-			</p>
-			<p class="font-display text-lg text-primary">Your trusted partner in compliance, innovation, and business success.</p>
-		</div>
-
-		<div class="mx-auto flex max-w-3xl flex-col items-center gap-2 rounded-2xl border border-accent/30 bg-accent/10 px-8 py-8 text-center">
-			<p class="font-display text-xl text-primary md:text-2xl">AI-driven Compliance.</p>
-			<p class="font-display text-xl text-primary md:text-2xl">AI-assisted IP Protection.</p>
-			<p class="font-display text-xl text-primary md:text-2xl">Human Expertise.</p>
-		</div>
-
-		<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-			{
-				capabilities.map((capability) => (
-					<FeatureCard title={capability.title} description={capability.description} icon={capability.icon} />
-				))
-			}
-		</div>
-
-		<div class="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-			<ButtonPrimary href="/contact">Get Started Today</ButtonPrimary>
-			<ButtonSecondary href="/contact">Book a Consultation</ButtonSecondary>
+			<div class="lg:col-span-5">
+				<div class="rounded-2xl border border-primary/15 bg-surface p-8">
+					<p class="text-xs font-semibold uppercase tracking-wide text-muted">Declaration of Practice</p>
+					<ol class="mt-6 flex flex-col gap-6">
+						<li class="flex items-baseline gap-4 border-b border-border-subtle pb-6">
+							<span class="font-display text-2xl text-accent">i.</span>
+							<span class="font-display text-xl text-primary md:text-2xl">AI-driven Compliance.</span>
+						</li>
+						<li class="flex items-baseline gap-4 border-b border-border-subtle pb-6">
+							<span class="font-display text-2xl text-accent">ii.</span>
+							<span class="font-display text-xl text-primary md:text-2xl">AI-assisted IP Protection.</span>
+						</li>
+						<li class="flex items-baseline gap-4">
+							<span class="font-display text-2xl text-accent">iii.</span>
+							<span class="font-display text-xl text-primary md:text-2xl">Human Expertise.</span>
+						</li>
+					</ol>
+				</div>
+			</div>
 		</div>
 	</Container>
 </section>

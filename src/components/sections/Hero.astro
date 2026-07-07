@@ -10,7 +10,7 @@ interface CtaLink {
 
 interface Props {
 	eyebrow?: string;
-	title: string;
+	title?: string;
 	subtitle?: string;
 	primaryCta?: CtaLink;
 	secondaryCta?: CtaLink;
@@ -34,33 +34,67 @@ const sectionBg = isDark ? 'bg-primary' : 'bg-surface';
 const titleColor = isDark ? 'text-surface' : 'text-primary';
 const subtitleColor = isDark ? 'text-surface/70' : 'text-muted';
 const eyebrowColor = isDark ? 'text-surface' : 'text-primary';
+const hasSignature = Astro.slots.has('signature');
+const hasTitleSlot = Astro.slots.has('title');
 ---
 
 <section class={`${sectionBg} ${paddingClass}`}>
-	<Container class="flex flex-col items-center gap-8 text-center">
-		{
-			eyebrow && (
-				<span class={`flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide ${eyebrowColor}`}>
-					<span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-					{eyebrow}
-				</span>
-			)
-		}
-		<h1 class={`max-w-4xl font-display text-4xl leading-[1.5] md:text-6xl ${titleColor}`}>
-			{title}
-		</h1>
-		{subtitle && <p class={`max-w-2xl text-lg leading-[1.5] md:text-xl ${subtitleColor}`}>{subtitle}</p>}
-		{
-			(primaryCta || secondaryCta) && (
-				<div class="mt-4 flex flex-col items-center gap-4 sm:flex-row">
-					{primaryCta && <ButtonPrimary href={primaryCta.href}>{primaryCta.label}</ButtonPrimary>}
-					{secondaryCta && (
-						<ButtonSecondary href={secondaryCta.href} variant={isDark ? 'inverted' : 'default'}>
-							{secondaryCta.label}
-						</ButtonSecondary>
-					)}
-				</div>
-			)
-		}
+	<Container>
+		<div
+			class={hasSignature
+				? 'grid grid-cols-1 items-center gap-16 text-center lg:grid-cols-12 lg:gap-12 lg:text-left'
+				: 'flex flex-col items-center gap-8 text-center'}
+		>
+			<div class={hasSignature ? 'flex flex-col items-center gap-8 lg:col-span-7 lg:items-start' : 'contents'}>
+				{
+					eyebrow && (
+						<span
+							class={`motion-safe-fade-in-up flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide lg:justify-start ${eyebrowColor}`}
+						>
+							<span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+							{eyebrow}
+						</span>
+					)
+				}
+				<h1
+					class={`motion-safe-fade-in-up max-w-4xl font-display text-4xl leading-[1.5] md:text-6xl ${titleColor}`}
+					style="animation-delay: 90ms"
+				>
+					{hasTitleSlot ? <slot name="title" /> : title}
+				</h1>
+				{
+					subtitle && (
+						<p
+							class={`motion-safe-fade-in-up max-w-2xl text-lg leading-[1.5] md:text-xl ${subtitleColor}`}
+							style="animation-delay: 180ms"
+						>
+							{subtitle}
+						</p>
+					)
+				}
+				{
+					(primaryCta || secondaryCta) && (
+						<div
+							class="motion-safe-fade-in-up mt-4 flex flex-col items-center gap-4 sm:flex-row lg:items-start"
+							style="animation-delay: 270ms"
+						>
+							{primaryCta && <ButtonPrimary href={primaryCta.href}>{primaryCta.label}</ButtonPrimary>}
+							{secondaryCta && (
+								<ButtonSecondary href={secondaryCta.href} variant={isDark ? 'inverted' : 'default'}>
+									{secondaryCta.label}
+								</ButtonSecondary>
+							)}
+						</div>
+					)
+				}
+			</div>
+			{
+				hasSignature && (
+					<div class="motion-safe-fade-in-up lg:col-span-5" style="animation-delay: 360ms">
+						<slot name="signature" />
+					</div>
+				)
+			}
+		</div>
 	</Container>
 </section>

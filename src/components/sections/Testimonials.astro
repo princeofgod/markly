@@ -1,7 +1,6 @@
 ---
 import Container from '../layout/Container.astro';
 import SectionHeading from '../common/SectionHeading.astro';
-import TestimonialCard from '../common/TestimonialCard.astro';
 import { testimonials } from '../../data/testimonials';
 ---
 
@@ -9,8 +8,24 @@ import { testimonials } from '../../data/testimonials';
 	<Container class="flex flex-col gap-12">
 		<SectionHeading eyebrow="Client Trust" title="Trusted by Founders and Compliance Teams" />
 
-		<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-			{testimonials.map((testimonial) => <TestimonialCard testimonial={testimonial} />)}
+		<div class="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
+			{
+				testimonials.map((testimonial) => (
+					<figure class="flex flex-col gap-2">
+						<span class="font-display text-5xl leading-none text-accent" aria-hidden="true">
+							&ldquo;
+						</span>
+						<blockquote class="-mt-4 font-display text-xl italic leading-[1.5] text-primary">
+							{testimonial.quote}
+						</blockquote>
+						<figcaption class="mt-3 flex flex-col gap-1 border-t border-accent pt-3 text-xs font-semibold uppercase tracking-wide text-muted">
+							{testimonial.author}
+							{testimonial.role && <span class="font-normal normal-case text-muted">, {testimonial.role}</span>}
+							{testimonial.company && <span class="font-normal normal-case text-muted"> &middot; {testimonial.company}</span>}
+						</figcaption>
+					</figure>
+				))
+			}
 		</div>
 	</Container>
 </section>

@@ -1,6 +1,7 @@
 ---
 import Container from '../layout/Container.astro';
 import ButtonPrimary from '../common/ButtonPrimary.astro';
+import ReviewedSeal from '../common/ReviewedSeal.astro';
 
 interface Props {
 	title: string;
@@ -19,5 +20,6 @@ const { title, subtitle, ctaLabel, ctaHref } = Astro.props;
 		</h2>
 		{subtitle && <p class="max-w-xl leading-[1.5] text-surface/70">{subtitle}</p>}
 		<ButtonPrimary href={ctaHref}>{ctaLabel}</ButtonPrimary>
+		<ReviewedSeal tone="inverted" label="Reviewed by a human expert" class="max-w-full" />
 	</Container>
 </section>
