@@ -5,7 +5,7 @@ import ButtonSecondary from '../common/ButtonSecondary.astro';
 import { services } from '../../data/services';
 ---
 
-<section class="bg-surface py-16 md:py-24">
+<section class="bg-surface-alt py-16 md:py-24">
 	<Container class="flex flex-col gap-12">
 		<SectionHeading
 			eyebrow="What We Do"
@@ -22,7 +22,7 @@ import { services } from '../../data/services';
 						class="flex items-center justify-between gap-4 border-b border-border-subtle py-6"
 					>
 						<div class="flex min-w-0 flex-1 items-center gap-x-4 sm:gap-x-6">
-							<span class="relative inline-flex h-8 w-8 flex-none items-center justify-center rounded-full border border-primary/20 bg-surface-alt font-display text-sm text-primary sm:h-10 sm:w-10 sm:text-base">
+							<span class="relative inline-flex h-8 w-8 flex-none items-center justify-center rounded-full border border-primary/20 bg-surface font-display text-sm text-primary sm:h-10 sm:w-10 sm:text-base">
 								{String(index + 1).padStart(2, '0')}
 								<span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-accent ring-2 ring-surface" aria-hidden="true" />
 							</span>

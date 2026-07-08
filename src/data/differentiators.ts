@@ -8,20 +8,37 @@ export const differentiators: Differentiator[] = [
 		icon: 'seal-check',
 	},
 	{
-		title: 'Pan-African & Global Reach',
-		description: 'Coordinated trademark and compliance support across African and international jurisdictions.',
+		title: 'Industry Expertise',
+		description:
+			'A team of professionals with extensive experience across legal, compliance, business, and intellectual property disciplines.',
+		icon: 'scale',
+	},
+	{
+		title: 'Client-Focused Solutions',
+		description: "Every solution is customized to meet your organization's unique needs and objectives.",
+		icon: 'users',
+	},
+	{
+		title: 'Regional and Global Perspective',
+		description:
+			'We understand African regulatory environments while supporting clients with international expansion and protection strategies.',
 		icon: 'globe',
 	},
 	{
-		title: 'Practical, Business-First Advisory',
-		description:
-			'Guidance built for founders and operators, not just legal theory, focused on decisions you can act on.',
-		icon: 'lightbulb',
+		title: 'Practical Results',
+		description: 'Our recommendations are actionable, business-friendly, and designed to create measurable value.',
+		icon: 'chart',
 	},
 	{
-		title: 'Proven Track Record',
+		title: 'Global Reach',
 		description:
-			'Trusted by startups, SMEs, and enterprises to protect what they have built and support sustainable growth.',
-		icon: 'check',
+			'We help clients secure trademark rights across Africa and major international markets through trusted global networks and strategic partnerships.',
+		icon: 'shield',
+	},
+	{
+		title: 'End-to-End Support',
+		description:
+			'From advisory and compliance to implementation and training, we remain your trusted partner throughout your journey.',
+		icon: 'clipboard',
 	},
 ];
