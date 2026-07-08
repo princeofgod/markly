@@ -1,0 +1,24 @@
+---
+import type { SocialPlatform } from '../../types';
+import LinkedinIcon from './LinkedinIcon.astro';
+import TwitterIcon from './TwitterIcon.astro';
+import FacebookIcon from './FacebookIcon.astro';
+import InstagramIcon from './InstagramIcon.astro';
+
+const icons = {
+	linkedin: LinkedinIcon,
+	twitter: TwitterIcon,
+	facebook: FacebookIcon,
+	instagram: InstagramIcon,
+} satisfies Record<SocialPlatform, unknown>;
+
+interface Props {
+	name: SocialPlatform;
+	class?: string;
+}
+
+const { name, class: className = 'h-4 w-4' } = Astro.props;
+const IconComponent = icons[name];
+---
+
+<IconComponent class={className} />
