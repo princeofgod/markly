@@ -96,6 +96,23 @@ body {
 	transform: rotate(-6deg) scale(1);
 }
 
+/* Ledger scroll: a slow, steady horizontal register for content framed as an
+   ongoing list (e.g. industries served) rather than a fixed schedule. The
+   track is duplicated in markup and translated by exactly half its width for
+   a seamless loop; pauses on hover so it can still be read. */
+@keyframes ledger-scroll {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+.animate-ledger-scroll {
+	animation: ledger-scroll 36s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.motion-safe-fade-in-up,
 	.motion-safe-seal-in {
@@ -106,5 +123,9 @@ body {
 		opacity: 1;
 		transform: none;
 		transition: none;
+	}
+
+	.animate-ledger-scroll {
+		animation: none;
 	}
 }

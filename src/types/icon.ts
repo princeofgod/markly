@@ -8,4 +8,5 @@ export type IconName =
 	| 'chart'
 	| 'clipboard'
 	| 'seal-check'
-	| 'check';
+	| 'check'
+	| 'chevron-down';
