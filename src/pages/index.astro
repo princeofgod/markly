@@ -15,29 +15,27 @@ import CTASection from '../components/sections/CTASection.astro';
 	description="Markly Africa helps businesses, startups, and innovators navigate data protection, regulatory compliance, intellectual property, and business growth with practical, AI-driven solutions."
 >
 	<Hero
-		eyebrow="Markly"
 		subtitle="Practical, AI-driven advisory across data protection, intellectual property, and business growth, reviewed and supervised by human experts at every step."
-		primaryCta={{ label: 'Explore Our Services', href: '/services' }}
-		secondaryCta={{ label: 'Book a Consultation', href: '/contact' }}
+		primaryCta={{ label: 'Book a Consultation', href: '/contact' }}
 	>
 		<Fragment slot="title">
 			Helping businesses stay compliant, secure their brands, and grow <em class="italic text-accent">with confidence</em>.
 		</Fragment>
 		<div slot="signature" class="relative mx-auto max-w-sm">
-			<div class="motion-safe-seal-in absolute -right-3 -top-5 z-10 rotate-6" style="animation-delay: 480ms">
+			<div class="motion-safe-seal-in absolute -right-3 -top-5 z-10 rotate-6" style="animation-delay: 1300ms">
 				<ReviewedSeal tone="solid" />
 			</div>
-			<div class="rounded-2xl border-t-4 border-accent bg-surface-alt p-6 shadow-xl md:p-8">
+			<div class="rounded-2xl border border-border-subtle bg-surface-alt p-6 shadow-xl md:p-8">
 				<p class="text-xs font-semibold uppercase tracking-wide text-muted">Trademark Search &mdash; Class Availability</p>
 				<div class="mt-6 flex flex-col gap-3 border-b border-border-subtle pb-6 text-left">
-					<p class="redline-strike text-sm leading-[1.5] text-muted" style="animation-delay: 600ms">
+					<p class="motion-safe-fade-in-up text-sm leading-[1.5] text-muted line-through decoration-accent decoration-1 [text-decoration-skip-ink:none]" style="animation-delay: 600ms">
 						The mark is available for registration in all classes.
 					</p>
-					<p class="font-display text-lg leading-[1.5] text-primary">
+					<p class="motion-safe-fade-in-up font-display text-lg italic leading-[1.5] text-primary" style="animation-delay: 950ms">
 						Available in Classes 9, 35 &amp; 42 &mdash; one prior filing found in Class 41.
 					</p>
 				</div>
-				<div class="mt-6 flex items-center justify-between text-left text-xs text-muted">
+				<div class="motion-safe-fade-in-up mt-6 flex items-center justify-between text-left text-xs text-muted" style="animation-delay: 1150ms">
 					<span>&mdash; A. Bello, Compliance Counsel</span>
 					<span>Reviewed in 4 hrs</span>
 				</div>
@@ -60,5 +58,9 @@ import CTASection from '../components/sections/CTASection.astro';
 		subtitle="Talk to our advisory team about compliance, intellectual property, and growth strategy tailored to your business."
 		ctaLabel="Contact Our Team"
 		ctaHref="/contact"
+		image={{
+			src: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80',
+			alt: 'Fountain pen resting on a lined notebook page',
+		}}
 	/>
 </MainLayout>

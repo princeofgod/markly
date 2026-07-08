@@ -5,7 +5,7 @@ export const differentiators: Differentiator[] = [
 		title: 'Human + AI Collaboration',
 		description:
 			'AI-driven tools accelerate research and monitoring, while every recommendation is reviewed by qualified human experts.',
-		icon: 'sparkles',
+		icon: 'seal-check',
 	},
 	{
 		title: 'Pan-African & Global Reach',

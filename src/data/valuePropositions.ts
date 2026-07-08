@@ -28,6 +28,6 @@ export const valuePropositions: ValuePillar[] = [
 			'We provide practical, stage-appropriate business advisory and capacity building to help you grow with confidence.',
 		value:
 			'You scale faster with fewer costly missteps, backed by a partner invested in your long-term success.',
-		icon: 'rocket',
+		icon: 'ledger',
 	},
 ];

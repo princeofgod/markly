@@ -10,8 +10,8 @@ import { testimonials } from '../../data/testimonials';
 
 		<div class="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
 			{
-				testimonials.map((testimonial) => (
-					<figure class="flex flex-col gap-2">
+				testimonials.map((testimonial, index) => (
+					<figure data-reveal style={`transition-delay: ${index * 100}ms`} class="flex flex-col gap-2">
 						<span class="font-display text-5xl leading-none text-accent" aria-hidden="true">
 							&ldquo;
 						</span>

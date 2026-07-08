@@ -17,14 +17,16 @@ const [featured, ...rest] = differentiators;
 		/>
 
 		<div class="flex flex-col gap-10">
-			<div class="flex flex-col gap-6 rounded-2xl bg-primary p-8 text-surface md:flex-row md:items-center md:gap-10 md:p-10">
+			<div data-reveal class="flex flex-col gap-6 rounded-2xl bg-primary p-8 text-surface md:flex-row md:items-center md:gap-10 md:p-10">
 				<span class="inline-flex h-14 w-14 flex-none items-center justify-center rounded-full bg-accent/20 text-accent">
 					<Icon name={featured.icon} class="h-7 w-7" />
 				</span>
 				<div class="flex flex-col gap-3">
 					<div class="flex flex-wrap items-center gap-3">
 						<h3 class="font-display text-2xl md:text-3xl">{featured.title}</h3>
-						<ReviewedSeal tone="inverted" label="Every output, human-reviewed" />
+						<span data-reveal="seal" style="transition-delay: 200ms" class="inline-block">
+							<ReviewedSeal tone="inverted" label="Every output, human-reviewed" />
+						</span>
 					</div>
 					<p class="max-w-2xl leading-[1.5] text-surface/80">{featured.description}</p>
 				</div>
@@ -32,8 +34,8 @@ const [featured, ...rest] = differentiators;
 
 			<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
 				{
-					rest.map((item) => (
-						<div class="flex flex-col gap-3">
+					rest.map((item, index) => (
+						<div data-reveal style={`transition-delay: ${index * 100}ms`} class="flex flex-col gap-3">
 							<span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-primary">
 								<Icon name={item.icon} class="h-5 w-5" />
 							</span>

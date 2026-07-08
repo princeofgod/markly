@@ -19,7 +19,7 @@ export const capabilities: Feature[] = [
 	{
 		title: 'Launch and Scale Startups Successfully',
 		description: 'Get practical, investor-ready advisory support from formation through growth.',
-		icon: 'rocket',
+		icon: 'ledger',
 	},
 	{
 		title: 'Build Workforce Capacity through Professional Training',

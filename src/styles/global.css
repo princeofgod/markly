@@ -48,15 +48,6 @@ body {
 	}
 }
 
-@keyframes draw-strike {
-	from {
-		width: 0;
-	}
-	to {
-		width: 100%;
-	}
-}
-
 @keyframes seal-in {
 	from {
 		opacity: 0;
@@ -76,22 +67,6 @@ body {
 	animation: seal-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.redline-strike {
-	position: relative;
-	display: inline-block;
-}
-
-.redline-strike::after {
-	content: '';
-	position: absolute;
-	left: 0;
-	top: 50%;
-	height: 1px;
-	width: 100%;
-	background-color: var(--color-brand-orange);
-	animation: draw-strike 0.5s ease-out both;
-}
-
 [data-reveal] {
 	opacity: 0;
 	transform: translateY(16px);
@@ -105,15 +80,26 @@ body {
 	transform: translateY(0);
 }
 
+/* Seal variant: reuses the [data-reveal] observer, but stamps in with the
+   same rotate + scale gesture as the hero's motion-safe-seal-in, so the
+   "reviewed" mark reads consistently wherever it appears on scroll. */
+[data-reveal='seal'] {
+	opacity: 0;
+	transform: rotate(-8deg) scale(0.85);
+	transition:
+		opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+		transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal='seal'].is-visible {
+	opacity: 1;
+	transform: rotate(-6deg) scale(1);
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.motion-safe-fade-in-up,
 	.motion-safe-seal-in {
 		animation: none;
-	}
-
-	.redline-strike::after {
-		animation: none;
-		width: 100%;
 	}
 
 	[data-reveal] {

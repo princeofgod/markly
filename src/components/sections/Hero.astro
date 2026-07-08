@@ -28,7 +28,7 @@ const {
 	tone = 'dark',
 } = Astro.props;
 
-const paddingClass = variant === 'compact' ? 'py-16 md:py-20' : 'py-20 md:py-32';
+const paddingClass = variant === 'compact' ? 'pt-10 pb-16 md:pt-12 md:pb-20' : 'pt-10 pb-20 md:pt-14 md:pb-32';
 const isDark = tone === 'dark';
 const sectionBg = isDark ? 'bg-primary' : 'bg-surface';
 const titleColor = isDark ? 'text-surface' : 'text-primary';
@@ -65,7 +65,7 @@ const hasTitleSlot = Astro.slots.has('title');
 				{
 					subtitle && (
 						<p
-							class={`motion-safe-fade-in-up max-w-2xl text-lg leading-[1.5] md:text-xl ${subtitleColor}`}
+							class={`motion-safe-fade-in-up max-w-[65ch] text-lg leading-[1.5] md:text-xl ${subtitleColor}`}
 							style="animation-delay: 180ms"
 						>
 							{subtitle}

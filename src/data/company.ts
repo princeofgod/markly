@@ -6,7 +6,7 @@ export const company: CompanyInfo = {
 	description:
 		'Markly Africa is dedicated to helping businesses, startups, organizations, and innovators navigate the complex landscape of data protection, regulatory compliance, intellectual property, and corporate governance with practical, strategic, and AI-driven solutions.',
 	email: 'hello@markly.africa',
-	phone: '+234 000 000 0000',
+	phone: '+234 813 245 7790',
 	address: 'Lagos, Nigeria',
 	url: 'https://markly.africa',
 };

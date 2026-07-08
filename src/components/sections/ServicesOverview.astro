@@ -2,7 +2,6 @@
 import Container from '../layout/Container.astro';
 import SectionHeading from '../common/SectionHeading.astro';
 import ButtonSecondary from '../common/ButtonSecondary.astro';
-import Icon from '../icons/Icon.astro';
 import { services } from '../../data/services';
 ---
 
@@ -14,20 +13,24 @@ import { services } from '../../data/services';
 			subtitle="A full-service advisory practice covering the legal, regulatory, and strategic needs of modern businesses."
 		/>
 
-		<div class="flex flex-col border-t border-border-subtle">
+		<div class="mx-auto flex w-full max-w-3xl flex-col border-t border-border-subtle">
 			{
 				services.map((service, index) => (
 					<div
 						data-reveal
 						style={`transition-delay: ${Math.min(index, 4) * 80}ms`}
-						class="grid grid-cols-[2.5rem_1fr] items-start gap-x-4 gap-y-3 border-b border-border-subtle py-6 sm:grid-cols-[3.5rem_3rem_15rem_1fr] sm:items-center sm:gap-x-6"
+						class="flex items-center justify-between gap-4 border-b border-border-subtle py-6"
 					>
-						<span class="font-display text-sm text-muted">§{String(index + 1).padStart(2, '0')}</span>
-						<span class="hidden h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-primary sm:inline-flex">
-							<Icon name={service.icon} class="h-5 w-5" />
+						<div class="flex min-w-0 flex-1 items-center gap-x-4 sm:gap-x-6">
+							<span class="relative inline-flex h-8 w-8 flex-none items-center justify-center rounded-full border border-primary/20 bg-surface-alt font-display text-sm text-primary sm:h-10 sm:w-10 sm:text-base">
+								{String(index + 1).padStart(2, '0')}
+								<span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-accent ring-2 ring-surface" aria-hidden="true" />
+							</span>
+							<h3 class="font-display text-xl text-primary">{service.title}</h3>
+						</div>
+						<span class="hidden flex-none text-sm font-semibold uppercase tracking-wide text-muted sm:inline-block">
+							{service.category}
 						</span>
-						<h3 class="font-display text-xl text-primary">{service.title}</h3>
-						<p class="col-span-2 leading-[1.5] text-muted sm:col-span-1">{service.summary}</p>
 					</div>
 				))
 			}

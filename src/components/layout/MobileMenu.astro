@@ -13,7 +13,7 @@ const { navigation } = Astro.props;
 	<button
 		id="mobile-menu-trigger"
 		type="button"
-		class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-primary transition-all duration-300 ease-in-out hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+		class="relative inline-flex h-10 w-10 items-center justify-center rounded-lg text-primary transition-all duration-300 ease-in-out hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
 		aria-expanded="false"
 		aria-controls="mobile-menu-panel"
 	>
@@ -27,7 +27,7 @@ const { navigation } = Astro.props;
 			stroke-width="1.75"
 			stroke-linecap="round"
 			stroke-linejoin="round"
-			class="h-6 w-6"
+			class="absolute inset-0 m-auto h-6 w-6"
 			aria-hidden="true"
 		>
 			<path d="M4 6h16M4 12h16M4 18h16" />
@@ -41,7 +41,7 @@ const { navigation } = Astro.props;
 			stroke-width="1.75"
 			stroke-linecap="round"
 			stroke-linejoin="round"
-			class="hidden h-6 w-6"
+			class="absolute inset-0 m-auto h-6 w-6"
 			aria-hidden="true"
 		>
 			<path d="M6 6l12 12M18 6L6 18" />
@@ -54,7 +54,7 @@ const { navigation } = Astro.props;
 	role="dialog"
 	aria-modal="true"
 	aria-label="Main menu"
-	class="fixed inset-x-0 top-20 z-40 hidden max-h-[calc(100vh-5rem)] overflow-y-auto border-b border-border-subtle bg-surface-alt px-4 pb-8 pt-4 shadow-md md:hidden"
+	class="mobile-menu-panel fixed inset-x-0 top-20 z-40 max-h-[calc(100vh-5rem)] overflow-y-auto border-b border-border-subtle bg-surface-alt px-4 pb-8 pt-4 shadow-md md:hidden"
 >
 	<ul class="flex flex-col gap-2">
 		{
@@ -83,17 +83,13 @@ const { navigation } = Astro.props;
 
 	if (trigger && panel && iconOpen && iconClose) {
 		const closeMenu = () => {
-			panel.classList.add('hidden');
+			panel.classList.remove('is-open');
 			trigger.setAttribute('aria-expanded', 'false');
-			iconOpen.classList.remove('hidden');
-			iconClose.classList.add('hidden');
 		};
 
 		const openMenu = () => {
-			panel.classList.remove('hidden');
+			panel.classList.add('is-open');
 			trigger.setAttribute('aria-expanded', 'true');
-			iconOpen.classList.add('hidden');
-			iconClose.classList.remove('hidden');
 			const firstLink = panel.querySelector('a');
 			firstLink?.focus();
 		};
@@ -136,3 +132,62 @@ const { navigation } = Astro.props;
 		document.addEventListener('astro:page-load', closeMenu);
 	}
 </script>
+
+<style>
+	/* Sheet entry: fades + settles down from behind the header rather than
+	   snapping open, matching the "shadow-md sheet" the panel is meant to read as. */
+	.mobile-menu-panel {
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transform: translateY(-8px);
+		transition:
+			opacity 300ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+			visibility 0s linear 300ms;
+	}
+
+	.mobile-menu-panel.is-open {
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		transform: translateY(0);
+		transition:
+			opacity 300ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+			visibility 0s linear 0s;
+	}
+
+	/* Hamburger <-> close crossfade, driven by the button's own aria-expanded
+	   state so no extra JS or class bookkeeping is needed. */
+	#mobile-menu-icon-open,
+	#mobile-menu-icon-close {
+		transition:
+			opacity 300ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	#mobile-menu-icon-close {
+		opacity: 0;
+		transform: rotate(-45deg);
+	}
+
+	#mobile-menu-trigger[aria-expanded='true'] #mobile-menu-icon-open {
+		opacity: 0;
+		transform: rotate(45deg);
+	}
+
+	#mobile-menu-trigger[aria-expanded='true'] #mobile-menu-icon-close {
+		opacity: 1;
+		transform: rotate(0deg);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.mobile-menu-panel,
+		.mobile-menu-panel.is-open,
+		#mobile-menu-icon-open,
+		#mobile-menu-icon-close {
+			transition: none;
+		}
+	}
+</style>

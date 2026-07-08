@@ -1,11 +1,11 @@
 export type IconName =
 	| 'shield'
 	| 'scale'
-	| 'rocket'
+	| 'ledger'
 	| 'globe'
 	| 'lightbulb'
 	| 'users'
 	| 'chart'
 	| 'clipboard'
-	| 'sparkles'
+	| 'seal-check'
 	| 'check';
