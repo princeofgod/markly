@@ -1,0 +1,29 @@
+---
+import Container from '../layout/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import Icon from '../icons/Icon.astro';
+import { faqs } from '../../data/faq';
+---
+
+<section class="bg-surface py-16 md:py-24">
+	<Container class="flex flex-col gap-10">
+		<SectionHeading eyebrow="FAQ" title="Frequently Asked Questions" align="left" class="mx-0" />
+
+		<div class="flex flex-col border-t border-border-subtle">
+			{
+				faqs.map((faq, index) => (
+					<details data-reveal style={`transition-delay: ${Math.min(index, 6) * 60}ms`} class="group border-b border-border-subtle py-6">
+						<summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xs [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+							<span class="font-display text-lg text-primary md:text-xl">{faq.question}</span>
+							<Icon
+								name="chevron-down"
+								class="h-5 w-5 flex-none text-primary transition-transform duration-300 ease-in-out motion-reduce:transition-none group-open:rotate-180"
+							/>
+						</summary>
+						<p class="mt-4 max-w-[65ch] leading-[1.5] text-muted">{faq.answer}</p>
+					</details>
+				))
+			}
+		</div>
+	</Container>
+</section>

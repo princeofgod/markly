@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import Container from './Container.astro';
 import MobileMenu from './MobileMenu.astro';
 import ButtonPrimary from '../common/ButtonPrimary.astro';
 import { mainNavigation } from '../../data/navigation';
 import { company } from '../../data/company';
+import markyLogo from '../../assets/markly-logo.png';
 
 const currentPath = Astro.url.pathname;
 ---
@@ -12,12 +14,12 @@ const currentPath = Astro.url.pathname;
 	<Container as="nav" class="flex h-20 items-center justify-between">
 		<a
 			href="/"
-			class="font-display text-2xl font-semibold text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+			class="rounded-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
 		>
-			{company.name}
+			<Image src={markyLogo} alt={company.name} class="h-8 w-auto sm:h-9 md:h-7 lg:h-9" widths={[240, 480]} sizes="240px" />
 		</a>
 
-		<ul class="hidden items-center gap-8 md:flex">
+		<ul class="hidden items-center gap-6 md:flex lg:gap-8">
 			{
 				mainNavigation.map((item) => {
 					const isActive = currentPath === item.href;

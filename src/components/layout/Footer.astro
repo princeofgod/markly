@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import Container from './Container.astro';
 import SocialIcon from '../icons/SocialIcon.astro';
 import { company } from '../../data/company';
 import { footerNavigation } from '../../data/navigation';
 import { socialLinks } from '../../data/social';
+import markyLogoWhite from '../../assets/markly-logo-white-1.png';
 
 const year = new Date().getFullYear();
 ---
@@ -12,7 +14,7 @@ const year = new Date().getFullYear();
 	<Container class="flex flex-col gap-12 py-16 md:py-24">
 		<div class="grid grid-cols-1 gap-12 md:grid-cols-3">
 			<div class="flex flex-col gap-4">
-				<span class="font-display text-2xl font-semibold text-surface">{company.name}</span>
+				<Image src={markyLogoWhite} alt={company.name} class="h-6 w-auto self-start sm:h-7" widths={[240, 480]} sizes="240px" />
 				<p class="max-w-sm leading-[1.5] text-surface/70">{company.tagline}</p>
 			</div>
 

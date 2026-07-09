@@ -1,0 +1,29 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import FAQSection from '../components/sections/FAQSection.astro';
+import CTASection from '../components/sections/CTASection.astro';
+---
+
+<MainLayout
+	title="Resources"
+	description="Answers to common questions about Markly Africa's AI-powered compliance, trademark protection, data protection, and corporate advisory services."
+>
+	<Hero
+		variant="compact"
+		tone="light"
+		eyebrow="Resources"
+		title="Answers to Your Compliance and IP Questions"
+		subtitle="Straightforward answers about how our AI-powered platform, human experts, and advisory services work together to protect your business."
+		primaryCta={{ label: 'Book a Consultation', href: '/contact' }}
+	/>
+
+	<FAQSection />
+
+	<CTASection
+		title="Still Have Questions?"
+		subtitle="Talk to our advisory team — we're happy to walk you through how Markly Africa can support your business."
+		ctaLabel="Contact Our Team"
+		ctaHref="/contact"
+	/>
+</MainLayout>

@@ -8,3 +8,4 @@ export type { SocialLink, SocialPlatform } from './social';
 export type { CompanyInfo } from './company';
 export type { ValuePillar } from './valueProposition';
 export type { Differentiator } from './differentiator';
+export type { Step } from './step';

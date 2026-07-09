@@ -1,0 +1,363 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Container from '../components/layout/Container.astro';
+import Hero from '../components/sections/Hero.astro';
+import ButtonPrimary from '../components/common/ButtonPrimary.astro';
+import Icon from '../components/icons/Icon.astro';
+import { services } from '../data/services';
+import { company } from '../data/company';
+
+// marklyafrica.com is now the canonical domain (company.ts), so this page
+// pulls the email straight from the shared data file instead of keeping its
+// own divergent copy.
+const contactEmail = company.email;
+// The brief's phone number was a template ("+234 XXX XXX XXXX"). Shipping
+// literal placeholder digits on a live page reads as broken, so this uses
+// the real number already on file instead.
+const contactPhone = company.phone;
+const contactPhoneHref = contactPhone.replace(/[^+\d]/g, '');
+const contactAddress = company.address;
+
+const contactRows = [
+	{ label: 'Email', value: contactEmail, href: `mailto:${contactEmail}` },
+	{ label: 'Phone', value: contactPhone, href: `tel:${contactPhoneHref}` },
+	{ label: 'Address', value: contactAddress },
+	{ label: 'Office Hours', value: 'Monday – Friday: 8:00 AM – 5:00 PM' },
+];
+---
+
+<MainLayout
+	title="Contact Us"
+	description="Talk to Markly Africa's advisory team about trademark protection, intellectual property management, brand monitoring, or compliance support."
+>
+	<Hero
+		variant="compact"
+		tone="light"
+		eyebrow="Contact Us"
+		title="Let’s Protect What You’ve Built"
+		subtitle="Whether you are seeking trademark protection, intellectual property management, brand monitoring, or compliance support, our team is ready to help."
+		primaryCta={{ label: 'Request a Consultation', href: '#consultation-form' }}
+	/>
+
+	<section class="bg-surface pb-16 md:pb-24">
+		<Container>
+			<p class="mx-auto max-w-3xl text-center font-display text-lg italic leading-[1.5] text-primary sm:text-xl">
+				Protect your brand. Strengthen your competitive advantage. Build with confidence.
+			</p>
+		</Container>
+	</section>
+
+	<section id="consultation-form" class="scroll-mt-24 bg-surface-alt py-16 md:py-24">
+		<Container>
+			<div class="grid grid-cols-1 overflow-hidden rounded-2xl border border-border-subtle lg:grid-cols-12">
+				<div data-reveal class="flex flex-col gap-10 bg-primary p-8 text-surface sm:p-10 lg:col-span-5 lg:p-12">
+					<div class="flex flex-col gap-2">
+						<h2 class="font-display text-2xl sm:text-3xl">Get in Touch</h2>
+						<p class="leading-[1.5] text-surface/70">
+							Reach our advisory team directly, or fill out the form and we&rsquo;ll follow up with you.
+						</p>
+					</div>
+
+					<dl class="flex flex-col border-t border-surface/15">
+						{
+							contactRows.map((row, index) => (
+								<div
+									data-reveal
+									style={`transition-delay: ${index * 80}ms`}
+									class="flex flex-col gap-1 border-b border-surface/15 py-5"
+								>
+									<dt class="text-sm font-semibold uppercase tracking-wide text-surface/60">{row.label}</dt>
+									<dd class="text-lg text-surface">
+										{row.href ? (
+											<a
+												href={row.href}
+												class="rounded-xs transition-colors duration-200 hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface"
+											>
+												{row.value}
+											</a>
+										) : (
+											row.value
+										)}
+									</dd>
+								</div>
+							))
+						}
+					</dl>
+				</div>
+
+				<div class="flex flex-col gap-8 bg-surface-alt p-8 sm:p-10 lg:col-span-7 lg:p-12">
+					<div class="flex flex-col gap-2">
+						<h2 class="font-display text-2xl text-primary sm:text-3xl">Request a Consultation</h2>
+						<p class="leading-[1.5] text-muted">
+							Fill out our contact form and one of our experts will get in touch with you.
+						</p>
+					</div>
+
+					<form id="consultation-form-el" class="flex flex-col gap-6" novalidate>
+						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+							<div class="flex flex-col gap-2">
+								<label for="name" class="text-sm font-semibold text-primary">
+									Name <span class="text-primary" aria-hidden="true">*</span>
+								</label>
+								<input
+									id="name"
+									name="name"
+									type="text"
+									required
+									autocomplete="name"
+									aria-describedby="name-error"
+									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[invalid=true]:border-primary"
+								/>
+								<p id="name-error" role="alert" class="hidden text-sm font-medium text-primary"></p>
+							</div>
+							<div class="flex flex-col gap-2">
+								<label for="company" class="text-sm font-semibold text-primary">Company</label>
+								<input
+									id="company"
+									name="company"
+									type="text"
+									autocomplete="organization"
+									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+								/>
+							</div>
+							<div class="flex flex-col gap-2">
+								<label for="email" class="text-sm font-semibold text-primary">
+									Email <span class="text-primary" aria-hidden="true">*</span>
+								</label>
+								<input
+									id="email"
+									name="email"
+									type="email"
+									required
+									autocomplete="email"
+									inputmode="email"
+									aria-describedby="email-error"
+									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[invalid=true]:border-primary"
+								/>
+								<p id="email-error" role="alert" class="hidden text-sm font-medium text-primary"></p>
+							</div>
+							<div class="flex flex-col gap-2">
+								<label for="phone" class="text-sm font-semibold text-primary">Phone Number</label>
+								<input
+									id="phone"
+									name="phone"
+									type="tel"
+									autocomplete="tel"
+									inputmode="tel"
+									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+								/>
+							</div>
+						</div>
+
+						<div class="flex flex-col gap-2">
+							<label for="service" class="text-sm font-semibold text-primary">
+								Service Required <span class="text-primary" aria-hidden="true">*</span>
+							</label>
+							<div class="relative">
+								<select
+									id="service"
+									name="service"
+									required
+									aria-describedby="service-error"
+									class="w-full appearance-none rounded-lg border border-border-subtle bg-surface px-4 py-3 pr-10 text-base text-primary invalid:text-muted transition-colors duration-200 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[invalid=true]:border-primary"
+								>
+									<option value="" selected disabled>
+										Select the service you need
+									</option>
+									{services.map((service) => <option value={service.slug}>{service.title}</option>)}
+									<option value="general">General Inquiry / Not Sure</option>
+								</select>
+								<Icon
+									name="chevron-down"
+									class="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-muted"
+								/>
+							</div>
+							<p id="service-error" role="alert" class="hidden text-sm font-medium text-primary"></p>
+						</div>
+
+						<div class="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
+							<ButtonPrimary type="submit" class="w-full shrink-0 sm:w-auto">
+								<span data-submit-idle class="inline-flex items-center gap-2">
+									<Icon name="clipboard" class="h-4 w-4" />
+									Send Request
+								</span>
+								<span data-submit-loading class="hidden items-center gap-2">
+									<svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+										<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+										<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4Z" />
+									</svg>
+									Sending&hellip;
+								</span>
+							</ButtonPrimary>
+							<p class="text-sm text-muted">We typically respond within one business day.</p>
+						</div>
+
+						<div
+							role="status"
+							aria-live="polite"
+							data-form-success
+							class="hidden items-start gap-2 rounded-lg border border-accent/40 bg-accent/10 px-4 py-3 text-sm text-primary"
+						>
+							<Icon name="check" class="mt-0.5 h-4 w-4 flex-none text-accent" />
+							<span>Thank you &mdash; your request has been received. A member of our advisory team will be in touch shortly.</span>
+						</div>
+						<div
+							role="alert"
+							data-form-error
+							class="hidden items-start gap-2 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary"
+						>
+							<span>
+								<strong class="font-semibold">Something went wrong</strong> sending your request. Please try again, or
+								reach us directly at{' '}
+								<a
+									class="font-semibold underline underline-offset-2 transition-opacity duration-200 hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+									href={`mailto:${contactEmail}`}
+								>
+									{contactEmail}
+								</a>
+								.
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+		</Container>
+	</section>
+
+	<script>
+		// TODO: point FORM_ENDPOINT at a real backend before launch — e.g. a
+		// hosted form service (Formspree, Getform, Web3Forms) that accepts a
+		// POST of FormData and returns JSON, or an Astro server endpoint
+		// (`src/pages/api/contact.ts`) once an SSR adapter is added to
+		// astro.config.mjs. The site currently builds fully static, so there
+		// is no server to receive this POST yet.
+		const FORM_ENDPOINT = '';
+
+		const form = document.querySelector<HTMLFormElement>('#consultation-form-el');
+
+		if (form) {
+			const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+			const idleState = form.querySelector<HTMLElement>('[data-submit-idle]');
+			const loadingState = form.querySelector<HTMLElement>('[data-submit-loading]');
+			const successEl = form.querySelector<HTMLElement>('[data-form-success]');
+			const errorEl = form.querySelector<HTMLElement>('[data-form-error]');
+
+			// Inline, on-brand validation for the required fields, replacing the
+			// browser's default (inconsistently styled) validation bubbles.
+			type ValidatedField = {
+				input: HTMLInputElement | HTMLSelectElement;
+				errorEl: HTMLElement;
+				message: (input: HTMLInputElement | HTMLSelectElement) => string;
+			};
+
+			const fieldConfigs: ValidatedField[] = [
+				{
+					input: form.querySelector<HTMLInputElement>('#name')!,
+					errorEl: form.querySelector<HTMLElement>('#name-error')!,
+					message: () => 'Please enter your name.',
+				},
+				{
+					input: form.querySelector<HTMLInputElement>('#email')!,
+					errorEl: form.querySelector<HTMLElement>('#email-error')!,
+					message: (input: HTMLInputElement | HTMLSelectElement) =>
+						input.validity.valueMissing ? 'Please enter your email address.' : 'Enter a valid email address.',
+				},
+				{
+					input: form.querySelector<HTMLSelectElement>('#service')!,
+					errorEl: form.querySelector<HTMLElement>('#service-error')!,
+					message: () => 'Please select the service you need.',
+				},
+			].filter((field) => field.input && field.errorEl);
+
+			const setFieldError = (field: ValidatedField, show: boolean) => {
+				if (show) {
+					field.input.setAttribute('aria-invalid', 'true');
+					field.errorEl.textContent = field.message(field.input);
+					field.errorEl.classList.remove('hidden');
+				} else {
+					field.input.removeAttribute('aria-invalid');
+					field.errorEl.textContent = '';
+					field.errorEl.classList.add('hidden');
+				}
+			};
+
+			const validateField = (field: ValidatedField) => {
+				const valid = field.input.checkValidity();
+				setFieldError(field, !valid);
+				return valid;
+			};
+
+			for (const field of fieldConfigs) {
+				// Validate on blur once the user has left the field, then keep it
+				// live as they type/select so the error clears as soon as it's fixed.
+				field.input.addEventListener('blur', () => {
+					field.input.dataset.touched = 'true';
+					validateField(field);
+				});
+				field.input.addEventListener('input', () => {
+					if (field.input.dataset.touched === 'true') validateField(field);
+				});
+				field.input.addEventListener('change', () => {
+					if (field.input.dataset.touched === 'true') validateField(field);
+				});
+			}
+
+			form.addEventListener('submit', async (event) => {
+				event.preventDefault();
+				successEl?.classList.add('hidden');
+				successEl?.classList.remove('flex');
+				errorEl?.classList.add('hidden');
+				errorEl?.classList.remove('flex');
+
+				let firstInvalid: HTMLInputElement | HTMLSelectElement | null = null;
+				for (const field of fieldConfigs) {
+					field.input.dataset.touched = 'true';
+					const valid = validateField(field);
+					if (!valid && !firstInvalid) firstInvalid = field.input;
+				}
+				if (firstInvalid) {
+					firstInvalid.focus();
+					return;
+				}
+
+				if (!FORM_ENDPOINT) {
+					errorEl?.classList.remove('hidden');
+					errorEl?.classList.add('flex');
+					return;
+				}
+
+				submitButton?.setAttribute('disabled', 'true');
+				submitButton?.setAttribute('aria-busy', 'true');
+				idleState?.classList.add('hidden');
+				loadingState?.classList.remove('hidden');
+				loadingState?.classList.add('inline-flex');
+
+				try {
+					const response = await fetch(FORM_ENDPOINT, {
+						method: 'POST',
+						headers: { Accept: 'application/json' },
+						body: new FormData(form),
+					});
+					if (!response.ok) throw new Error('Request failed');
+					form.reset();
+					for (const field of fieldConfigs) {
+						delete field.input.dataset.touched;
+						setFieldError(field, false);
+					}
+					successEl?.classList.remove('hidden');
+					successEl?.classList.add('flex');
+				} catch {
+					errorEl?.classList.remove('hidden');
+					errorEl?.classList.add('flex');
+				} finally {
+					submitButton?.removeAttribute('disabled');
+					submitButton?.removeAttribute('aria-busy');
+					idleState?.classList.remove('hidden');
+					idleState?.classList.add('inline-flex');
+					loadingState?.classList.add('hidden');
+					loadingState?.classList.remove('inline-flex');
+				}
+			});
+		}
+	</script>
+</MainLayout>

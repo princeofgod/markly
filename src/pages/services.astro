@@ -2,6 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import Container from '../components/layout/Container.astro';
 import Hero from '../components/sections/Hero.astro';
+import HowItWorks from '../components/sections/HowItWorks.astro';
 import CTASection from '../components/sections/CTASection.astro';
 import SectionHeading from '../components/common/SectionHeading.astro';
 import Icon from '../components/icons/Icon.astro';
@@ -20,6 +21,8 @@ import { industries } from '../data/industries';
 		subtitle="From data protection to trademarks to startup advisory, every engagement is drafted with AI and countersigned by a licensed professional before it reaches you."
 		primaryCta={{ label: 'Book a Consultation', href: '/contact' }}
 	/>
+
+	<HowItWorks />
 
 	<section class="bg-surface py-16 md:py-24">
 		<Container class="flex flex-col gap-10">
@@ -77,10 +80,11 @@ import { industries } from '../data/industries';
 										<p class="max-w-[65ch] leading-[1.5] text-muted">{service.description}</p>
 									)}
 
-									{service.groups?.map((group) => {
+									{service.groups?.map((group, groupIndex) => {
 										const hasMore = group.items.length > visibleCount;
 										const visibleItems = hasMore ? group.items.slice(0, visibleCount) : group.items;
 										const restItems = hasMore ? group.items.slice(visibleCount) : [];
+										const toggleId = `${service.slug}-more-${groupIndex}`;
 
 										return (
 											<div class="flex flex-col gap-3">
@@ -96,16 +100,16 @@ import { industries } from '../data/industries';
 													))}
 												</ul>
 												{hasMore && (
-													<details class="group">
-														<summary class="flex w-fit cursor-pointer list-none items-center gap-1.5 rounded-sm text-sm font-semibold text-primary [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
-															<span class="group-open:hidden">+{restItems.length} more</span>
-															<span class="hidden group-open:inline">Show less</span>
-															<Icon
-																name="chevron-down"
-																class="h-4 w-4 flex-none transition-transform duration-200 motion-reduce:transition-none group-open:rotate-180"
-															/>
-														</summary>
-														<ul class="mt-3 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+													<div class="flex flex-col gap-3">
+														<input id={toggleId} type="checkbox" class="peer sr-only" />
+														<label
+															for={toggleId}
+															class="flex w-fit cursor-pointer items-center gap-1.5 rounded-sm text-sm font-semibold text-primary peer-checked:hidden peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent"
+														>
+															+{restItems.length} more
+															<Icon name="chevron-down" class="h-4 w-4 flex-none" />
+														</label>
+														<ul class="hidden grid-cols-1 gap-x-8 gap-y-2 peer-checked:grid sm:grid-cols-2">
 															{restItems.map((item) => (
 																<li class="flex items-start gap-2 leading-[1.5] text-primary">
 																	<Icon name="check" class="mt-1 h-4 w-4 flex-none text-accent" />
@@ -113,7 +117,14 @@ import { industries } from '../data/industries';
 																</li>
 															))}
 														</ul>
-													</details>
+														<label
+															for={toggleId}
+															class="hidden w-fit cursor-pointer items-center gap-1.5 rounded-sm text-sm font-semibold text-primary peer-checked:flex peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent"
+														>
+															Show less
+															<Icon name="chevron-down" class="h-4 w-4 flex-none rotate-180" />
+														</label>
+													</div>
 												)}
 											</div>
 										);
