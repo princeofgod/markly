@@ -50,15 +50,26 @@ const contactRows = [
 	<section id="consultation-form" class="scroll-mt-24 bg-surface-alt py-16 md:py-24">
 		<Container>
 			<div class="grid grid-cols-1 overflow-hidden rounded-2xl border border-border-subtle lg:grid-cols-12">
-				<div data-reveal class="flex flex-col gap-10 bg-primary p-8 text-surface sm:p-10 lg:col-span-5 lg:p-12">
-					<div class="flex flex-col gap-2">
+				<div
+					data-reveal
+					class="relative isolate flex flex-col gap-10 overflow-hidden bg-primary-950 p-8 text-surface sm:p-10 lg:col-span-5 lg:p-12"
+				>
+					<span
+						aria-hidden="true"
+						class="pointer-events-none absolute -right-24 -top-24 -z-10 h-72 w-72 rounded-full bg-accent/25 blur-3xl motion-safe:animate-aura"
+					></span>
+					<span
+						aria-hidden="true"
+						class="pointer-events-none absolute -bottom-28 -left-20 -z-10 h-72 w-72 rounded-full bg-[#4D2A98]/40 blur-3xl"
+					></span>
+					<div class="relative flex flex-col gap-2">
 						<h2 class="font-display text-2xl sm:text-3xl">Get in Touch</h2>
 						<p class="leading-[1.5] text-surface/70">
 							Reach our advisory team directly, or fill out the form and we&rsquo;ll follow up with you.
 						</p>
 					</div>
 
-					<dl class="flex flex-col border-t border-surface/15">
+					<dl class="relative flex flex-col border-t border-surface/15">
 						{
 							contactRows.map((row, index) => (
 								<div
@@ -106,7 +117,7 @@ const contactRows = [
 									required
 									autocomplete="name"
 									aria-describedby="name-error"
-									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[invalid=true]:border-primary"
+									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[invalid=true]:border-primary"
 								/>
 								<p id="name-error" role="alert" class="hidden text-sm font-medium text-primary"></p>
 							</div>
@@ -117,7 +128,7 @@ const contactRows = [
 									name="company"
 									type="text"
 									autocomplete="organization"
-									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
 								/>
 							</div>
 							<div class="flex flex-col gap-2">
@@ -132,7 +143,7 @@ const contactRows = [
 									autocomplete="email"
 									inputmode="email"
 									aria-describedby="email-error"
-									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[invalid=true]:border-primary"
+									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-[invalid=true]:border-primary"
 								/>
 								<p id="email-error" role="alert" class="hidden text-sm font-medium text-primary"></p>
 							</div>
@@ -144,7 +155,7 @@ const contactRows = [
 									type="tel"
 									autocomplete="tel"
 									inputmode="tel"
-									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+									class="rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base text-primary transition-colors duration-200 placeholder:text-muted focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
 								/>
 							</div>
 						</div>
@@ -182,7 +193,7 @@ const contactRows = [
 								name="message"
 								rows="5"
 								placeholder="Tell us a little about your business and what you&rsquo;re looking for — the more detail, the better we can help."
-								class="min-h-[8rem] resize-y rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base leading-[1.5] text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+								class="min-h-[8rem] resize-y rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base leading-[1.5] text-primary transition-colors duration-200 placeholder:text-muted focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
 							></textarea>
 							<p class="text-sm text-muted">Optional, but it helps us route your request to the right expert.</p>
 						</div>
@@ -212,6 +223,25 @@ const contactRows = [
 						>
 							<Icon name="check" class="mt-0.5 h-4 w-4 flex-none text-accent" />
 							<span>Thank you &mdash; your request has been received. A member of our advisory team will be in touch shortly.</span>
+						</div>
+						<div
+							role="status"
+							aria-live="polite"
+							data-form-direct
+							class="hidden items-start gap-2 rounded-lg border border-border-strong bg-primary/5 px-4 py-3 text-sm text-primary"
+						>
+							<Icon name="clipboard" class="mt-0.5 h-4 w-4 flex-none text-primary" />
+							<span>
+								Thanks for the details. Online submissions aren&rsquo;t live just yet, so please send your request
+								straight to{' '}
+								<a
+									class="font-semibold underline underline-offset-2 transition-opacity duration-200 hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+									href={`mailto:${contactEmail}`}
+								>
+									{contactEmail}
+								</a>{' '}
+								and a member of our advisory team will respond within one business day.
+							</span>
 						</div>
 						<div
 							role="alert"
@@ -253,6 +283,7 @@ const contactRows = [
 			const loadingState = form.querySelector<HTMLElement>('[data-submit-loading]');
 			const successEl = form.querySelector<HTMLElement>('[data-form-success]');
 			const errorEl = form.querySelector<HTMLElement>('[data-form-error]');
+			const directEl = form.querySelector<HTMLElement>('[data-form-direct]');
 
 			// Inline, on-brand validation for the required fields, replacing the
 			// browser's default (inconsistently styled) validation bubbles.
@@ -320,6 +351,8 @@ const contactRows = [
 				successEl?.classList.remove('flex');
 				errorEl?.classList.add('hidden');
 				errorEl?.classList.remove('flex');
+				directEl?.classList.add('hidden');
+				directEl?.classList.remove('flex');
 
 				let firstInvalid: HTMLInputElement | HTMLSelectElement | null = null;
 				for (const field of fieldConfigs) {
@@ -332,9 +365,13 @@ const contactRows = [
 					return;
 				}
 
+				// No submission endpoint is wired yet. Rather than surface a false
+				// "something went wrong" error to a user who filled the form out
+				// correctly, route them to the direct email with a calm message.
 				if (!FORM_ENDPOINT) {
-					errorEl?.classList.remove('hidden');
-					errorEl?.classList.add('flex');
+					directEl?.classList.remove('hidden');
+					directEl?.classList.add('flex');
+					directEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 					return;
 				}
 
