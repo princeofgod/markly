@@ -62,7 +62,7 @@ const seo = buildSeo({ title, description, ogImage, path: Astro.url.pathname });
 		</main>
 		<Footer />
 			<script>
-				const revealEls = document.querySelectorAll('[data-reveal]');
+				const revealEls = document.querySelectorAll('[data-reveal], [data-reveal-group]');
 				if (revealEls.length) {
 					const observer = new IntersectionObserver(
 						(entries, obs) => {

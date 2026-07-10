@@ -102,7 +102,7 @@ p {
 @keyframes rise-in {
 	from {
 		opacity: 0;
-		transform: translateY(16px);
+		transform: translateY(24px);
 	}
 	to {
 		opacity: 1;
@@ -111,24 +111,67 @@ p {
 }
 
 .animate-rise-in {
-	animation: rise-in 0.7s var(--ease-out-quint) both;
+	animation: rise-in 0.8s var(--ease-out-expo) both;
 }
 
 /* Scroll-triggered reveal (JS adds .is-visible via IntersectionObserver).
    Content is visible by default; only the JS-enabled document (html.js, set
    before paint) opts into the hidden pre-reveal state, so a no-JS or headless
-   render never ships blank. */
+   render never ships blank.
+
+   Confident slide-up + fade on an exponential ease-out, so content settles
+   into place rather than merely appearing. An optional per-element --i index
+   staggers grouped reveals; --reveal-shift overrides the travel distance. */
 .js [data-reveal] {
 	opacity: 0;
-	transform: translateY(18px);
+	transform: translateY(var(--reveal-shift, 34px));
 	transition:
-		opacity 0.6s var(--ease-out-quint),
-		transform 0.6s var(--ease-out-quint);
+		opacity 0.72s var(--ease-out-expo),
+		transform 0.72s var(--ease-out-expo);
+	transition-delay: calc(var(--i, 0) * 70ms);
+	will-change: opacity, transform;
 }
 
 .js [data-reveal].is-visible {
 	opacity: 1;
 	transform: translateY(0);
+}
+
+/* Stagger group: the container reveals on scroll, then cascades its direct
+   children in sequence. Cheaper than observing every child individually, and
+   the cascade reads as one deliberate motion. Children opt into a custom index
+   with style="--i: N"; otherwise :nth-child drives the default order. */
+.js [data-reveal-group] > * {
+	opacity: 0;
+	transform: translateY(var(--reveal-shift, 30px));
+	transition:
+		opacity 0.68s var(--ease-out-expo),
+		transform 0.68s var(--ease-out-expo);
+}
+
+.js [data-reveal-group].is-visible > * {
+	opacity: 1;
+	transform: translateY(0);
+	transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+.js [data-reveal-group].is-visible > *:nth-child(1) {
+	--i: 0;
+}
+.js [data-reveal-group].is-visible > *:nth-child(2) {
+	--i: 1;
+}
+.js [data-reveal-group].is-visible > *:nth-child(3) {
+	--i: 2;
+}
+.js [data-reveal-group].is-visible > *:nth-child(4) {
+	--i: 3;
+}
+.js [data-reveal-group].is-visible > *:nth-child(5) {
+	--i: 4;
+}
+.js [data-reveal-group].is-visible > *:nth-child(6) {
+	--i: 5;
 }
 
 /* Marquee for the industries register — duplicated track translated by half. */
@@ -160,6 +203,26 @@ p {
 	animation: aura-drift 18s var(--ease-out-expo) infinite;
 }
 
+/* Gentle vertical bob for small decorative brand shapes. Two speeds so a pair
+   of shapes drifts out of phase rather than in lockstep. */
+@keyframes float-soft {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0);
+	}
+	50% {
+		transform: translate3d(0, -14px, 0);
+	}
+}
+
+.animate-float {
+	animation: float-soft 9s var(--ease-out-expo) infinite;
+}
+
+.animate-float-slow {
+	animation: float-soft 13s var(--ease-out-expo) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	html {
 		scroll-behavior: auto;
@@ -167,12 +230,16 @@ p {
 
 	.animate-rise-in,
 	.animate-marquee,
-	.animate-aura {
+	.animate-aura,
+	.animate-float,
+	.animate-float-slow {
 		animation: none;
 	}
 
 	.js [data-reveal],
-	[data-reveal] {
+	[data-reveal],
+	.js [data-reveal-group] > *,
+	[data-reveal-group] > * {
 		opacity: 1;
 		transform: none;
 		transition: none;

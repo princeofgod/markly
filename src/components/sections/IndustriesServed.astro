@@ -15,11 +15,14 @@ import { industries } from '../../data/industries';
 					strategy to your context.
 				</p>
 			</div>
-			<div data-reveal style="transition-delay: 80ms" class="lg:col-span-8 lg:pt-2">
-				<ul class="flex flex-wrap items-center gap-x-6 gap-y-3.5">
+			<div class="lg:col-span-8 lg:pt-2">
+				<ul data-reveal-group class="flex flex-wrap items-center gap-x-6 gap-y-3.5">
 					{
-						industries.map((sector) => (
-							<li class="flex items-center gap-2.5 text-[0.95rem] font-medium leading-none text-ink/80">
+						industries.map((sector, index) => (
+							<li
+								style={`--i: ${index}`}
+								class="flex items-center gap-2.5 text-[0.95rem] font-medium leading-none text-ink/80"
+							>
 								<span class="h-1 w-1 flex-none rounded-full bg-accent" aria-hidden="true" />
 								{sector}
 							</li>
