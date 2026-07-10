@@ -1,0 +1,32 @@
+---
+import Container from '../layout/Container.astro';
+import { industries } from '../../data/industries';
+---
+
+<section class="border-t border-border-subtle bg-surface-alt py-16 md:py-20">
+	<Container>
+		<div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start lg:gap-12">
+			<div data-reveal class="flex flex-col gap-3 lg:col-span-4">
+				<h2 class="font-display text-2xl font-semibold leading-[1.15] text-primary md:text-3xl">
+					Advisory built for organizations across every sector
+				</h2>
+				<p class="max-w-[46ch] text-[0.95rem] leading-[1.6] text-muted">
+					From first-time founders to established institutions, we tailor compliance, protection, and growth
+					strategy to your context.
+				</p>
+			</div>
+			<div data-reveal style="transition-delay: 80ms" class="lg:col-span-8 lg:pt-2">
+				<ul class="flex flex-wrap items-center gap-x-6 gap-y-3.5">
+					{
+						industries.map((sector) => (
+							<li class="flex items-center gap-2.5 text-[0.95rem] font-medium leading-none text-ink/80">
+								<span class="h-1 w-1 flex-none rounded-full bg-accent" aria-hidden="true" />
+								{sector}
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+	</Container>
+</section>

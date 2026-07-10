@@ -68,7 +68,7 @@ const titleSize = isCompact
 				{
 					kicker && (
 						<span
-							class={`animate-rise-in flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] ${kickerColor}`}
+							class={`animate-rise-in flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] ${kickerColor}`}
 						>
 							<span class="h-px w-8 flex-none bg-accent" aria-hidden="true" />
 							{kicker}
@@ -114,6 +114,8 @@ const titleSize = isCompact
 							alt={image!.alt}
 							width="1200"
 							height="900"
+							fetchpriority="high"
+							decoding="async"
 							class="aspect-[4/3] w-full rounded-2xl object-cover shadow-[var(--shadow-lift)] ring-1 ring-surface/15"
 						/>
 					</div>

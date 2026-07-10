@@ -4,6 +4,12 @@ import SectionHeading from '../common/SectionHeading.astro';
 import ButtonSecondary from '../common/ButtonSecondary.astro';
 import Icon from '../icons/Icon.astro';
 import { services } from '../../data/services';
+
+// In the framed register a lone item on the final 3-col row would leave two
+// blank cells. When the count leaves exactly one orphan, render it as a
+// full-width horizontal closer so the panel's bottom edge stays flush.
+const lastIndex = services.length - 1;
+const wideCloser = services.length % 3 === 1;
 ---
 
 <section class="bg-surface-alt py-16 md:py-24">
@@ -19,36 +25,64 @@ import { services } from '../../data/services';
 			</div>
 		</div>
 
-		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		<div
+			data-reveal
+			class="grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border-subtle bg-border-subtle sm:grid-cols-2 lg:grid-cols-3"
+		>
 			{
-				services.map((service, index) => (
-					<a
-						href="/services"
-						data-reveal
-						style={`transition-delay: ${Math.min(index, 5) * 60}ms`}
-						class="group flex h-full flex-col gap-4 rounded-lg border border-border-subtle bg-surface p-6 transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-border-strong hover:shadow-[var(--shadow-card)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none motion-reduce:hover:translate-none"
-					>
-						<div class="flex items-center justify-between">
-							<span class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-md bg-primary/8 text-primary transition-colors duration-300 group-hover:bg-accent group-hover:text-primary">
-								<Icon name={service.icon} class="h-5 w-5" />
+				services.map((service, index) =>
+					index === lastIndex && wideCloser ? (
+						<a
+							href="/services"
+							class="group flex h-full flex-col gap-5 bg-surface-alt p-6 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-primary/[0.03] focus-visible:relative focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent sm:col-span-2 sm:flex-row sm:items-center sm:gap-6 md:p-7 lg:col-span-3"
+						>
+							<span class="inline-flex h-12 w-12 flex-none items-center justify-center rounded-md bg-primary/8 text-primary transition-colors duration-300 group-hover:bg-accent group-hover:text-primary">
+								<Icon name={service.icon} class="h-6 w-6" />
 							</span>
-							<span class="text-xs font-semibold uppercase tracking-[0.16em] text-faint">{service.category}</span>
-						</div>
-						<h3 class="mt-1 font-display text-xl font-semibold leading-[1.2] text-primary">{service.title}</h3>
-						{service.description && (
-							<p class="text-[0.95rem] leading-[1.55] text-muted">{service.description}</p>
-						)}
-						<span class="mt-auto inline-flex items-center gap-1.5 pt-1 text-sm font-semibold text-primary">
-							Learn more
-							<span
-								class="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 motion-reduce:transition-none"
-								aria-hidden="true"
-							>
-								&rarr;
+							<div class="flex flex-1 flex-col gap-1.5">
+								<span class="text-xs font-semibold uppercase tracking-[0.16em] text-faint">{service.category}</span>
+								<h3 class="font-display text-xl font-semibold leading-[1.2] text-primary">{service.title}</h3>
+								{service.description && (
+									<p class="max-w-2xl text-[0.95rem] leading-[1.55] text-muted">{service.description}</p>
+								)}
+							</div>
+							<span class="inline-flex flex-none items-center gap-1.5 text-sm font-semibold text-primary">
+								Learn more
+								<span
+									class="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 motion-reduce:transition-none"
+									aria-hidden="true"
+								>
+									&rarr;
+								</span>
 							</span>
-						</span>
-					</a>
-				))
+						</a>
+					) : (
+						<a
+							href="/services"
+							class="group flex h-full flex-col gap-4 bg-surface-alt p-6 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-primary/[0.03] focus-visible:relative focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent md:p-7"
+						>
+							<div class="flex items-center justify-between">
+								<span class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-md bg-primary/8 text-primary transition-colors duration-300 group-hover:bg-accent group-hover:text-primary">
+									<Icon name={service.icon} class="h-5 w-5" />
+								</span>
+								<span class="text-xs font-semibold uppercase tracking-[0.16em] text-faint">{service.category}</span>
+							</div>
+							<h3 class="mt-1 font-display text-xl font-semibold leading-[1.2] text-primary">{service.title}</h3>
+							{service.description && (
+								<p class="text-[0.95rem] leading-[1.55] text-muted">{service.description}</p>
+							)}
+							<span class="mt-auto inline-flex items-center gap-1.5 pt-1 text-sm font-semibold text-primary">
+								Learn more
+								<span
+									class="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 motion-reduce:transition-none"
+									aria-hidden="true"
+								>
+									&rarr;
+								</span>
+							</span>
+						</a>
+					),
+				)
 			}
 		</div>
 
