@@ -8,37 +8,40 @@ import { company } from '../../data/company';
 <section class="bg-surface py-16 md:py-24">
 	<Container>
 		<div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
-			<div class="flex flex-col gap-6 lg:col-span-7">
-				<SectionHeading
-					eyebrow="Who We Are"
-					title="Protecting Innovation. Ensuring Compliance. Empowering Growth."
-					align="left"
-					class="mx-0"
-				/>
-				<p class="leading-[1.5] text-muted">
-					{company.description}
-				</p>
-				<p class="leading-[1.5] text-muted">
-					We provide practical, strategic, and AI-driven solutions that enable our clients to operate confidently,
-					protect valuable assets, and scale sustainably across Africa and global markets.
-				</p>
-				<p class="font-display text-lg italic text-primary">
-					Your trusted partner in compliance, innovation, and business success.
-				</p>
-				<div class="mt-2 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-					<ButtonPrimary href="/contact">Get Started Today</ButtonPrimary>
+			<div data-reveal class="lg:col-span-5">
+				<div class="relative">
+					<div class="absolute -inset-2 -z-10 rounded-[1.75rem] bg-primary/5 blur-xl" aria-hidden="true"></div>
+					<img
+						src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
+						alt="Two advisors reviewing annotated documents beside open laptops"
+						width="1200"
+						height="1500"
+						loading="lazy"
+						class="aspect-[4/5] w-full rounded-2xl object-cover shadow-[var(--shadow-card)]"
+					/>
 				</div>
 			</div>
 
-			<div class="lg:col-span-5">
-				<img
-					src="https://images.unsplash.com/photo-1506957833838-96c1e88d394f?auto=format&fit=crop&w=1200&q=80"
-					alt="Close-up of a fountain pen marking ink onto paper"
-					width="1200"
-					height="1500"
-					loading="lazy"
-					class="aspect-[4/5] w-full rounded-2xl border border-border-subtle object-cover"
+			<div class="flex flex-col gap-6 lg:col-span-7">
+				<SectionHeading
+					kicker="Who We Are"
+					title="Protecting innovation. Ensuring compliance. Empowering growth."
+					align="left"
+					class="mx-0 max-w-none"
 				/>
+				<p class="max-w-[62ch] text-lg leading-[1.6] text-muted">
+					{company.description}
+				</p>
+				<p class="max-w-[62ch] text-lg leading-[1.6] text-muted">
+					We provide practical, strategic, and AI-driven solutions that enable our clients to operate confidently,
+					protect valuable assets, and scale sustainably across Africa and global markets.
+				</p>
+				<p class="max-w-[52ch] border-l-0 font-display text-xl font-medium leading-[1.4] text-primary">
+					Your trusted partner in compliance, innovation, and business success.
+				</p>
+				<div class="mt-2">
+					<ButtonPrimary href="/contact">Get Started Today</ButtonPrimary>
+				</div>
 			</div>
 		</div>
 	</Container>

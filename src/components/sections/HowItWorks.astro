@@ -7,29 +7,29 @@ import { howItWorks } from '../../data/howItWorks';
 
 <section class="bg-surface-alt py-16 md:py-24">
 	<Container class="flex flex-col gap-12">
-		<SectionHeading eyebrow="How It Works" title="A Smarter Way to Protect Your Brand" align="left" class="mx-0" />
+		<SectionHeading title="A smarter way to protect your brand" align="left" class="mx-0" />
 
-		<div class="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+		<ol class="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
 			{
 				howItWorks.map((step, index) => (
-					<div data-reveal style={`transition-delay: ${index * 100}ms`} class="[perspective:1000px]">
-						<div class="group flex h-full flex-col gap-5 rounded-2xl border border-border-subtle bg-surface p-8 shadow-sm transition-[transform,translate,scale,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[transform,translate,scale] hover:-translate-y-1.5 hover:-rotate-x-3 hover:scale-[1.02] hover:border-primary/25 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-none motion-reduce:hover:scale-100 motion-reduce:hover:rotate-x-0">
+					<li data-reveal style={`transition-delay: ${index * 90}ms`} class="[perspective:1200px]">
+						<div class="group relative flex h-full flex-col gap-5 rounded-xl border border-border-subtle bg-surface p-8 shadow-[var(--shadow-card)] transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform hover:-translate-y-1.5 hover:-rotate-x-3 hover:scale-[1.02] hover:border-border-strong hover:shadow-[var(--shadow-lift)] motion-reduce:transition-none motion-reduce:hover:translate-none motion-reduce:hover:scale-100 motion-reduce:hover:rotate-x-0">
 							<div class="flex items-center justify-between">
-								<span class="inline-flex h-12 w-12 flex-none items-center justify-center rounded-full border-[3px] border-double border-primary/35 bg-surface text-primary transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-110">
+								<span class="inline-flex h-12 w-12 flex-none items-center justify-center rounded-lg bg-primary/8 text-primary transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-accent group-hover:text-primary">
 									<Icon name={step.icon} class="h-5 w-5" />
 								</span>
-								<span class="font-display text-sm text-primary/40">§{String(index + 1).padStart(2, '0')}</span>
+								<span class="font-display text-4xl font-semibold leading-none text-primary/15">
+									{String(index + 1).padStart(2, '0')}
+								</span>
 							</div>
 							<div class="flex flex-col gap-2">
-								<h3 class="font-display text-xl text-primary">
-									Step {index + 1}: {step.title}
-								</h3>
-								<p class="leading-[1.5] text-muted">{step.description}</p>
+								<h3 class="font-display text-xl font-semibold text-primary">{step.title}</h3>
+								<p class="leading-[1.55] text-muted">{step.description}</p>
 							</div>
 						</div>
-					</div>
+					</li>
 				))
 			}
-		</div>
+		</ol>
 	</Container>
 </section>

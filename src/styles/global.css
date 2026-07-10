@@ -1,46 +1,108 @@
 @import 'tailwindcss';
 
 /*
-  Design tokens mapped 1:1 from SKILL.md.
-  Components must reference these semantic tokens (bg-primary, text-accent, font-display, ...)
-  rather than raw hex values or ad-hoc font stacks.
+  Markly Africa — design tokens.
+
+  Brand colors are fixed identity and carried over verbatim. Everything else
+  (type, spacing rhythm, radius, motion) is a fresh system: a confident,
+  contemporary professional-services voice. No legal-document pastiche.
+
+  Components reference the semantic tokens below (bg-primary, text-accent,
+  font-display, rounded-panel, …) rather than raw hex or ad-hoc stacks.
 */
 @theme {
-	/* Brand palette */
+	/* ---- Brand palette (fixed identity — unchanged) ---- */
 	--color-brand-purple: #2d106c;
 	--color-brand-orange: #fe5f1b;
 	--color-brand-offwhite: #faf8ff;
 
-	/* Semantic color tokens */
+	/* ---- Semantic colors ---- */
 	--color-primary: var(--color-brand-purple);
 	--color-accent: var(--color-brand-orange);
 	--color-surface: var(--color-brand-offwhite);
 	--color-surface-alt: #ffffff;
-	--color-muted: #64748b;
-	--color-border-subtle: #e2e8f0;
 
-	/* Typography */
-	--font-display: 'Playfair Display', ui-serif, serif;
-	--font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+	/* Purple ramp for layered dark surfaces and tints */
+	--color-primary-950: #1a0942;
+	--color-primary-900: #2d106c;
+	--color-primary-800: #3b1a82;
+	--color-primary-700: #4d2a98;
+
+	/* Text */
+	--color-ink: #1d0e42; /* deepest purple-black, long-form body on light */
+	--color-muted: #57607a; /* secondary text — darker than old slate for AA on off-white */
+	--color-faint: #8a90a6; /* captions/meta only */
+
+	/* Lines & fills */
+	--color-border-subtle: #e6e2f0; /* faint purple-tinted hairline */
+	--color-border-strong: #d4cee6;
+
+	/* ---- Typography ---- */
+	--font-display: 'Petrona', 'Iowan Old Style', Georgia, ui-serif, serif;
+	--font-body: 'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+	/* ---- Radius ---- */
+	--radius-sm: 0.5rem;
+	--radius-md: 0.875rem;
+	--radius-lg: 1.25rem;
+	--radius-xl: 1.75rem;
+
+	/* ---- Motion easing ---- */
+	--ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+	/* ---- Elevation (purple-tinted, restrained) ---- */
+	--shadow-card: 0 1px 2px rgba(29, 14, 66, 0.04), 0 8px 24px -18px rgba(29, 14, 66, 0.28);
+	--shadow-lift: 0 18px 48px -24px rgba(29, 14, 66, 0.4);
 }
 
 html {
 	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
 }
 
 body {
-	line-height: 1.5;
+	font-feature-settings: 'ss01', 'cv05';
+	text-rendering: optimizeLegibility;
 }
 
-/*
-  Signature-moment motion: hero entrance + the "redline" strikethrough drawing itself,
-  plus a shared scroll-reveal used sparingly (Schedule of Services rows only).
-  All disabled under prefers-reduced-motion.
-*/
-@keyframes fade-in-up {
+/* Display type wants tighter tracking + balanced wrapping */
+.font-display {
+	letter-spacing: -0.018em;
+}
+
+h1,
+h2,
+h3 {
+	text-wrap: balance;
+}
+
+p {
+	text-wrap: pretty;
+}
+
+::selection {
+	background: var(--color-accent);
+	color: #fff;
+}
+
+/* Consistent, on-brand focus ring for keyboard users */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Motion                                                             */
+/*  A single, well-behaved reveal grammar + a couple of entrance       */
+/*  gestures. Everything degrades to a static end-state under          */
+/*  prefers-reduced-motion.                                            */
+/* ------------------------------------------------------------------ */
+
+@keyframes rise-in {
 	from {
 		opacity: 0;
-		transform: translateY(12px);
+		transform: translateY(16px);
 	}
 	to {
 		opacity: 1;
@@ -48,59 +110,29 @@ body {
 	}
 }
 
-@keyframes seal-in {
-	from {
-		opacity: 0;
-		transform: rotate(-8deg) scale(0.85);
-	}
-	to {
-		opacity: 1;
-		transform: rotate(-6deg) scale(1);
-	}
+.animate-rise-in {
+	animation: rise-in 0.7s var(--ease-out-quint) both;
 }
 
-.motion-safe-fade-in-up {
-	animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.motion-safe-seal-in {
-	animation: seal-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-[data-reveal] {
+/* Scroll-triggered reveal (JS adds .is-visible via IntersectionObserver).
+   Content is visible by default; only the JS-enabled document (html.js, set
+   before paint) opts into the hidden pre-reveal state, so a no-JS or headless
+   render never ships blank. */
+.js [data-reveal] {
 	opacity: 0;
-	transform: translateY(16px);
+	transform: translateY(18px);
 	transition:
-		opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-		transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+		opacity 0.6s var(--ease-out-quint),
+		transform 0.6s var(--ease-out-quint);
 }
 
-[data-reveal].is-visible {
+.js [data-reveal].is-visible {
 	opacity: 1;
 	transform: translateY(0);
 }
 
-/* Seal variant: reuses the [data-reveal] observer, but stamps in with the
-   same rotate + scale gesture as the hero's motion-safe-seal-in, so the
-   "reviewed" mark reads consistently wherever it appears on scroll. */
-[data-reveal='seal'] {
-	opacity: 0;
-	transform: rotate(-8deg) scale(0.85);
-	transition:
-		opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-		transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-[data-reveal='seal'].is-visible {
-	opacity: 1;
-	transform: rotate(-6deg) scale(1);
-}
-
-/* Ledger scroll: a slow, steady horizontal register for content framed as an
-   ongoing list (e.g. industries served) rather than a fixed schedule. The
-   track is duplicated in markup and translated by exactly half its width for
-   a seamless loop; pauses on hover so it can still be read. */
-@keyframes ledger-scroll {
+/* Marquee for the industries register — duplicated track translated by half. */
+@keyframes marquee-scroll {
 	from {
 		transform: translateX(0);
 	}
@@ -109,23 +141,40 @@ body {
 	}
 }
 
-.animate-ledger-scroll {
-	animation: ledger-scroll 36s linear infinite;
+.animate-marquee {
+	animation: marquee-scroll 42s linear infinite;
+}
+
+/* Slow, ambient drift for decorative hero aura */
+@keyframes aura-drift {
+	0%,
+	100% {
+		transform: translate3d(0, 0, 0) scale(1);
+	}
+	50% {
+		transform: translate3d(2%, -3%, 0) scale(1.06);
+	}
+}
+
+.animate-aura {
+	animation: aura-drift 18s var(--ease-out-expo) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.motion-safe-fade-in-up,
-	.motion-safe-seal-in {
+	html {
+		scroll-behavior: auto;
+	}
+
+	.animate-rise-in,
+	.animate-marquee,
+	.animate-aura {
 		animation: none;
 	}
 
+	.js [data-reveal],
 	[data-reveal] {
 		opacity: 1;
 		transform: none;
 		transition: none;
-	}
-
-	.animate-ledger-scroll {
-		animation: none;
 	}
 }

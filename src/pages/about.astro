@@ -4,9 +4,8 @@ import Container from '../components/layout/Container.astro';
 import Hero from '../components/sections/Hero.astro';
 import SectionHeading from '../components/common/SectionHeading.astro';
 import ButtonPrimary from '../components/common/ButtonPrimary.astro';
-import Card from '../components/common/Card.astro';
-import CTASection from '../components/sections/CTASection.astro';
 import Icon from '../components/icons/Icon.astro';
+import CTASection from '../components/sections/CTASection.astro';
 import { values } from '../data/values';
 
 // The brief's "Industries We Serve" is a set of business sectors, distinct in
@@ -23,6 +22,7 @@ const industriesServed = [
 	'Financial Services',
 	'Agriculture',
 ];
+const marqueeItems = [...industriesServed, ...industriesServed];
 ---
 
 <MainLayout
@@ -31,62 +31,66 @@ const industriesServed = [
 >
 	<Hero
 		variant="compact"
-		tone="light"
-		title="Transforming Compliance and Brand Protection Through Technology"
+		tone="dark"
+		kicker="About Markly"
+		title="Transforming compliance and brand protection through technology"
 		subtitle="Markly Africa is a multidisciplinary advisory and professional services firm helping businesses navigate data protection, compliance, intellectual property, and growth — powered by AI, reviewed by human experts."
 		primaryCta={{ label: 'Book a Consultation', href: '/contact' }}
 	/>
 
-	<section class="bg-surface pb-16 md:pb-24">
+	<section class="bg-surface py-16 md:py-24">
 		<Container>
-			<div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
+			<div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
 				<div data-reveal class="flex flex-col gap-6 lg:col-span-7">
-					<SectionHeading eyebrow="Who We Are" title="A Multidisciplinary Advisory Practice" align="left" class="mx-0" />
-					<p class="leading-[1.5] text-muted">
+					<SectionHeading title="A multidisciplinary advisory practice" align="left" class="mx-0 max-w-none" />
+					<p class="max-w-[65ch] text-lg leading-[1.6] text-muted">
 						Markly Africa is a multidisciplinary advisory and professional services firm leveraging technology to
 						provide comprehensive solutions in data protection, compliance, intellectual property, corporate
 						advisory, startup development, and corporate training.
 					</p>
-					<p class="leading-[1.5] text-muted">
+					<p class="max-w-[65ch] text-lg leading-[1.6] text-muted">
 						Our platform combines the power of artificial intelligence with professional expertise, business
 						strategy, and industry experience to simplify complex compliance and deliver solutions tailored to the
 						unique needs of businesses operating in Africa and international markets.
 					</p>
-					<p class="leading-[1.5] text-muted">
+					<p class="max-w-[65ch] text-lg leading-[1.6] text-muted">
 						By automating routine tasks, identifying potential risks, and delivering data-driven insights, we
 						enable businesses to make informed decisions, protect valuable assets, and stay ahead of evolving
 						regulatory requirements with confidence.
 					</p>
-					<p class="font-display text-lg italic leading-[1.5] text-primary">
+					<p class="max-w-[58ch] font-display text-xl font-medium leading-[1.4] text-primary">
 						We serve startups, SMEs, corporations, NGOs, government institutions, innovators, creators, and
 						investors seeking reliable support in managing risks, protecting assets, and achieving sustainable
 						growth.
 					</p>
-					<div class="mt-2 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+					<div class="mt-2">
 						<ButtonPrimary href="/contact">Talk to Our Team</ButtonPrimary>
 					</div>
 				</div>
 
 				<div data-reveal style="transition-delay: 100ms" class="lg:col-span-5">
-					<img
-						src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
-						alt="Advisors reviewing annotated documents and notes alongside open laptops"
-						width="1200"
-						height="1500"
-						loading="lazy"
-						class="aspect-[4/5] w-full rounded-2xl border border-border-subtle object-cover"
-					/>
+					<div class="relative">
+						<div class="absolute -inset-2 -z-10 rounded-[1.75rem] bg-primary/5 blur-xl" aria-hidden="true"></div>
+						<img
+							src="https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=1200&q=80"
+							alt="A multidisciplinary team collaborating around a table with laptops"
+							width="1200"
+							height="1500"
+							loading="lazy"
+							class="aspect-[4/5] w-full rounded-2xl object-cover shadow-[var(--shadow-card)]"
+						/>
+					</div>
 				</div>
 			</div>
 		</Container>
 	</section>
 
-	<section class="bg-primary py-16 md:py-24">
+	<section class="bg-primary-950 py-16 text-surface md:py-24">
 		<Container>
 			<div class="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
 				<div data-reveal class="flex flex-col gap-4">
-					<span class="text-sm font-semibold uppercase tracking-wide text-surface/60">Our Vision</span>
-					<p class="font-display text-2xl italic leading-[1.5] text-surface md:text-3xl">
+					<span class="text-xs font-semibold uppercase tracking-[0.22em] text-surface/60">Our Vision</span>
+					<p class="font-display text-2xl font-medium leading-[1.3] text-surface md:text-3xl">
 						To become Africa&rsquo;s most trusted partner for accessible, affordable, and efficient compliance,
 						intellectual property protection, and business advisory services for businesses worldwide.
 					</p>
@@ -96,8 +100,8 @@ const industriesServed = [
 					style="transition-delay: 120ms"
 					class="flex flex-col gap-4 border-t border-surface/15 pt-12 md:border-l md:border-t-0 md:pl-16 md:pt-0"
 				>
-					<span class="text-sm font-semibold uppercase tracking-wide text-surface/60">Our Mission</span>
-					<p class="font-display text-2xl italic leading-[1.5] text-surface md:text-3xl">
+					<span class="text-xs font-semibold uppercase tracking-[0.22em] text-surface/60">Our Mission</span>
+					<p class="font-display text-2xl font-medium leading-[1.3] text-surface md:text-3xl">
 						To become the leading AI-powered compliance platform across Africa and beyond, empowering
 						organizations through expert advisory, innovative solutions, and practical compliance strategies that
 						drive growth and protect value.
@@ -108,30 +112,23 @@ const industriesServed = [
 	</section>
 
 	<section class="bg-surface py-16 md:py-24">
-		<Container class="flex flex-col gap-10">
+		<Container class="flex flex-col gap-12">
 			<SectionHeading
-				title="Our Core Values"
+				title="Our core values"
 				subtitle="We provide proactive, business-focused solutions that align with your strategic objectives."
 				align="left"
 				class="mx-0"
 			/>
 
-			<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			<div class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
 				{
 					values.map((value, index) => (
-						<div data-reveal style={`transition-delay: ${index * 60}ms`} class="h-full">
-							<Card class="flex h-full flex-col gap-5">
-								<div class="flex items-center justify-between">
-									<span class="inline-flex h-12 w-12 flex-none items-center justify-center rounded-full border-[3px] border-double border-primary/35 bg-surface text-primary">
-										<Icon name={value.icon} class="h-5 w-5" />
-									</span>
-									<span class="font-display text-sm text-primary/40">§{String(index + 1).padStart(2, '0')}</span>
-								</div>
-								<div class="flex flex-col gap-2">
-									<h3 class="font-display text-xl text-primary">{value.title}</h3>
-									<p class="leading-[1.5] text-muted">{value.description}</p>
-								</div>
-							</Card>
+						<div data-reveal style={`transition-delay: ${index * 60}ms`} class="flex flex-col gap-3">
+							<span class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-md bg-primary/8 text-primary">
+								<Icon name={value.icon} class="h-5 w-5" />
+							</span>
+							<h3 class="font-display text-lg font-semibold text-primary">{value.title}</h3>
+							<p class="text-[0.95rem] leading-[1.55] text-muted">{value.description}</p>
 						</div>
 					))
 				}
@@ -141,41 +138,31 @@ const industriesServed = [
 
 	<section class="bg-surface-alt py-16 md:py-24">
 		<Container class="flex flex-col gap-10">
-			<SectionHeading title="Industries We Serve" align="left" class="mx-0" />
+			<SectionHeading title="Industries we serve" align="left" class="mx-0" />
 			<div
 				class="group relative -mx-4 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_2rem,black_calc(100%-2rem),transparent)] sm:-mx-6 sm:px-6 md:-mx-8 md:px-8 motion-reduce:overflow-visible motion-reduce:[mask-image:none]"
 				data-reveal
 			>
-				<div class="flex w-max animate-ledger-scroll group-hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:animate-none">
-					<ul class="flex flex-none motion-reduce:flex-wrap motion-reduce:gap-3" aria-label="Industries we serve">
-						{
-							industriesServed.map((industry) => (
-								<li class="mr-3 flex-none motion-reduce:mr-0">
-									<span class="inline-flex items-center whitespace-nowrap rounded-full border border-border-subtle bg-surface px-4 py-2 text-sm font-medium text-primary">
-										{industry}
-									</span>
-								</li>
-							))
-						}
-					</ul>
-					<ul class="flex flex-none motion-reduce:hidden" aria-hidden="true">
-						{
-							industriesServed.map((industry) => (
-								<li class="mr-3 flex-none">
-									<span class="inline-flex items-center whitespace-nowrap rounded-full border border-border-subtle bg-surface px-4 py-2 text-sm font-medium text-primary">
-										{industry}
-									</span>
-								</li>
-							))
-						}
-					</ul>
-				</div>
+				<ul
+					class="flex w-max animate-marquee gap-3 group-hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:animate-none"
+					aria-label="Industries we serve"
+				>
+					{
+						marqueeItems.map((industry, index) => (
+							<li class="flex-none" aria-hidden={index >= industriesServed.length ? 'true' : undefined}>
+								<span class="inline-flex items-center whitespace-nowrap rounded-full border border-border-subtle bg-surface px-5 py-2.5 text-sm font-medium text-primary">
+									{industry}
+								</span>
+							</li>
+						))
+					}
+				</ul>
 			</div>
 		</Container>
 	</section>
 
 	<CTASection
-		title="Ready to Build with Confidence?"
+		title="Ready to build with confidence?"
 		subtitle="Talk to our advisory team about compliance, intellectual property, and growth strategy tailored to your business."
 		ctaLabel="Book a Consultation"
 		ctaHref="/contact"

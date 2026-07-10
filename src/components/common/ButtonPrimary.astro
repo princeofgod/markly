@@ -9,12 +9,16 @@ interface Props {
 
 const { href, type = 'button', class: className = '' } = Astro.props;
 
+// Orange fill carries deep-purple text (4.75:1, AA) — never white-on-orange (fails).
+// Hover inverts to the purple register with off-white text (15:1).
 const classes = cn(
-	'inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3',
-	'text-base font-semibold text-primary',
-	'transition-all duration-300 ease-in-out hover:bg-primary hover:text-surface-alt active:scale-[0.98]',
-	'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+	'group/btn inline-flex items-center justify-center gap-2 rounded-md bg-accent px-6 py-3',
+	'text-[0.95rem] font-semibold text-primary shadow-[0_10px_30px_-12px_rgba(254,95,27,0.7)]',
+	'transition-[background-color,color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
+	'hover:-translate-y-0.5 hover:bg-primary hover:text-surface hover:shadow-[0_16px_36px_-16px_rgba(45,16,108,0.65)]',
+	'active:translate-y-0 active:scale-[0.98]',
 	'disabled:pointer-events-none disabled:opacity-50 disabled:active:scale-100',
+	'motion-reduce:transition-none motion-reduce:hover:translate-none',
 	className,
 );
 ---

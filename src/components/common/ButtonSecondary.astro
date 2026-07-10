@@ -12,18 +12,15 @@ const { href, type = 'button', variant = 'default', class: className = '' } = As
 
 const variantClasses =
 	variant === 'inverted'
-		? cn(
-				'border-surface text-surface',
-				'hover:bg-surface hover:text-primary',
-				'focus-visible:outline-surface',
-			)
-		: cn('border-primary text-primary', 'hover:bg-primary hover:text-surface', 'focus-visible:outline-primary');
+		? cn('border-surface/35 text-surface hover:border-surface hover:bg-surface hover:text-primary')
+		: cn('border-primary/25 text-primary hover:border-primary hover:bg-primary hover:text-surface');
 
 const classes = cn(
-	'inline-flex items-center justify-center gap-2 rounded-full border-2 px-6 py-3',
-	'text-base font-semibold',
-	'transition-all duration-300 ease-in-out active:scale-[0.98]',
-	'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+	'inline-flex items-center justify-center gap-2 rounded-md border px-6 py-3',
+	'text-[0.95rem] font-semibold',
+	'transition-[background-color,color,border-color,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
+	'hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]',
+	'motion-reduce:transition-none motion-reduce:hover:translate-none',
 	variantClasses,
 	className,
 );

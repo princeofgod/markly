@@ -1,57 +1,66 @@
 ---
 import Container from '../layout/Container.astro';
 import ButtonPrimary from '../common/ButtonPrimary.astro';
-import ReviewedSeal from '../common/ReviewedSeal.astro';
+import ButtonSecondary from '../common/ButtonSecondary.astro';
 
 interface Props {
 	title: string;
 	subtitle?: string;
 	ctaLabel: string;
 	ctaHref: string;
-	tone?: 'dark' | 'light';
 	image?: { src: string; alt: string };
 }
 
-const { title, subtitle, ctaLabel, ctaHref, tone = 'light', image } = Astro.props;
-const isDark = tone === 'dark';
-const sectionBg = isDark ? 'bg-primary' : 'bg-surface';
-const titleColor = isDark ? 'text-surface' : 'text-primary';
-const subtitleColor = isDark ? 'text-surface/70' : 'text-muted';
-const sealTone = isDark ? 'inverted' : 'default';
+const { title, subtitle, ctaLabel, ctaHref, image } = Astro.props;
 ---
 
-<section class={`${sectionBg} py-16 md:py-24`}>
+<section class="bg-surface py-16 md:py-24">
 	<Container>
-		<div class:list={['flex flex-col gap-12', image && 'lg:grid lg:grid-cols-12 lg:items-center lg:gap-16']}>
+		<div
+			class="relative overflow-hidden rounded-2xl bg-primary-950 px-6 py-14 text-surface sm:px-10 md:px-14 md:py-20"
+		>
+			<div
+				class="animate-aura pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-accent/25 blur-[110px] motion-reduce:animate-none"
+				aria-hidden="true"
+			>
+			</div>
+			<div
+				class="pointer-events-none absolute -bottom-28 -left-20 h-72 w-72 rounded-full bg-primary-700/50 blur-[120px]"
+				aria-hidden="true"
+			>
+			</div>
+
 			<div
 				class:list={[
-					'flex flex-col gap-6',
-					image ? 'items-start text-left lg:order-2 lg:col-span-7' : 'items-center text-center',
+					'relative flex flex-col gap-8',
+					image && 'lg:grid lg:grid-cols-12 lg:items-center lg:gap-14',
 				]}
 			>
-				<h2 class={`font-display text-3xl leading-[1.5] md:text-4xl ${image ? 'max-w-xl' : 'max-w-2xl'} ${titleColor}`}>
-					{title}
-				</h2>
-				{subtitle && <p class={`max-w-[65ch] leading-[1.5] ${subtitleColor}`}>{subtitle}</p>}
-				<ButtonPrimary href={ctaHref}>{ctaLabel}</ButtonPrimary>
-				<span data-reveal="seal" class="inline-block">
-					<ReviewedSeal tone={sealTone} label="Reviewed by a human expert" class="max-w-full" />
-				</span>
-			</div>
-			{
-				image && (
-					<div class="lg:order-1 lg:col-span-5">
-						<img
-							src={image.src}
-							alt={image.alt}
-							width="1200"
-							height="1500"
-							loading="lazy"
-							class="aspect-[4/5] w-full rounded-2xl border border-border-subtle object-cover"
-						/>
+				<div class:list={['flex flex-col gap-6', image ? 'lg:col-span-7' : 'max-w-2xl']}>
+					<h2 class="font-display text-3xl font-semibold leading-[1.12] md:text-[2.6rem]">
+						{title}
+					</h2>
+					{subtitle && <p class="max-w-[58ch] text-lg leading-[1.6] text-surface/75">{subtitle}</p>}
+					<div class="mt-2 flex flex-col gap-4 sm:flex-row sm:items-center">
+						<ButtonPrimary href={ctaHref}>{ctaLabel}</ButtonPrimary>
+						<ButtonSecondary href="/services" variant="inverted">Explore Services</ButtonSecondary>
 					</div>
-				)
-			}
+				</div>
+				{
+					image && (
+						<div class="lg:col-span-5">
+							<img
+								src={image.src}
+								alt={image.alt}
+								width="1200"
+								height="900"
+								loading="lazy"
+								class="aspect-[4/3] w-full rounded-xl object-cover ring-1 ring-surface/15"
+							/>
+						</div>
+					)
+				}
+			</div>
 		</div>
 	</Container>
 </section>

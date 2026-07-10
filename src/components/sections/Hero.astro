@@ -9,64 +9,83 @@ interface CtaLink {
 }
 
 interface Props {
-	eyebrow?: string;
+	kicker?: string;
 	title?: string;
 	subtitle?: string;
 	primaryCta?: CtaLink;
 	secondaryCta?: CtaLink;
 	variant?: 'default' | 'compact';
 	tone?: 'dark' | 'light';
+	image?: { src: string; alt: string };
 }
 
-const {
-	eyebrow,
-	title,
-	subtitle,
-	primaryCta,
-	secondaryCta,
-	variant = 'default',
-	tone = 'dark',
-} = Astro.props;
+const { kicker, title, subtitle, primaryCta, secondaryCta, variant = 'default', tone = 'dark', image } = Astro.props;
 
-const paddingClass = variant === 'compact' ? 'pt-10 pb-16 md:pt-12 md:pb-20' : 'pt-10 pb-20 md:pt-14 md:pb-32';
 const isDark = tone === 'dark';
-const sectionBg = isDark ? 'bg-primary' : 'bg-surface';
+const isCompact = variant === 'compact';
+const hasImage = Boolean(image);
+const hasTitleSlot = Astro.slots.has('title');
+
+const sectionBg = isDark ? 'bg-primary-950' : 'bg-surface';
 const titleColor = isDark ? 'text-surface' : 'text-primary';
 const subtitleColor = isDark ? 'text-surface/70' : 'text-muted';
-const eyebrowColor = isDark ? 'text-surface' : 'text-primary';
-const hasSignature = Astro.slots.has('signature');
-const hasTitleSlot = Astro.slots.has('title');
+const kickerColor = isDark ? 'text-surface/70' : 'text-primary/60';
+
+const paddingClass = isCompact ? 'pt-16 pb-14 md:pt-20 md:pb-16' : 'pt-16 pb-20 md:pt-24 md:pb-28';
+
+// A photography-led split layout when an image is supplied; otherwise a
+// centered (compact interior) or left-aligned single column.
+const gridClass = hasImage
+	? 'grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16'
+	: isCompact
+		? 'flex max-w-3xl flex-col items-start gap-6'
+		: 'flex max-w-3xl flex-col items-start gap-6';
+
+const titleSize = isCompact
+	? 'text-[2.25rem] leading-[1.08] sm:text-5xl'
+	: 'text-[2.6rem] leading-[1.05] sm:text-5xl md:text-6xl';
 ---
 
-<section class={`${sectionBg} ${paddingClass}`}>
-	<Container>
-		<div
-			class={hasSignature
-				? 'grid grid-cols-1 items-center gap-16 text-center lg:grid-cols-12 lg:gap-12 lg:text-left'
-				: 'flex flex-col items-center gap-8 text-center'}
-		>
-			<div class={hasSignature ? 'flex flex-col items-center gap-8 lg:col-span-7 lg:items-start' : 'contents'}>
+<section class={`relative overflow-hidden ${sectionBg} ${paddingClass}`}>
+	{
+		isDark && (
+			<>
+				<div
+					class="animate-aura pointer-events-none absolute -right-[10%] -top-[30%] h-[36rem] w-[36rem] rounded-full bg-accent/25 blur-[120px] motion-reduce:animate-none"
+					aria-hidden="true"
+				/>
+				<div
+					class="pointer-events-none absolute -bottom-[35%] -left-[12%] h-[32rem] w-[32rem] rounded-full bg-primary-700/45 blur-[130px]"
+					aria-hidden="true"
+				/>
+			</>
+		)
+	}
+
+	<Container class="relative">
+		<div class={gridClass}>
+			<div class={hasImage ? 'flex flex-col items-start gap-6 lg:col-span-6' : 'contents'}>
 				{
-					eyebrow && (
+					kicker && (
 						<span
-							class={`motion-safe-fade-in-up flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide lg:justify-start ${eyebrowColor}`}
+							class={`animate-rise-in flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] ${kickerColor}`}
 						>
-							<span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-							{eyebrow}
+							<span class="h-px w-8 flex-none bg-accent" aria-hidden="true" />
+							{kicker}
 						</span>
 					)
 				}
 				<h1
-					class={`motion-safe-fade-in-up max-w-4xl font-display text-4xl leading-[1.5] md:text-6xl ${titleColor}`}
-					style="animation-delay: 90ms"
+					class={`animate-rise-in font-display font-semibold tracking-[-0.02em] ${titleSize} ${titleColor}`}
+					style="animation-delay: 80ms"
 				>
 					{hasTitleSlot ? <slot name="title" /> : title}
 				</h1>
 				{
 					subtitle && (
 						<p
-							class={`motion-safe-fade-in-up max-w-[65ch] text-lg leading-[1.5] md:text-xl ${subtitleColor}`}
-							style="animation-delay: 180ms"
+							class={`animate-rise-in max-w-[60ch] text-lg leading-[1.6] md:text-xl ${subtitleColor}`}
+							style="animation-delay: 160ms"
 						>
 							{subtitle}
 						</p>
@@ -74,10 +93,7 @@ const hasTitleSlot = Astro.slots.has('title');
 				}
 				{
 					(primaryCta || secondaryCta) && (
-						<div
-							class="motion-safe-fade-in-up mt-4 flex flex-col items-center gap-4 sm:flex-row lg:items-start"
-							style="animation-delay: 270ms"
-						>
+						<div class="animate-rise-in mt-2 flex flex-col gap-4 sm:flex-row sm:items-center" style="animation-delay: 240ms">
 							{primaryCta && <ButtonPrimary href={primaryCta.href}>{primaryCta.label}</ButtonPrimary>}
 							{secondaryCta && (
 								<ButtonSecondary href={secondaryCta.href} variant={isDark ? 'inverted' : 'default'}>
@@ -88,10 +104,18 @@ const hasTitleSlot = Astro.slots.has('title');
 					)
 				}
 			</div>
+
 			{
-				hasSignature && (
-					<div class="motion-safe-fade-in-up lg:col-span-5" style="animation-delay: 360ms">
-						<slot name="signature" />
+				hasImage && (
+					<div class="animate-rise-in relative lg:col-span-6" style="animation-delay: 200ms">
+						<div class="absolute -inset-3 -z-10 rounded-[2rem] bg-accent/20 blur-2xl" aria-hidden="true" />
+						<img
+							src={image!.src}
+							alt={image!.alt}
+							width="1200"
+							height="900"
+							class="aspect-[4/3] w-full rounded-2xl object-cover shadow-[var(--shadow-lift)] ring-1 ring-surface/15"
+						/>
 					</div>
 				)
 			}

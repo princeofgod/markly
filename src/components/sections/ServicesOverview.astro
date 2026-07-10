@@ -2,41 +2,57 @@
 import Container from '../layout/Container.astro';
 import SectionHeading from '../common/SectionHeading.astro';
 import ButtonSecondary from '../common/ButtonSecondary.astro';
+import Icon from '../icons/Icon.astro';
 import { services } from '../../data/services';
 ---
 
 <section class="bg-surface-alt py-16 md:py-24">
 	<Container class="flex flex-col gap-12">
-		<SectionHeading
-			eyebrow="What We Do"
-			title="Services Built for Compliance, Protection, and Growth"
-			subtitle="A full-service advisory practice covering the legal, regulatory, and strategic needs of modern businesses."
-		/>
+		<div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+			<SectionHeading
+				title="Services built for compliance, protection, and growth"
+				subtitle="A full-service advisory practice covering the legal, regulatory, and strategic needs of modern businesses."
+				class="mx-0"
+			/>
+			<div class="hidden flex-none md:block">
+				<ButtonSecondary href="/services">Explore All Services</ButtonSecondary>
+			</div>
+		</div>
 
-		<div class="mx-auto flex w-full max-w-3xl flex-col border-t border-border-subtle">
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 			{
 				services.map((service, index) => (
-					<div
+					<a
+						href="/services"
 						data-reveal
-						style={`transition-delay: ${Math.min(index, 4) * 80}ms`}
-						class="flex items-center justify-between gap-4 border-b border-border-subtle py-6"
+						style={`transition-delay: ${Math.min(index, 5) * 60}ms`}
+						class="group flex h-full flex-col gap-4 rounded-lg border border-border-subtle bg-surface p-6 transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-border-strong hover:shadow-[var(--shadow-card)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none motion-reduce:hover:translate-none"
 					>
-						<div class="flex min-w-0 flex-1 items-center gap-x-4 sm:gap-x-6">
-							<span class="relative inline-flex h-8 w-8 flex-none items-center justify-center rounded-full border border-primary/20 bg-surface font-display text-sm text-primary sm:h-10 sm:w-10 sm:text-base">
-								{String(index + 1).padStart(2, '0')}
-								<span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-accent ring-2 ring-surface" aria-hidden="true" />
+						<div class="flex items-center justify-between">
+							<span class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-md bg-primary/8 text-primary transition-colors duration-300 group-hover:bg-accent group-hover:text-primary">
+								<Icon name={service.icon} class="h-5 w-5" />
 							</span>
-							<h3 class="font-display text-xl text-primary">{service.title}</h3>
+							<span class="text-xs font-semibold uppercase tracking-[0.16em] text-faint">{service.category}</span>
 						</div>
-						<span class="hidden flex-none text-sm font-semibold uppercase tracking-wide text-muted sm:inline-block">
-							{service.category}
+						<h3 class="mt-1 font-display text-xl font-semibold leading-[1.2] text-primary">{service.title}</h3>
+						{service.description && (
+							<p class="text-[0.95rem] leading-[1.55] text-muted">{service.description}</p>
+						)}
+						<span class="mt-auto inline-flex items-center gap-1.5 pt-1 text-sm font-semibold text-primary">
+							Learn more
+							<span
+								class="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 motion-reduce:transition-none"
+								aria-hidden="true"
+							>
+								&rarr;
+							</span>
 						</span>
-					</div>
+					</a>
 				))
 			}
 		</div>
 
-		<div class="flex justify-center">
+		<div class="flex justify-center md:hidden">
 			<ButtonSecondary href="/services">Explore All Services</ButtonSecondary>
 		</div>
 	</Container>

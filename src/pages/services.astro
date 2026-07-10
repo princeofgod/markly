@@ -8,17 +8,20 @@ import SectionHeading from '../components/common/SectionHeading.astro';
 import Icon from '../components/icons/Icon.astro';
 import { services } from '../data/services';
 import { industries } from '../data/industries';
+
+const marqueeItems = [...industries, ...industries];
 ---
 
 <MainLayout
 	title="Services"
-	description="Data protection compliance, startup and business advisory, brand enforcement, global trademark registration, intellectual property, training, and continuous compliance monitoring — every engagement drafted with AI and countersigned by a human expert."
+	description="Data protection compliance, startup and business advisory, brand enforcement, global trademark registration, intellectual property, training, and continuous compliance monitoring — AI-driven and supervised by human experts."
 >
 	<Hero
 		variant="compact"
-		tone="light"
+		tone="dark"
+		kicker="What we do"
 		title="A full-service advisory practice, built for compliance, protection, and growth."
-		subtitle="From data protection to trademarks to startup advisory, every engagement is drafted with AI and countersigned by a licensed professional before it reaches you."
+		subtitle="From data protection to trademarks to startup advisory, every engagement is drafted with AI and reviewed by a qualified professional before it reaches you."
 		primaryCta={{ label: 'Book a Consultation', href: '/contact' }}
 	/>
 
@@ -26,20 +29,19 @@ import { industries } from '../data/industries';
 
 	<section class="bg-surface py-16 md:py-24">
 		<Container class="flex flex-col gap-10">
-			<h2 class="font-display text-xl text-primary sm:text-2xl">Schedule of Services</h2>
+			<SectionHeading title="Everything we do, in one place" align="left" class="mx-0" />
 
 			<nav
 				aria-label="Jump to a service"
-				class="sticky top-20 z-30 -mx-4 flex gap-2 overflow-x-auto border-y border-border-subtle bg-surface/95 px-4 py-3 backdrop-blur-sm sm:mx-0 sm:flex-wrap sm:overflow-visible sm:rounded-full sm:px-3"
+				class="sticky top-20 z-30 -mx-4 flex gap-2 overflow-x-auto border-y border-border-subtle bg-surface/95 px-4 py-3 backdrop-blur-sm sm:mx-0 sm:flex-wrap sm:overflow-visible sm:rounded-full sm:border sm:px-3"
 			>
 				{
-					services.map((service, index) => (
+					services.map((service) => (
 						<a
 							href={`#${service.slug}`}
 							data-jump-link={service.slug}
-							class="inline-flex flex-none items-center gap-1.5 rounded-full border border-border-subtle px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-muted transition-colors duration-200 hover:border-primary/40 hover:text-primary aria-[current=true]:border-primary/40 aria-[current=true]:text-primary"
+							class="inline-flex flex-none items-center rounded-full border border-border-subtle px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-muted transition-colors duration-200 hover:border-primary/40 hover:text-primary aria-[current=true]:border-transparent aria-[current=true]:bg-primary aria-[current=true]:text-surface"
 						>
-							<span class="font-display text-sm text-primary">§{String(index + 1).padStart(2, '0')}</span>
 							{service.category}
 						</a>
 					))
@@ -55,29 +57,23 @@ import { industries } from '../data/industries';
 								id={service.slug}
 								data-reveal
 								style={`transition-delay: ${Math.min(index, 4) * 80}ms`}
-								class="flex scroll-mt-40 flex-col gap-6 border-b border-border-subtle py-10 md:flex-row md:gap-10 md:py-12"
+								class="flex scroll-mt-40 flex-col gap-6 border-b border-border-subtle py-10 md:flex-row md:gap-12 md:py-12"
 							>
-								<div class="flex flex-none items-start gap-4 md:w-64">
-									<span
-										data-reveal="seal"
-										style={`transition-delay: ${Math.min(index, 4) * 80 + 200}ms`}
-										class="relative inline-flex h-11 w-11 flex-none items-center justify-center rounded-full border-[3px] border-double border-primary/35 bg-surface text-primary"
-									>
-										<Icon name={service.icon} class="h-4.5 w-4.5" />
-										<span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-accent ring-2 ring-surface" aria-hidden="true" />
+								<div class="flex flex-none items-start gap-4 md:w-72">
+									<span class="inline-flex h-12 w-12 flex-none items-center justify-center rounded-lg bg-primary/8 text-primary">
+										<Icon name={service.icon} class="h-5 w-5" />
 									</span>
-									<div class="flex flex-col gap-1">
-										<span class="flex items-baseline gap-1.5">
-											<span class="font-display text-sm text-primary/70">§{String(index + 1).padStart(2, '0')}</span>
-											<span class="text-sm font-semibold uppercase tracking-wide text-muted">{service.category}</span>
-										</span>
-										<h3 class="font-display text-2xl text-primary md:text-3xl">{service.title}</h3>
+									<div class="flex flex-col gap-1.5">
+										<span class="text-xs font-semibold uppercase tracking-[0.16em] text-faint">{service.category}</span>
+										<h3 class="font-display text-2xl font-semibold leading-[1.15] text-primary md:text-[1.75rem]">
+											{service.title}
+										</h3>
 									</div>
 								</div>
 
 								<div class="flex flex-1 flex-col gap-6">
 									{service.description && (
-										<p class="max-w-[65ch] leading-[1.5] text-muted">{service.description}</p>
+										<p class="max-w-[65ch] text-lg leading-[1.6] text-muted">{service.description}</p>
 									)}
 
 									{service.groups?.map((group, groupIndex) => {
@@ -89,11 +85,11 @@ import { industries } from '../data/industries';
 										return (
 											<div class="flex flex-col gap-3">
 												{group.label && (
-													<span class="text-sm font-semibold uppercase tracking-wide text-primary">{group.label}</span>
+													<span class="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{group.label}</span>
 												)}
-												<ul class="grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+												<ul class="grid grid-cols-1 gap-x-8 gap-y-2.5 sm:grid-cols-2">
 													{visibleItems.map((item) => (
-														<li class="flex items-start gap-2 leading-[1.5] text-primary">
+														<li class="flex items-start gap-2.5 leading-[1.5] text-ink">
 															<Icon name="check" class="mt-1 h-4 w-4 flex-none text-accent" />
 															<span>{item}</span>
 														</li>
@@ -109,9 +105,9 @@ import { industries } from '../data/industries';
 															+{restItems.length} more
 															<Icon name="chevron-down" class="h-4 w-4 flex-none" />
 														</label>
-														<ul class="hidden grid-cols-1 gap-x-8 gap-y-2 peer-checked:grid sm:grid-cols-2">
+														<ul class="hidden grid-cols-1 gap-x-8 gap-y-2.5 peer-checked:grid sm:grid-cols-2">
 															{restItems.map((item) => (
-																<li class="flex items-start gap-2 leading-[1.5] text-primary">
+																<li class="flex items-start gap-2.5 leading-[1.5] text-ink">
 																	<Icon name="check" class="mt-1 h-4 w-4 flex-none text-accent" />
 																	<span>{item}</span>
 																</li>
@@ -142,41 +138,31 @@ import { industries } from '../data/industries';
 
 	<section class="bg-surface-alt py-16 md:py-24">
 		<Container class="flex flex-col gap-10">
-			<SectionHeading title="Industries We Serve" align="left" class="mx-0" />
+			<SectionHeading title="Industries we serve" align="left" class="mx-0" />
 			<div
 				class="group relative -mx-4 overflow-hidden px-4 [mask-image:linear-gradient(to_right,transparent,black_2rem,black_calc(100%-2rem),transparent)] sm:-mx-6 sm:px-6 md:-mx-8 md:px-8 motion-reduce:overflow-visible motion-reduce:[mask-image:none]"
 				data-reveal
 			>
-				<div class="flex w-max animate-ledger-scroll group-hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:animate-none">
-					<ul class="flex flex-none motion-reduce:flex-wrap motion-reduce:gap-3" aria-label="Industries we serve">
-						{
-							industries.map((industry) => (
-								<li class="mr-3 flex-none motion-reduce:mr-0">
-									<span class="inline-flex items-center whitespace-nowrap rounded-full border border-border-subtle bg-surface px-4 py-2 text-sm font-medium text-primary">
-										{industry}
-									</span>
-								</li>
-							))
-						}
-					</ul>
-					<ul class="flex flex-none motion-reduce:hidden" aria-hidden="true">
-						{
-							industries.map((industry) => (
-								<li class="mr-3 flex-none">
-									<span class="inline-flex items-center whitespace-nowrap rounded-full border border-border-subtle bg-surface px-4 py-2 text-sm font-medium text-primary">
-										{industry}
-									</span>
-								</li>
-							))
-						}
-					</ul>
-				</div>
+				<ul
+					class="flex w-max animate-marquee gap-3 group-hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:animate-none"
+					aria-label="Industries we serve"
+				>
+					{
+						marqueeItems.map((industry, index) => (
+							<li class="flex-none" aria-hidden={index >= industries.length ? 'true' : undefined}>
+								<span class="inline-flex items-center whitespace-nowrap rounded-full border border-border-subtle bg-surface px-5 py-2.5 text-sm font-medium text-primary">
+									{industry}
+								</span>
+							</li>
+						))
+					}
+				</ul>
 			</div>
 		</Container>
 	</section>
 
 	<CTASection
-		title="Not Sure Which Service You Need?"
+		title="Not sure which service you need?"
 		subtitle="Talk to our advisory team — we'll map the right mix of compliance, protection, and growth services to your business."
 		ctaLabel="Talk to Our Team"
 		ctaHref="/contact"

@@ -4,24 +4,35 @@ import SectionHeading from '../common/SectionHeading.astro';
 import { testimonials } from '../../data/testimonials';
 ---
 
-<section class="bg-surface-alt py-16 md:py-24">
+<section class="bg-primary-950 py-16 text-surface md:py-24">
 	<Container class="flex flex-col gap-12">
-		<SectionHeading eyebrow="Client Trust" title="Trusted by Founders and Compliance Teams" />
+		<SectionHeading title="Trusted by founders and compliance teams" tone="dark" class="mx-0" />
 
-		<div class="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
+		<div class="grid grid-cols-1 gap-6 md:grid-cols-3">
 			{
 				testimonials.map((testimonial, index) => (
-					<figure data-reveal style={`transition-delay: ${index * 100}ms`} class="flex flex-col gap-2">
-						<span class="font-display text-5xl leading-none text-accent" aria-hidden="true">
-							&ldquo;
-						</span>
-						<blockquote class="-mt-4 font-display text-xl italic leading-[1.5] text-primary">
+					<figure
+						data-reveal
+						style={`transition-delay: ${index * 90}ms`}
+						class="flex h-full flex-col gap-6 rounded-xl border border-surface/12 bg-surface/[0.04] p-7 backdrop-blur-sm"
+					>
+						<blockquote class="font-display text-xl font-medium leading-[1.4] text-surface">
 							{testimonial.quote}
 						</blockquote>
-						<figcaption class="mt-2 flex flex-col gap-1 border-t border-accent pt-2 text-xs font-semibold uppercase tracking-wide text-muted">
-							{testimonial.author}
-							{testimonial.role && <span class="font-normal normal-case text-muted">, {testimonial.role}</span>}
-							{testimonial.company && <span class="font-normal normal-case text-muted"> &middot; {testimonial.company}</span>}
+						<figcaption class="mt-auto flex items-center gap-3 border-t border-surface/12 pt-5">
+							<span
+								class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-full bg-accent font-display text-base font-semibold text-primary"
+								aria-hidden="true"
+							>
+								{testimonial.author.charAt(0)}
+							</span>
+							<span class="flex flex-col">
+								<span class="text-sm font-semibold text-surface">{testimonial.author}</span>
+								<span class="text-sm text-surface/60">
+									{testimonial.role}
+									{testimonial.company && <span> &middot; {testimonial.company}</span>}
+								</span>
+							</span>
 						</figcaption>
 					</figure>
 				))

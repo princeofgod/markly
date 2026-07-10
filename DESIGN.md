@@ -1,48 +1,53 @@
 ---
 name: Markly Africa
-description: AI-assisted legal, compliance, and IP advisory — the record of a draft reviewed and countersigned by a human expert.
+description: AI-assisted compliance, IP protection, and business advisory — a confident, contemporary professional-services voice built on a deep-purple brand canvas.
 colors:
   deep-purple: "#2D106C"
+  purple-950: "#1A0942"
   signal-orange: "#FE5F1B"
   soft-off-white: "#FAF8FF"
-  paper-white: "#FFFFFF"
-  slate-muted: "#64748B"
-  hairline-border: "#E2E8F0"
+  surface-alt: "#FFFFFF"
+  ink: "#1D0E42"
+  muted: "#57607A"
+  faint: "#8A90A6"
+  border-subtle: "#E6E2F0"
+  border-strong: "#D4CEE6"
 typography:
   display:
-    fontFamily: "Playfair Display, ui-serif, serif"
-    fontSize: "64px"
-    fontWeight: 700
-    lineHeight: 1.15
-    letterSpacing: "normal"
-  headline:
-    fontFamily: "Playfair Display, ui-serif, serif"
-    fontSize: "48px"
-    fontWeight: 700
-    lineHeight: 1.2
-    letterSpacing: "normal"
-  title:
-    fontFamily: "Playfair Display, ui-serif, serif"
-    fontSize: "32px"
+    fontFamily: "Petrona, Iowan Old Style, Georgia, ui-serif, serif"
+    fontSize: "60px"
     fontWeight: 600
-    lineHeight: 1.3
-    letterSpacing: "normal"
+    lineHeight: 1.05
+    letterSpacing: "-0.02em"
+  headline:
+    fontFamily: "Petrona, Iowan Old Style, Georgia, ui-serif, serif"
+    fontSize: "44px"
+    fontWeight: 600
+    lineHeight: 1.1
+    letterSpacing: "-0.018em"
+  title:
+    fontFamily: "Petrona, Iowan Old Style, Georgia, ui-serif, serif"
+    fontSize: "24px"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "-0.01em"
   body:
-    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "16px"
+    fontFamily: "Hanken Grotesk, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "18px"
     fontWeight: 400
-    lineHeight: 1.5
+    lineHeight: 1.6
     letterSpacing: "normal"
   label:
-    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "14px"
+    fontFamily: "Hanken Grotesk, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "12px"
     fontWeight: 600
-    lineHeight: 1.5
-    letterSpacing: "0.02em"
+    lineHeight: 1.4
+    letterSpacing: "0.16em"
 rounded:
   pill: "9999px"
-  lg: "16px"
-  md: "12px"
+  xl: "28px"
+  lg: "20px"
+  md: "14px"
   sm: "8px"
 spacing:
   xs: "8px"
@@ -55,31 +60,31 @@ spacing:
 components:
   button-primary:
     backgroundColor: "{colors.signal-orange}"
-    textColor: "{colors.paper-white}"
+    textColor: "{colors.deep-purple}"
     typography: "{typography.label}"
-    rounded: "{rounded.pill}"
+    rounded: "{rounded.md}"
     padding: "12px 24px"
   button-primary-hover:
     backgroundColor: "{colors.deep-purple}"
-    textColor: "{colors.paper-white}"
-    rounded: "{rounded.pill}"
+    textColor: "{colors.soft-off-white}"
+    rounded: "{rounded.md}"
     padding: "12px 24px"
   button-secondary:
     backgroundColor: "transparent"
     textColor: "{colors.deep-purple}"
     typography: "{typography.label}"
-    rounded: "{rounded.pill}"
+    rounded: "{rounded.md}"
     padding: "12px 24px"
   button-secondary-hover:
     backgroundColor: "{colors.deep-purple}"
     textColor: "{colors.soft-off-white}"
-    rounded: "{rounded.pill}"
+    rounded: "{rounded.md}"
     padding: "12px 24px"
   card:
-    backgroundColor: "{colors.soft-off-white}"
+    backgroundColor: "{colors.surface-alt}"
     textColor: "{colors.deep-purple}"
     rounded: "{rounded.lg}"
-    padding: "24px"
+    padding: "28px"
   nav-link:
     textColor: "{colors.deep-purple}"
     typography: "{typography.body}"
@@ -90,107 +95,112 @@ components:
 
 ## Overview
 
-**Creative North Star: "The Countersigned Draft"**
+**Creative direction: "Confident professional services, technology-native."**
 
-Markly's whole trust proposition is a single fact: an AI drafts, a qualified human reviews and countersigns, and nothing reaches the client that a person hasn't put their name behind. The visual system is built to look like the paper trail of that process — filings, exhibits, schedules, redlines, seals — rather than the interface of a SaaS tool that happens to talk about compliance. Every page should read like a document under active review: something drafted quickly, then marked up, corrected, and formally approved.
+Markly's proposition is AI-accelerated capability under human professional supervision. The visual system carries that as poise, not pastiche: a deep-purple brand canvas that reads as authority, warm photography of real people at work, a high-contrast serif for declarations, and a clean grotesque for everything that must be read quickly. It is modern and technology-enabled while keeping the gravity a compliance and IP audience expects — no gimmicks, no legal-document cosplay.
 
-This is not a startup dashboard wearing legal-industry copy. It rejects both failure modes named in PRODUCT.md: the "generic AI-startup SaaS template" (gradient text, hero-metric stat blocks, icon-in-a-circle card grids, tiny tracked eyebrows above every heading) and the "stodgy traditional law-firm site" (navy-and-gold, handshake stock photography, dense text walls, no visual personality). Markly sits in the gap between them — modern and technology-enabled, but carrying the gravity and precision of an actual legal instrument.
+The brand colors are fixed identity and carried over verbatim from prior work: deep purple `#2D106C`, signal orange `#FE5F1B`, soft off-white `#FAF8FF`. Everything else — type, spacing rhythm, radius, motion — is a fresh, contemporary system.
 
-Deep purple is the register of authority: identity, headings, structure. Orange is used the way a reviewing lawyer's pen is used — sparingly, to mark, correct, and flag, never as a surface. The redline strike (an AI-drafted line struck through next to its human-corrected replacement) is the system's signature device and should recur wherever a "before/after" or "draft/reviewed" moment is plausible, not just once in a hero.
-
-**Key Characteristics:**
-- Legal/compliance vernacular over tech iconography — exhibits, schedules, seals, registration marks, § section numbers, not rockets or gears.
-- Purple carries identity; orange marks correction and action, at roughly 10% of any surface.
-- Section-to-section structure varies by what's being communicated — no repeated eyebrow-heading-card-grid template.
-- Motion demonstrates the "AI drafts, human reviews" claim (the redline strike drawing itself, a seal stamping in) rather than decorating unrelated content.
+**Key characteristics:**
+- Deep purple is the authority register: hero canvas, dark feature panels, footer, headings, body emphasis.
+- Orange is an accent only — CTA fill, icon-hover, the short heading rule, avatar chips. Never body text on a light surface.
+- Committed-color strategy: purple carries 30–40% of the marketing surfaces (hero, testimonials, CTA, one feature panel per page), off-white/white carry the reading surfaces.
+- Photography over iconography for human moments; simple line icons for structural labelling.
+- Motion is a single well-behaved reveal grammar plus a couple of deliberate entrance/ambient gestures, all degrading cleanly under `prefers-reduced-motion`.
 
 ## Colors
 
-The palette is intentionally narrow — two brand colors plus off-white and near-black-purple text, held to a strict usage ratio so neither color is ever ambient wallpaper.
-
 ### Primary
-- **Deep Purple** (`#2D106C`): The brand's identity color. Used for headings, body emphasis, primary text, navigation, borders, icons, and secondary-button treatments. Never used as a full-bleed background for more than one section in a row — it reads as authority precisely because it's not everywhere.
+- **Deep Purple** (`#2D106C`) / **Purple-950** (`#1A0942`): Brand identity. Purple-950 is the darker canvas for hero, testimonials, and CTA panels; `#2D106C` is used for headings, emphasis, borders, and icons on light surfaces. Aura glows use `primary-700` (`#4D2A98`) at low opacity behind dark panels.
 
-### Secondary
-- **Signal Orange** (`#FE5F1B`): The mark of review and action — primary CTA backgrounds, the redline-strike stroke, active-state underlines, small accent chips. Held to roughly 10% of any given surface. Never used as text color on light backgrounds (`#FAF8FF` / `#FFFFFF`) — the contrast fails outright (~2.9:1). On `#2D106C` it clears AA (4.90:1) and is safe for icon and accent use inside dark-purple sections.
+### Accent
+- **Signal Orange** (`#FE5F1B`): The mark of action and attention — primary CTA background, the short heading rule, icon-hover fill, avatar initials. **Never used as text on `#FAF8FF` or `#FFFFFF`** — it fails AA (~2.76:1). On the orange CTA fill, text is **deep purple** (`#2D106C`, 4.75:1 AA), never white. Orange text on purple-950 is reserved for large display accents (the italic hero flourish).
 
-### Neutral
-- **Soft Off-White** (`#FAF8FF`): The primary page background and the default reading surface. Roughly 70% of any page by area.
-- **Paper White** (`#FFFFFF`): The alternate surface used to separate adjacent sections without introducing a third hue — a "second sheet of paper," not a different material.
-- **Slate Muted** (`#64748B`): Secondary/supporting text — captions, timestamps, de-emphasized copy. Never used for body copy that must carry primary meaning.
-- **Hairline Border** (`#E2E8F0`): Dividers and row rules — the ruled lines of a schedule or ledger, not decorative card outlines.
+### Neutral & Text
+- **Soft Off-White** (`#FAF8FF`): Primary page background and default reading surface.
+- **Surface-Alt** (`#FFFFFF`): Alternate section surface to separate adjacent light sections without a third hue.
+- **Ink** (`#1D0E42`): Densest long-form body / list items on light surfaces.
+- **Muted** (`#57607A`): Secondary body copy — darkened from a generic slate so it clears AA (4.5:1+) on off-white.
+- **Faint** (`#8A90A6`): Captions and meta labels only.
+- **Border Subtle** (`#E6E2F0`) / **Border Strong** (`#D4CEE6`): Purple-tinted hairlines for dividers and card outlines; the strong variant is the hover border.
 
 ### Named Rules
-**The Pen, Not the Paint Rule.** Orange marks a specific correction, action, or moment of attention — like ink from a reviewing pen — and never becomes a surface, a background wash, or body text. If orange is covering more than a CTA, an icon, or a strike-line, it's being used wrong.
+**Accent, not surface.** Orange marks a CTA, an icon state, a short rule, or an avatar — never a background wash or body text. If orange covers more than that, it's wrong.
 
-**The One Dark Section Rule.** `#2D106C` as a full-section background is a deliberate, occasional gravity anchor (the footer, one feature moment) — not a repeating alternation with the light sections. Stacking two purple-background sections back to back flattens its impact.
+**Contrast is non-negotiable.** Orange CTA carries purple text (4.75:1). White-on-orange is banned. Muted body on off-white must clear 4.5:1 — bump toward `ink` before reaching for a lighter gray.
 
 ## Typography
 
-**Display Font:** Playfair Display (with ui-serif, serif fallback)
-**Body Font:** Inter (with ui-sans-serif, system-ui, sans-serif fallback)
+**Display Font:** Petrona (with Iowan Old Style, Georgia, ui-serif fallback)
+**Body Font:** Hanken Grotesk (with ui-sans-serif, system-ui fallback)
 
-**Character:** A high-contrast serif for editorial, declarative moments (headlines, pull-statements, exhibit labels) paired with a neutral, highly legible grotesque for everything that has to be read quickly and accurately — the same pairing logic as a formal document: a serif masthead over sans-serif body clauses. The pairing itself enacts the brand thesis: a confident, human "signature" face over a precise, systematic "working" face.
+**Character:** A warm, high-contrast transitional serif for declarative moments paired with a clean, slightly humanist grotesque for reading. The pairing works on a genuine contrast axis (serif + grotesque), not two near-identical sans faces. Display type is set with tightened tracking (`-0.018em` to `-0.02em`) and `text-wrap: balance`; long prose uses `text-wrap: pretty`.
 
 ### Hierarchy
-- **Display** (700, 64px / `text-4xl`, 1.15 line-height): Hero statements only. One per page.
-- **Headline** (700, 48px / `text-3xl`, 1.2 line-height): Section H2s.
-- **Title** (600, 32px / `text-2xl`, 1.3 line-height): Section H3s, card/row titles.
-- **Body** (400, 16px / `text-base`, 1.5 line-height, capped 65–75ch): Paragraph copy, descriptions.
-- **Label** (600, 14px / `text-sm`, 0.02em tracking): Captions, exhibit/schedule labels, nav items, button text. Uppercase only for true labels (nav, eyebrows), never for full sentences.
-
-Playfair Display is also used in-line, italic, at body/lead sizes (`text-lg italic`) for the "human-corrected" half of a redline pairing — italic Playfair signals "this is the considered, reviewed version" distinctly from the struck-through sans-serif draft next to it.
+- **Display** (Petrona 600, clamped ~42–60px, 1.05): Hero statements. One per page.
+- **Headline** (Petrona 600, ~32–44px, 1.1): Section H2s.
+- **Title** (Petrona 600, ~20–24px): Card and row titles.
+- **Body** (Hanken Grotesk 400, 16–18px, 1.6, capped 60–75ch): Paragraph copy.
+- **Label** (Hanken Grotesk 600, 12px, 0.16–0.22em tracking, uppercase): The heading kicker, category tags, meta labels. Uppercase only for true labels, never sentences.
 
 ### Named Rules
-**The Two-Voice Rule.** Playfair Display speaks in declarations (headlines, verdicts, corrected text); Inter speaks in explanation (body copy, captions, UI). If a sentence is explaining something, it's Inter. If it's asserting something, it's Playfair.
+**Two voices.** Petrona asserts (headlines, pull-statements, the featured differentiator); Hanken Grotesk explains (body, captions, UI, list items). If a line is explaining, it's the grotesque.
+
+**The kicker is a system, not a reflex.** The short orange rule + uppercase label appears on deliberate section intros and hero, not above every heading. Most sections lead with the headline alone.
 
 ## Elevation
 
-The system is layered, not lifted. Depth comes from paper-stacking (off-white sections against white sections, purple sections as the "different material" beneath) and ruled hairline borders — not drop shadows. Shadows exist but are reserved for genuinely floating UI (mobile menu overlay, hover states on interactive cards), where they signal "this is temporarily above the page," not general decoration.
+Depth is restrained and purple-tinted, never a gray glow. Light cards rest on a soft two-part shadow; dark panels get depth from ambient aura glows rather than drop shadows.
 
 ### Shadow Vocabulary
-- **Resting card** (`box-shadow: 0 1px 2px rgba(45,16,108,0.05)` / `shadow-sm`): Default state for card-shaped components that need to read as a distinct object.
-- **Hover / active lift** (`box-shadow: 0 4px 12px rgba(45,16,108,0.1)` / `shadow-md`): Card hover states, the mobile menu sheet — a small, honest lift, not a glow.
-
-### Named Rules
-**The Ruled-Line Rule.** Where a SaaS site would use a shadowed card to separate items, Markly uses a hairline border (`#E2E8F0`) — the visual grammar of a ruled schedule or ledger, not a floating tile.
+- **Card resting** (`--shadow-card`: `0 1px 2px rgba(29,14,66,0.04), 0 8px 24px -18px rgba(29,14,66,0.28)`): Default for card-shaped objects.
+- **Card lift** (`--shadow-lift`: `0 18px 48px -24px rgba(29,14,66,0.4)`): Hover state and hero image frame.
+- **Aura** (accent/`primary-700` at 20–25% opacity, heavy blur): Ambient depth behind purple hero, testimonial, and CTA panels; drifts slowly via `animate-aura`, static under reduced motion.
 
 ## Components
 
 ### Buttons
-- **Shape:** Fully rounded (`rounded-full`, 9999px) — a stamp/seal silhouette, not a rectangular app button.
-- **Primary:** Orange background (`#FE5F1B`), white text, semibold, ≥16px (`text-base font-semibold`). Hover inverts to deep purple background. This is the only place orange fills a shape larger than an icon chip.
-- **Secondary:** Transparent with a 2px deep-purple border and purple text; hover fills solid purple with off-white/surface text. Used for lower-emphasis actions ("Explore All Services") that shouldn't compete with the primary CTA.
-- **Hover / Focus:** All buttons use `transition-all duration-300 ease-in-out`, `active:scale-[0.98]` on press, and a visible 2px offset focus ring in the button's own color family (`focus-visible:outline-accent` on primary, `focus-visible:outline-primary` on secondary). Never remove the focus ring.
+- **Shape:** `rounded-md` (14px) — a calm, contemporary button, not a pill.
+- **Primary:** Orange fill, **deep-purple** text, semibold. Hover inverts to purple fill with off-white text and lifts `-translate-y-0.5`. The only place orange fills a shape larger than an icon.
+- **Secondary:** Bordered, purple text (or off-white text via `inverted` variant on dark panels); hover fills solid.
+- **Interaction:** `transition` on transform/color, `active:scale-[0.98]`, visible 2px accent focus ring. Never remove the focus ring. All motion respects `motion-reduce`.
 
-### Cards / Containers
-- **Corner Style:** 16px (`rounded-2xl`) for feature/callout containers (e.g. the WhyChooseUs featured block, BrandPositioning panel); 12px (`rounded-xl`) for small icon chips; 8px (`rounded-lg`) for compact interactive rows (mobile menu items).
-- **Background:** Off-white or white surface, occasionally solid deep purple for a single featured moment per page.
-- **Shadow Strategy:** Resting cards use `shadow-sm`; interactive/hover cards escalate to `shadow-md`. See Elevation.
-- **Border:** 1px `hairline-border` (`#E2E8F0`) on light-surface cards; `primary/15` (purple at 15% opacity) on the featured panel variant.
-- **Internal Padding:** 24–40px (`p-6` to `p-10`), following the 8px grid.
+### Cards / Panels
+- **Radius:** `rounded-lg` (20px) for content cards; `rounded-xl` (28px) for feature panels and CTA blocks; `rounded-md` for icon chips.
+- **Light card:** off-white/white surface, `border-subtle` hairline, `--shadow-card`; hover lifts to `border-strong` + `--shadow-lift`.
+- **Dark feature panel:** `purple-950` surface with an accent aura, orange icon chip, used once per section cluster (WhyChooseUs featured differentiator, CTA, testimonials).
+- **Icon chip:** `rounded-md`, `primary/8` fill with purple icon; on card hover the accent chips flip to orange fill + purple icon.
 
-### Schedule / Exhibit Rows (Signature Component)
-The system's default alternative to a card grid: content presented as rows in a ruled schedule, each with a small structural label (`§01`, `§02...` for services; `Exhibit A`, `Exhibit B...` for value pillars) instead of a decorative icon-in-circle. Rows sit inside a `border-t` container, each row separated by a `border-b border-border-subtle` hairline, with generous vertical padding (40–48px) so the rhythm reads as a formal register, not a compressed list. This is where the redline motif lives: a struck-through "problem" line (`line-through decoration-accent decoration-1`, muted color) sits directly above its italic Playfair "solution" line, dramatizing draft → correction inline. Rows reveal on scroll (`[data-reveal]`, staggered `transition-delay` per row) rather than all at once, echoing documents being reviewed one at a time.
+### Section Rhythm
+Content is presented as clean grids and rows without decorative scaffolding. The one legitimate numbered sequence is HowItWorks (a real 3-step process, `01/02/03` set large and faint inside each step card). Service lists use a category label + serif title + hairline-separated rows with a sticky pill jump-nav. The industries register is a masked marquee (`animate-marquee`, pauses on hover, wraps static under reduced motion).
 
 ### Navigation
-- **Style:** Sticky top bar, off-white at 95% opacity with backdrop blur, hairline bottom border. Wordmark in Playfair Display semibold; nav links in Inter medium with an animated orange underline that draws in on hover/active (`after:` pseudo-element, width 0 → 100%). Primary CTA button always visible at desktop widths.
-- **Mobile:** Collapses to a rounded icon-button trigger (`rounded-lg`) opening a full-width sheet below the header (`shadow-md`, off-white background), links stacked with generous tap targets and a light orange-tint hover state.
+- Sticky top bar, `surface-alt` at 95% with backdrop blur, hairline bottom border. Nav links in the grotesque with an animated orange underline (`after:` width 0 → 100%). Primary CTA always visible at desktop.
+- **Mobile:** rounded icon trigger opening a full-width sheet below the header; stacked links with generous tap targets.
+
+## Motion
+
+A single reveal grammar plus deliberate accents:
+- **`[data-reveal]` scroll reveal:** opacity + 18px rise, staggered per item via `transition-delay`, driven by one IntersectionObserver. Enhances an already-laid-out element.
+- **`animate-rise-in`:** hero entrance stagger (kicker → title → subtitle → CTAs → image).
+- **`animate-aura`:** slow ambient drift of the accent glow behind dark panels.
+- **`animate-marquee`:** the industries register.
+- **HowItWorks 3D tilt:** step cards lift + rotate-x on hover.
+
+Every animation has a `@media (prefers-reduced-motion: reduce)` fallback that removes motion and pins content to its static end state. Motion never gates content visibility.
 
 ## Do's and Don'ts
 
-### Do:
-- **Do** use legal/compliance vernacular for structural devices — `§` section numbers, "Exhibit A/B/C" labels, "Schedule" framing, ruled hairline rows — instead of generic tech iconography (rockets, gears, abstract blobs) or bare numbered scaffolding.
-- **Do** demonstrate "AI drafts, human reviews" visually wherever plausible — the redline strike (struck-through draft text beside italic Playfair corrected text), the seal-in stamp motion — rather than asserting the claim once in a paragraph.
-- **Do** vary layout structure section to section based on what that section is actually communicating; a single eyebrow-heading-card-grid pattern reused repeatedly is the generic-template failure mode this system explicitly rejects.
-- **Do** hold orange to ~10% of any surface, used only as background/accent/CTA/redline-stroke — never as text on `#FAF8FF` or `#FFFFFF` (fails AA at ~2.9:1).
-- **Do** respect `prefers-reduced-motion: reduce` on every entrance/reveal animation (fade-in-up, seal-in, redline strike draw, scroll-reveal) — remove motion, never remove content.
-- **Do** push contrast pairings to AAA where the palette already clears it for free (purple-on-off-white 14.2:1, white-on-purple 15.0:1) rather than diluting them toward "softer" grays.
+### Do
+- **Do** keep the three brand colors exact and use orange as an accent only.
+- **Do** put purple text on the orange CTA (4.75:1); keep muted body above 4.5:1 on off-white.
+- **Do** lead most sections with the headline; reserve the kicker rule for deliberate intros and the hero.
+- **Do** use photography for human moments and a committed purple canvas for the hero, testimonials, and CTA.
+- **Do** respect `prefers-reduced-motion` on every reveal, aura, marquee, and tilt.
 
-### Don't:
-- **Don't** build a "generic AI-startup SaaS template": no gradient text, no hero-metric blocks (big number + small label + supporting stats), no identical icon-in-a-circle card grids repeated section after section, no tiny uppercase tracked eyebrow above every heading.
-- **Don't** build a "stodgy traditional law-firm site": no navy-and-gold palettes, no stock photography of handshakes or skylines, no dense unbroken text walls.
-- **Don't** write "overly playful or consumer-startup" copy: no gimmicks, mascots, or casual/meme-adjacent language — the register must stay authoritative for a compliance/legal audience while feeling contemporary.
-- **Don't** use `border-left`/`border-right` as a colored accent stripe on cards or rows — use full hairline borders, background tints, or the `§`/`Exhibit` label system instead.
-- **Don't** stack two full-bleed deep-purple sections back to back; it's a deliberate, occasional gravity anchor, not an alternating background rhythm.
-- **Don't** use a single `::after` pseudo-element strikethrough positioned at 50% height for multi-line text — it breaks on wrap. Use native `line-through decoration-*` utilities for any strikethrough text that can wrap.
+### Don't
+- **Don't** put white text on orange, or orange text on off-white/white.
+- **Don't** add a tiny uppercase eyebrow above every section, or numbered `01/02/03` markers on non-sequential sections (HowItWorks is the one earned exception).
+- **Don't** use gradient text, side-stripe accent borders, decorative glassmorphism, or hero-metric stat blocks.
+- **Don't** stack two full-bleed purple sections back to back; the dark canvas is a deliberate gravity anchor.
+- **Don't** reintroduce the retired "Countersigned Draft" devices (redline strikes, `§` numbers, wax-seal badges, exhibit/schedule framing).

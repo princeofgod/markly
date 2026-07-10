@@ -32,16 +32,16 @@ const contactRows = [
 >
 	<Hero
 		variant="compact"
-		tone="light"
-		eyebrow="Contact Us"
-		title="Let’s Protect What You’ve Built"
+		tone="dark"
+		kicker="Contact us"
+		title="Let’s protect what you’ve built"
 		subtitle="Whether you are seeking trademark protection, intellectual property management, brand monitoring, or compliance support, our team is ready to help."
 		primaryCta={{ label: 'Request a Consultation', href: '#consultation-form' }}
 	/>
 
-	<section class="bg-surface pb-16 md:pb-24">
+	<section class="bg-surface py-16 md:py-24">
 		<Container>
-			<p class="mx-auto max-w-3xl text-center font-display text-lg italic leading-[1.5] text-primary sm:text-xl">
+			<p class="mx-auto max-w-3xl text-center font-display text-2xl font-medium leading-[1.4] text-primary sm:text-3xl">
 				Protect your brand. Strengthen your competitive advantage. Build with confidence.
 			</p>
 		</Container>
@@ -173,6 +173,18 @@ const contactRows = [
 								/>
 							</div>
 							<p id="service-error" role="alert" class="hidden text-sm font-medium text-primary"></p>
+						</div>
+
+						<div class="flex flex-col gap-2">
+							<label for="message" class="text-sm font-semibold text-primary">How can we help?</label>
+							<textarea
+								id="message"
+								name="message"
+								rows="5"
+								placeholder="Tell us a little about your business and what you&rsquo;re looking for — the more detail, the better we can help."
+								class="min-h-[8rem] resize-y rounded-lg border border-border-subtle bg-surface px-4 py-3 text-base leading-[1.5] text-primary transition-colors duration-200 placeholder:text-muted/60 focus:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+							></textarea>
+							<p class="text-sm text-muted">Optional, but it helps us route your request to the right expert.</p>
 						</div>
 
 						<div class="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">

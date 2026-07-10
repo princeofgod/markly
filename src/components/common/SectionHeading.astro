@@ -2,29 +2,36 @@
 import { cn } from '../../utils/cn';
 
 interface Props {
-	eyebrow?: string;
+	/** Optional short label. Rendered with a single accent rule — used deliberately, not on every section. */
+	kicker?: string;
 	title: string;
 	subtitle?: string;
 	as?: 'h1' | 'h2' | 'h3';
 	align?: 'left' | 'center';
+	tone?: 'light' | 'dark';
 	class?: string;
 }
 
-const { eyebrow, title, subtitle, as: Tag = 'h2', align = 'center', class: className = '' } = Astro.props;
+const { kicker, title, subtitle, as: Tag = 'h2', align = 'left', tone = 'light', class: className = '' } = Astro.props;
 
 const alignClass = align === 'center' ? 'items-center text-center mx-auto' : 'items-start text-left';
-const eyebrowJustify = align === 'center' ? 'justify-center' : 'justify-start';
+const isDark = tone === 'dark';
+const titleColor = isDark ? 'text-surface' : 'text-primary';
+const subColor = isDark ? 'text-surface/70' : 'text-muted';
+const kickerColor = isDark ? 'text-surface/60' : 'text-primary/55';
 ---
 
-<div class={cn('flex max-w-3xl flex-col gap-4', alignClass, className)}>
+<div class={cn('flex max-w-2xl flex-col gap-5', alignClass, className)}>
 	{
-		eyebrow && (
-			<span class={cn('flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-primary', eyebrowJustify)}>
-				<span class="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-				{eyebrow}
+		kicker && (
+			<span class={cn('flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em]', kickerColor)}>
+				<span class="h-px w-8 flex-none bg-accent" aria-hidden="true" />
+				{kicker}
 			</span>
 		)
 	}
-	<Tag class="font-display text-3xl leading-[1.5] text-primary md:text-4xl">{title}</Tag>
-	{subtitle && <p class="text-lg leading-[1.5] text-muted">{subtitle}</p>}
+	<Tag class={cn('font-display text-[2rem] font-semibold leading-[1.08] sm:text-4xl md:text-[2.75rem]', titleColor)}>
+		{title}
+	</Tag>
+	{subtitle && <p class={cn('max-w-[62ch] text-lg leading-[1.6]', subColor)}>{subtitle}</p>}
 </div>
