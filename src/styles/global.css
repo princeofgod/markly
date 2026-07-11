@@ -250,6 +250,37 @@ p {
 	}
 }
 
+/* Arrow drift for the services index. Each row is a [data-reveal-group] child
+   that cascades up on scroll; as the row settles, its trailing arrow performs a
+   single horizontal drift — a one-shot flourish that hints "this row goes
+   somewhere," then rests. Not a perpetual loop: the arrow nudges once and stops,
+   so the list stays a calm directory rather than a twitchy one. Hover keeps its
+   own translate; the animation runs with no fill-mode so it releases the
+   transform cleanly on completion and the hover slide still works afterward.
+
+   Delay = the row's own stagger (var(--i) inherited from the <li>) plus a beat,
+   so the drift fires just after the row arrives and sweeps down the column in the
+   same order the rows revealed — one continuous gesture, not seven separate ones.
+   Gated to no-preference; reduced-motion never sees it. */
+@keyframes arrow-drift {
+	0% {
+		transform: translateX(0);
+	}
+	55% {
+		transform: translateX(6px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.js [data-reveal-group].is-visible [data-reveal-nudge] {
+		animation: arrow-drift 0.6s var(--ease-out-quint);
+		animation-delay: calc(var(--i, 0) * 70ms + 0.34s);
+	}
+}
+
 /* Marquee for the industries register — duplicated track translated by half. */
 @keyframes marquee-scroll {
 	from {

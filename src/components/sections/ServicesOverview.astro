@@ -20,14 +20,20 @@ import { services } from '../../data/services';
 
 		{/* Lean index: the full breadth of the practice, each name deep-linking to
 		    its section on /services. Replaces the previous 7-card matrix — same
-		    information, a fraction of the height, no wall-of-cards density. */}
+		    information, a fraction of the height, no wall-of-cards density.
+
+		    The list is a [data-reveal-group]: its rows cascade up in DOM order on
+		    scroll, and as each row settles its arrow does a single horizontal
+		    drift (see [data-reveal-nudge] in global.css) — a one-shot flourish
+		    that teaches the affordance, then rests. The per-row --i drives both
+		    the row stagger and the arrow-drift delay so they read as one gesture. */}
 		<ul
-			data-reveal
+			data-reveal-group
 			class="grid grid-cols-1 border-t border-border-subtle sm:grid-cols-2 sm:gap-x-12 lg:gap-x-16"
 		>
 			{
-				services.map((service) => (
-					<li>
+				services.map((service, index) => (
+					<li style={`--i: ${index}`}>
 						<a
 							href={`/services#${service.slug}`}
 							class="group flex items-baseline justify-between gap-6 border-b border-border-subtle py-5 transition-colors duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-primary/40 focus-visible:relative focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
@@ -38,6 +44,7 @@ import { services } from '../../data/services';
 							<span
 								class="flex-none text-primary/35 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:text-primary motion-reduce:transition-none"
 								aria-hidden="true"
+								data-reveal-nudge
 							>
 								&rarr;
 							</span>
