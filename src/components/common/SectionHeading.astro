@@ -9,19 +9,54 @@ interface Props {
 	as?: 'h1' | 'h2' | 'h3';
 	align?: 'left' | 'center';
 	tone?: 'light' | 'dark';
+	/**
+	 * Visual weight tier. Drives section-to-section hierarchy: `lg` for anchor
+	 * sections that carry the argument, `sm` for connective/utility sections
+	 * (directories, registers). `md` is the default and reproduces the original
+	 * scale, so existing usages are unchanged.
+	 */
+	size?: 'lg' | 'md' | 'sm';
 	class?: string;
 }
 
-const { kicker, title, subtitle, as: Tag = 'h2', align = 'left', tone = 'light', class: className = '' } = Astro.props;
+const {
+	kicker,
+	title,
+	subtitle,
+	as: Tag = 'h2',
+	align = 'left',
+	tone = 'light',
+	size = 'md',
+	class: className = '',
+} = Astro.props;
 
 const alignClass = align === 'center' ? 'items-center text-center mx-auto' : 'items-start text-left';
 const isDark = tone === 'dark';
 const titleColor = isDark ? 'text-surface' : 'text-primary';
 const subColor = isDark ? 'text-surface/70' : 'text-muted';
 const kickerColor = isDark ? 'text-surface/60' : 'text-primary/55';
+
+const sizeStyles: Record<NonNullable<Props['size']>, { gap: string; title: string; subtitle: string }> = {
+	lg: {
+		gap: 'gap-5',
+		title: 'text-[2.25rem] leading-[1.05] sm:text-[2.75rem] md:text-[3.25rem]',
+		subtitle: 'text-lg leading-[1.6]',
+	},
+	md: {
+		gap: 'gap-5',
+		title: 'text-[2rem] leading-[1.08] sm:text-4xl md:text-[2.75rem]',
+		subtitle: 'text-lg leading-[1.6]',
+	},
+	sm: {
+		gap: 'gap-3',
+		title: 'text-2xl leading-[1.15] md:text-3xl',
+		subtitle: 'text-[0.95rem] leading-[1.6]',
+	},
+};
+const sizeStyle = sizeStyles[size];
 ---
 
-<div class={cn('flex max-w-2xl flex-col gap-5', alignClass, className)}>
+<div class={cn('flex max-w-2xl flex-col', sizeStyle.gap, alignClass, className)}>
 	{
 		kicker && (
 			<span class={cn('flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em]', kickerColor)}>
@@ -30,8 +65,8 @@ const kickerColor = isDark ? 'text-surface/60' : 'text-primary/55';
 			</span>
 		)
 	}
-	<Tag class={cn('font-display text-[2rem] font-semibold leading-[1.08] sm:text-4xl md:text-[2.75rem]', titleColor)}>
+	<Tag class={cn('font-display font-semibold', sizeStyle.title, titleColor)}>
 		{title}
 	</Tag>
-	{subtitle && <p class={cn('max-w-[62ch] text-lg leading-[1.6]', subColor)}>{subtitle}</p>}
+	{subtitle && <p class={cn('max-w-[62ch]', sizeStyle.subtitle, subColor)}>{subtitle}</p>}
 </div>

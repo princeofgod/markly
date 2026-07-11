@@ -1,19 +1,19 @@
 ---
 import Container from '../layout/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
 import { industries } from '../../data/industries';
 ---
 
 <section class="border-t border-border-subtle bg-surface-alt py-16 md:py-20">
 	<Container>
 		<div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start lg:gap-12">
-			<div data-reveal class="flex flex-col gap-3 lg:col-span-4">
-				<h2 class="font-display text-2xl font-semibold leading-[1.15] text-primary md:text-3xl">
-					Advisory built for organizations across every sector
-				</h2>
-				<p class="max-w-[46ch] text-[0.95rem] leading-[1.6] text-muted">
-					From first-time founders to established institutions, we tailor compliance, protection, and growth
-					strategy to your context.
-				</p>
+			<div data-reveal class="lg:col-span-4">
+				<SectionHeading
+					title="Advisory built for organizations across every sector"
+					subtitle="From first-time founders to established institutions, we tailor compliance, protection, and growth strategy to your context."
+					size="sm"
+					class="mx-0 max-w-none"
+				/>
 			</div>
 			<div class="lg:col-span-8 lg:pt-2">
 				<ul data-reveal-group class="flex flex-wrap items-center gap-x-6 gap-y-3.5">
