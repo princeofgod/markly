@@ -7,7 +7,12 @@ import { mainNavigation } from '../../data/navigation';
 import { company } from '../../data/company';
 import markyLogo from '../../assets/markly-logo.png';
 
-const currentPath = Astro.url.pathname;
+// Compare paths slash-agnostically: the dev server serves `/services` while the
+// production host serves `/services/` (trailing slash), and an exact `===` match
+// silently fails on the mismatch — so the active nav underline never appeared in
+// production. Strip any trailing slash (but keep root "/") on both sides.
+const stripSlash = (path: string) => (path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path);
+const currentPath = stripSlash(Astro.url.pathname);
 ---
 
 <header class="nav-drop sticky top-0 z-50 border-b border-border-subtle bg-surface-alt/95 backdrop-blur">
@@ -22,7 +27,7 @@ const currentPath = Astro.url.pathname;
 		<ul class="hidden items-center gap-6 md:flex lg:gap-8">
 			{
 				mainNavigation.map((item) => {
-					const isActive = currentPath === item.href;
+					const isActive = currentPath === stripSlash(item.href);
 					return (
 						<li>
 							<a
