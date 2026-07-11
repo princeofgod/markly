@@ -3,6 +3,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 import Container from '../components/layout/Container.astro';
 import Hero from '../components/sections/Hero.astro';
 import HowItWorks from '../components/sections/HowItWorks.astro';
+import ServicesPipelineGraphic from '../components/sections/ServicesPipelineGraphic.astro';
 import CTASection from '../components/sections/CTASection.astro';
 import SectionHeading from '../components/common/SectionHeading.astro';
 import Icon from '../components/icons/Icon.astro';
@@ -23,7 +24,9 @@ const marqueeItems = [...industries, ...industries];
 		title="A full-service advisory practice, built for compliance, protection, and growth."
 		subtitle="From data protection to trademarks to startup advisory, every engagement is drafted with AI and reviewed by a qualified professional before it reaches you."
 		primaryCta={{ label: 'Book a Consultation', href: '/contact' }}
-	/>
+	>
+		<ServicesPipelineGraphic slot="media" />
+	</Hero>
 
 	<HowItWorks />
 
@@ -51,7 +54,6 @@ const marqueeItems = [...industries, ...industries];
 			<div class="flex flex-col border-t border-border-subtle">
 				{
 					services.map((service, index) => {
-						const visibleCount = 4;
 						return (
 							<div
 								id={service.slug}
@@ -76,55 +78,21 @@ const marqueeItems = [...industries, ...industries];
 										<p class="max-w-[65ch] text-lg leading-[1.6] text-muted">{service.description}</p>
 									)}
 
-									{service.groups?.map((group, groupIndex) => {
-										const hasMore = group.items.length > visibleCount;
-										const visibleItems = hasMore ? group.items.slice(0, visibleCount) : group.items;
-										const restItems = hasMore ? group.items.slice(visibleCount) : [];
-										const toggleId = `${service.slug}-more-${groupIndex}`;
-
-										return (
-											<div class="flex flex-col gap-3">
-												{group.label && (
-													<span class="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{group.label}</span>
-												)}
-												<ul class="grid grid-cols-1 gap-x-8 gap-y-2.5 sm:grid-cols-2">
-													{visibleItems.map((item) => (
-														<li class="flex items-start gap-2.5 leading-[1.5] text-ink">
-															<Icon name="check" class="mt-1 h-4 w-4 flex-none text-accent" />
-															<span>{item}</span>
-														</li>
-													))}
-												</ul>
-												{hasMore && (
-													<div class="flex flex-col gap-3">
-														<input id={toggleId} type="checkbox" class="peer sr-only" />
-														<label
-															for={toggleId}
-															class="flex w-fit cursor-pointer items-center gap-1.5 rounded-sm text-sm font-semibold text-primary peer-checked:hidden peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent"
-														>
-															+{restItems.length} more
-															<Icon name="chevron-down" class="h-4 w-4 flex-none" />
-														</label>
-														<ul class="hidden grid-cols-1 gap-x-8 gap-y-2.5 peer-checked:grid sm:grid-cols-2">
-															{restItems.map((item) => (
-																<li class="flex items-start gap-2.5 leading-[1.5] text-ink">
-																	<Icon name="check" class="mt-1 h-4 w-4 flex-none text-accent" />
-																	<span>{item}</span>
-																</li>
-															))}
-														</ul>
-														<label
-															for={toggleId}
-															class="hidden w-fit cursor-pointer items-center gap-1.5 rounded-sm text-sm font-semibold text-primary peer-checked:flex peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent"
-														>
-															Show less
-															<Icon name="chevron-down" class="h-4 w-4 flex-none rotate-180" />
-														</label>
-													</div>
-												)}
-											</div>
-										);
-									})}
+									{service.groups?.map((group) => (
+										<div class="flex flex-col gap-3">
+											{group.label && (
+												<span class="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{group.label}</span>
+											)}
+											<ul class="grid grid-cols-1 gap-x-8 gap-y-2.5 sm:grid-cols-2">
+												{group.items.map((item) => (
+													<li class="flex items-start gap-2.5 leading-[1.5] text-ink">
+														<Icon name="check" class="mt-1 h-4 w-4 flex-none text-accent" />
+														<span>{item}</span>
+													</li>
+												))}
+											</ul>
+										</div>
+									))}
 
 									{service.note && <p class="max-w-[65ch] text-sm leading-[1.5] text-muted">{service.note}</p>}
 								</div>

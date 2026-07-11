@@ -23,8 +23,11 @@ const { kicker, title, subtitle, primaryCta, secondaryCta, variant = 'default', 
 
 const isDark = tone === 'dark';
 const isCompact = variant === 'compact';
-const hasImage = Boolean(image);
 const hasTitleSlot = Astro.slots.has('title');
+const hasMediaSlot = Astro.slots.has('media');
+// A supplied image OR a custom media slot (e.g. an animated brand graphic) both
+// trigger the photography-led split layout.
+const hasImage = Boolean(image) || hasMediaSlot;
 
 const sectionBg = isDark ? 'bg-primary-950' : 'bg-surface';
 const titleColor = isDark ? 'text-surface' : 'text-primary';
@@ -64,6 +67,14 @@ const titleSize = isCompact
 				/>
 				<div
 					class="animate-float-slow pointer-events-none absolute bottom-[26%] left-[6%] hidden h-2.5 w-2.5 rounded-full bg-accent/50 motion-reduce:animate-none lg:block"
+					aria-hidden="true"
+				/>
+				<div
+					class="animate-drift pointer-events-none absolute left-[38%] top-[22%] hidden h-4 w-4 rounded-full bg-accent/60 motion-reduce:animate-none lg:block"
+					aria-hidden="true"
+				/>
+				<div
+					class="animate-orbit pointer-events-none absolute bottom-[44%] left-[3%] hidden h-5 w-5 rounded-full border border-accent/40 motion-reduce:animate-none lg:block"
 					aria-hidden="true"
 				/>
 			</>
@@ -117,15 +128,19 @@ const titleSize = isCompact
 				hasImage && (
 					<div class="animate-rise-in relative lg:col-span-6" style="animation-delay: 200ms">
 						<div class="absolute -inset-3 -z-10 rounded-[2rem] bg-accent/20 blur-2xl" aria-hidden="true" />
-						<img
-							src={image!.src}
-							alt={image!.alt}
-							width="1200"
-							height="900"
-							fetchpriority="high"
-							decoding="async"
-							class="aspect-[4/3] w-full rounded-2xl object-cover shadow-[var(--shadow-lift)] ring-1 ring-surface/15"
-						/>
+						{hasMediaSlot ? (
+							<slot name="media" />
+						) : (
+							<img
+								src={image!.src}
+								alt={image!.alt}
+								width="1200"
+								height="900"
+								fetchpriority="high"
+								decoding="async"
+								class="aspect-[4/3] w-full rounded-2xl object-cover shadow-[var(--shadow-lift)] ring-1 ring-surface/15"
+							/>
+						)}
 					</div>
 				)
 			}

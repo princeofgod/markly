@@ -1,0 +1,305 @@
+---
+// Centered, full-bleed hero exploring the "motion behind an opaque overlay"
+// technique: an energetic ORANGE bloom rises, fans, and recedes *behind* a single
+// frosted scrim, so the movement is genuinely visible but never competes with the
+// headline. Brand palette reserved — deep-purple base, a single orange bloom
+// (medium intensity), off-white type. Scoped + reduced-motion guarded (collapses to
+// the calm, resolved state).
+import ButtonPrimary from '../common/ButtonPrimary.astro';
+import Icon from '../icons/Icon.astro';
+
+const stats = ['AI-powered drafting', 'Human expert review', 'Compliance across Africa & beyond'];
+---
+
+<section class="hb relative flex min-h-[92dvh] items-center justify-center overflow-hidden bg-primary-950 px-6 pb-24 pt-32 md:py-24">
+	{/* ---- Layer A: drifting purple base ---- */}
+	<div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+		<div class="hb-drift-a absolute -left-[10%] top-[8%] h-[38rem] w-[38rem] rounded-full bg-primary-700/40 blur-[130px]"></div>
+		<div class="hb-drift-b absolute -right-[8%] bottom-[2%] h-[34rem] w-[34rem] rounded-full bg-primary-800/50 blur-[140px]"></div>
+	</div>
+
+	{/* ---- Layer B: the orange bloom — the visible motion, hidden behind the panels ---- */}
+	<div class="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
+		<div class="hb-bloom absolute left-1/2 top-1/2 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent blur-[95px]"></div>
+		<div class="hb-bloom-2 absolute left-1/2 top-1/2 h-[34rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/70 blur-[150px]"></div>
+	</div>
+
+	{/* ---- Layer C: the opaque overlay — a single frosted scrim that mutes the bloom
+	     in its center while it leaks vividly around the edges ---- */}
+	<div class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center" aria-hidden="true">
+		<div class="hb-breathe relative h-[min(72vh,600px)] w-[min(90vw,560px)] rounded-[2.5rem] border border-white/[0.12] bg-white/[0.06] backdrop-blur-2xl"></div>
+	</div>
+
+	{/* ---- Layer C2: thin ambient concentric ring for depth ---- */}
+	<div
+		class="pointer-events-none absolute left-1/2 top-1/2 z-20 h-[min(150vh,1100px)] w-[min(150vh,1100px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.07]"
+		aria-hidden="true"
+	>
+	</div>
+
+	{/* ---- Foreground: centered content ---- */}
+	<div class="relative z-30 flex max-w-3xl flex-col items-center text-center">
+		<span class="hb-in flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-surface/85">
+			<span class="hb-rule h-px w-8 flex-none bg-accent" aria-hidden="true"></span>
+			Powered by AI, guided by experts
+		</span>
+
+		<h1
+			class="hb-in mt-6 font-display text-[2.75rem] font-semibold leading-[1.05] tracking-[-0.02em] text-surface sm:text-6xl md:text-7xl"
+			style="animation-delay: 120ms"
+		>
+			Stay compliant, secure your brand, and grow <em class="not-italic text-accent">with confidence</em>.
+		</h1>
+
+		<p class="hb-in mt-6 max-w-xl text-lg leading-[1.6] text-surface/85 md:text-xl" style="animation-delay: 240ms">
+			Practical, AI-driven advisory across data protection, intellectual property, and business growth, reviewed and
+			supervised by human experts at every step.
+		</p>
+
+		<ul class="hb-in mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2" style="animation-delay: 340ms">
+			{
+				stats.map((s) => (
+					<li class="flex items-center gap-2 text-sm font-medium text-surface/90">
+						<span class="h-1.5 w-1.5 flex-none rounded-full bg-accent" aria-hidden="true" />
+						{s}
+					</li>
+				))
+			}
+		</ul>
+
+		<div class="hb-in mt-10 flex flex-col gap-4 sm:flex-row sm:items-center" style="animation-delay: 440ms">
+			<ButtonPrimary href="/contact">Book a Consultation</ButtonPrimary>
+			<a
+				href="/services"
+				class="inline-flex items-center justify-center gap-2 rounded-md border border-surface/25 px-6 py-3 text-[0.95rem] font-semibold text-surface transition-colors duration-300 hover:border-surface/50 hover:bg-surface/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+			>
+				Explore Services
+			</a>
+		</div>
+	</div>
+
+	{/* ---- Scroll cue ---- */}
+	<button
+		type="button"
+		data-hb-scroll
+		class="hb-cue absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-1.5 text-surface/60 transition-colors duration-300 hover:text-surface/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+		aria-label="Scroll to explore"
+	>
+		<span class="text-[0.65rem] font-semibold uppercase tracking-[0.2em]">Scroll</span>
+		<Icon name="chevron-down" class="h-4 w-4" />
+	</button>
+</section>
+
+<style>
+	/* Every loop shares an ease-in-out so the motion reads as continuous drift,
+	   never a snap. The two orange blooms orbit the scrim in opposite directions —
+	   the sweep is what makes the movement legible at a glance through the frost. */
+	.hb-drift-a {
+		animation: hb-drift-a 18s ease-in-out infinite;
+	}
+	.hb-drift-b {
+		animation: hb-drift-b 22s ease-in-out infinite;
+	}
+	.hb-bloom {
+		opacity: 0.3;
+		animation: hb-bloom 11s ease-in-out infinite;
+	}
+	.hb-bloom-2 {
+		opacity: 0.18;
+		animation: hb-bloom-2 14s ease-in-out infinite;
+	}
+	.hb-breathe {
+		animation: hb-breathe 12s ease-in-out infinite;
+	}
+	.hb-cue {
+		animation: hb-cue 2.2s ease-in-out infinite;
+	}
+
+	/* Battery/heat saver: pause every ambient loop while the hero is off-screen.
+	   Toggled by an IntersectionObserver below; entrance one-shots are unaffected. */
+	.hb-paused .hb-drift-a,
+	.hb-paused .hb-drift-b,
+	.hb-paused .hb-bloom,
+	.hb-paused .hb-bloom-2,
+	.hb-paused .hb-breathe,
+	.hb-paused .hb-cue {
+		animation-play-state: paused;
+	}
+
+	/* Foreground entrance — a staged rise with a focus-pull (blur clears as each
+	   line settles), staggered by inline delay. A gentle quint ease + longer
+	   duration keeps the glide smooth rather than snappy. */
+	.hb-in {
+		opacity: 0;
+		transform: translate3d(0, 22px, 0);
+		filter: blur(8px);
+		animation: hb-rise 1.15s var(--ease-out-quint, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+	}
+
+	/* The kicker rule draws itself in from the left before the label reads. */
+	.hb-rule {
+		transform-origin: left center;
+		animation: hb-rule-draw 0.9s var(--ease-out-quint, cubic-bezier(0.22, 1, 0.36, 1)) 0.15s both;
+	}
+
+	@keyframes hb-drift-a {
+		0%,
+		100% {
+			transform: translate3d(0, 0, 0) scale(1);
+		}
+		50% {
+			transform: translate3d(8%, -6%, 0) scale(1.2);
+		}
+	}
+	@keyframes hb-drift-b {
+		0%,
+		100% {
+			transform: translate3d(0, 0, 0) scale(1);
+		}
+		50% {
+			transform: translate3d(-9%, 7%, 0) scale(1.22);
+		}
+	}
+
+	/* Primary bloom: orbits the scrim clockwise — left → top → right → bottom —
+	   with a wide opacity swing (0.30 → 0.72) so the sweep reads clearly through
+	   the frost, brightest as it crests the top edge. */
+	@keyframes hb-bloom {
+		0% {
+			transform: translate3d(-74%, -44%, 0) scale(0.95);
+			opacity: 0.3;
+		}
+		28% {
+			transform: translate3d(-50%, -68%, 0) scale(1.2);
+			opacity: 0.72;
+		}
+		52% {
+			transform: translate3d(-26%, -46%, 0) scale(1.06);
+			opacity: 0.54;
+		}
+		78% {
+			transform: translate3d(-50%, -30%, 0) scale(1.12);
+			opacity: 0.6;
+		}
+		100% {
+			transform: translate3d(-74%, -44%, 0) scale(0.95);
+			opacity: 0.3;
+		}
+	}
+	/* Larger, softer bloom: orbits counter-clockwise so the two masses cross,
+	   keeping the edge-glow alive from multiple sides. */
+	@keyframes hb-bloom-2 {
+		0% {
+			transform: translate3d(-28%, -42%, 0) scale(0.95);
+			opacity: 0.18;
+		}
+		34% {
+			transform: translate3d(-52%, -62%, 0) scale(1.24);
+			opacity: 0.5;
+		}
+		62% {
+			transform: translate3d(-72%, -44%, 0) scale(1.08);
+			opacity: 0.42;
+		}
+		100% {
+			transform: translate3d(-28%, -42%, 0) scale(0.95);
+			opacity: 0.18;
+		}
+	}
+
+	@keyframes hb-breathe {
+		0%,
+		100% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(1.016);
+		}
+	}
+	@keyframes hb-rise {
+		to {
+			opacity: 1;
+			transform: translate3d(0, 0, 0);
+			filter: blur(0);
+		}
+	}
+	@keyframes hb-rule-draw {
+		from {
+			transform: scaleX(0);
+			opacity: 0;
+		}
+		to {
+			transform: scaleX(1);
+			opacity: 1;
+		}
+	}
+	/* Scroll cue: a gentle downward bob to hint there's more below. */
+	@keyframes hb-cue {
+		0%,
+		100% {
+			transform: translate(-50%, 0);
+		}
+		50% {
+			transform: translate(-50%, 6px);
+		}
+	}
+
+	/* Reduced motion: freeze on a calm, resolved frame — bloom low and settled,
+	   nothing moving, content fully visible. */
+	@media (prefers-reduced-motion: reduce) {
+		.hb-drift-a,
+		.hb-drift-b,
+		.hb-bloom,
+		.hb-bloom-2,
+		.hb-breathe,
+		.hb-cue,
+		.hb-rule,
+		.hb-in {
+			animation: none;
+		}
+		.hb-in {
+			opacity: 1;
+			transform: none;
+			filter: none;
+		}
+		.hb-rule {
+			transform: none;
+			opacity: 1;
+		}
+		.hb-bloom {
+			opacity: 0.32;
+			transform: translate3d(-50%, -52%, 0) scale(1.02);
+		}
+		.hb-bloom-2 {
+			opacity: 0.24;
+			transform: translate3d(-50%, -50%, 0) scale(1);
+		}
+	}
+</style>
+
+<script>
+	const hero = document.querySelector<HTMLElement>('.hb');
+	if (hero) {
+		// Pause ambient loops while the hero is scrolled out of view.
+		const io = new IntersectionObserver(
+			([entry]) => hero.classList.toggle('hb-paused', !entry.isIntersecting),
+			{ threshold: 0 },
+		);
+		io.observe(hero);
+
+		// Scroll cue → advance to the next section (or one viewport down).
+		const cue = hero.querySelector<HTMLElement>('[data-hb-scroll]');
+		cue?.addEventListener('click', () => {
+			// Astro hoists this bundled script to a sibling <script>, so skip any
+			// non-rendered nodes to land on the next real section.
+			let next = hero.nextElementSibling as HTMLElement | null;
+			while (next && ['SCRIPT', 'STYLE', 'TEMPLATE'].includes(next.tagName)) {
+				next = next.nextElementSibling as HTMLElement | null;
+			}
+			const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth';
+			if (next) next.scrollIntoView({ behavior, block: 'start' });
+			else window.scrollBy({ top: window.innerHeight, behavior });
+		});
+	}
+</script>

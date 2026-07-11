@@ -1,0 +1,509 @@
+---
+// Animated VECTOR illustration for the "Who We Are" slot (replaces the stock
+// advisor photo). A portrait "exhibit" that dramatises Markly's core metaphor —
+// the Countersigned Draft. An AI pass sweeps a client draft and resolves its
+// redline flags, the three pillars clear in sequence, then a human expert's
+// signature draws in by hand and a seal countersigns the result. The whole
+// scene loops. Real text (accessible), brand tokens only, SVG icons. Motion is
+// scoped + reduced-motion guarded (collapses to the finished, signed state).
+import Icon from '../icons/Icon.astro';
+
+interface Props {
+	class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const pillars = [
+	{ icon: 'shield', label: 'Protecting innovation' },
+	{ icon: 'scale', label: 'Ensuring compliance' },
+	{ icon: 'ledger', label: 'Empowering growth' },
+] as const;
+---
+
+<div
+	class:list={[
+		'bp relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border-subtle bg-surface-alt shadow-[var(--shadow-lift)]',
+		className,
+	]}
+	role="img"
+	aria-label="Markly's AI review sweeps a client draft and resolves its flagged clauses, clears three pillars — protecting innovation, ensuring compliance, and empowering growth — then a human expert countersigns and seals the result."
+>
+	<div class="pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full bg-accent/10 blur-3xl" aria-hidden="true"></div>
+
+	<div class="relative flex h-full flex-col gap-4 p-6 sm:p-7">
+		{/* header */}
+		<div class="flex items-center justify-between">
+			<span class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary/60">
+				<span class="h-px w-6 flex-none bg-accent" aria-hidden="true"></span>Exhibit A
+			</span>
+			<span class="rounded-full bg-primary/8 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-primary">
+				Draft &rarr; Final
+			</span>
+		</div>
+
+		{/* the draft under review — AI scan sweeps it, two flagged lines resolve */}
+		<div class="bp-doc relative flex flex-1 flex-col overflow-hidden rounded-xl border border-border-subtle bg-surface p-4">
+			<span class="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-primary/50">Client draft</span>
+
+			{/* a full page of clauses, evenly distributed so the draft fills the
+			   sheet like a real document; the two flagged clauses sit within it */}
+			<div class="mt-3 flex flex-1 flex-col justify-between py-1">
+				<span class="h-1.5 w-[90%] rounded-full bg-border-strong" aria-hidden="true"></span>
+				<span class="h-1.5 w-[96%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[82%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				{/* flagged clause 1 */}
+				<span class="bp-clause bp-clause-1 relative block h-1.5 w-full rounded-full bg-border-subtle" aria-hidden="true">
+					<span class="bp-strike absolute inset-y-0 left-0 w-full rounded-full bg-accent"></span>
+				</span>
+				<span class="h-1.5 w-[75%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[93%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[88%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[70%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[95%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[84%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				{/* flagged clause 2 */}
+				<span class="bp-clause bp-clause-2 relative block h-1.5 w-[85%] rounded-full bg-border-subtle" aria-hidden="true">
+					<span class="bp-strike absolute inset-y-0 left-0 w-full rounded-full bg-accent"></span>
+				</span>
+				<span class="h-1.5 w-[92%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[78%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[90%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[60%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+			</div>
+
+			{/* AI scan sweep — travels the full height of the draft */}
+			<span class="bp-scan pointer-events-none absolute inset-x-3 top-0 h-8 rounded-full bg-gradient-to-b from-accent/0 via-accent/25 to-accent/0" aria-hidden="true"></span>
+			<span class="bp-scan-line pointer-events-none absolute inset-x-3 top-0 h-px bg-accent" aria-hidden="true"></span>
+		</div>
+
+		{/* three pillars clear in sequence */}
+		<div class="grid grid-cols-3 gap-2">
+			{
+				pillars.map((p, i) => (
+					<div class={`bp-pillar bp-pillar-${i + 1} flex flex-col items-center gap-1.5 rounded-lg border border-border-subtle bg-surface px-1.5 py-2.5 text-center`}>
+						<span class="relative inline-flex h-7 w-7 flex-none items-center justify-center rounded-md bg-primary/8 text-primary">
+							<Icon name={p.icon} class="h-4 w-4" />
+							<span class={`bp-check bp-check-${i + 1} absolute -right-1 -top-1 inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-accent text-primary`}>
+								<Icon name="check" class="h-2.5 w-2.5" />
+							</span>
+						</span>
+						<span class="text-[0.5rem] font-semibold uppercase leading-tight tracking-[0.08em] text-primary/55">
+							{p.label}
+						</span>
+					</div>
+				))
+			}
+		</div>
+
+		{/* countersign block — the human signature draws in, then the seal stamps */}
+		<div class="relative flex items-center gap-3 rounded-xl border border-border-subtle bg-surface px-4 py-3">
+			<span class="flex-1">
+				<span class="flex items-center gap-1.5 text-[0.55rem] font-semibold uppercase tracking-[0.12em] text-primary/50">
+					<Icon name="users" class="h-3 w-3 text-accent" />
+					Countersigned by human experts
+				</span>
+				<svg class="mt-1.5 h-7 w-full" viewBox="0 0 200 40" fill="none" aria-hidden="true">
+					<path
+						class="bp-sign"
+						d="M4 30 C 18 6, 26 6, 30 24 C 33 36, 40 12, 52 20 C 60 25, 58 8, 70 10 C 84 12, 78 30, 92 28 C 108 26, 104 10, 118 14 C 132 18, 128 30, 146 24 C 164 18, 172 22, 196 16"
+						stroke="var(--color-primary)"
+						stroke-width="2.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						pathLength="100"
+					/>
+				</svg>
+			</span>
+			<span class="bp-seal relative inline-flex h-11 w-11 flex-none items-center justify-center rounded-full bg-accent text-primary shadow-[var(--shadow-card)]" aria-hidden="true">
+				<span class="bp-seal-ring pointer-events-none absolute inset-0 rounded-full bg-accent/40"></span>
+				<Icon name="seal-check" class="h-6 w-6" />
+			</span>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* One 9s loop drives the whole scene: the draft settles, an AI scan sweeps it
+	   and dissolves the two flagged clauses, the three pillars clear in turn, then
+	   the human signature draws by hand and the seal countersigns. Every element
+	   shares the same duration and starts together so the sequence stays in sync
+	   each loop; each element's action lives at its own slice of its keyframes. */
+	.bp :global(.bp-doc),
+	.bp :global(.bp-scan),
+	.bp :global(.bp-scan-line),
+	.bp :global(.bp-strike),
+	.bp :global(.bp-check),
+	.bp :global(.bp-pillar),
+	.bp :global(.bp-sign),
+	.bp :global(.bp-seal) {
+		animation-duration: 9s;
+		animation-iteration-count: infinite;
+		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.bp :global(.bp-doc) {
+		opacity: 0;
+		transform: translateY(10px);
+		animation-name: bp-doc;
+	}
+
+	/* AI scan travels top → bottom across the full draft height, then fades.
+	   Animating `top` (in %) keeps the sweep robust across card sizes; it's a
+	   single absolutely-positioned decorative overlay, so no sibling reflow. */
+	.bp :global(.bp-scan),
+	.bp :global(.bp-scan-line) {
+		top: 0;
+		opacity: 0;
+	}
+	.bp :global(.bp-scan) {
+		animation-name: bp-scan;
+	}
+	.bp :global(.bp-scan-line) {
+		animation-name: bp-scan-line;
+	}
+
+	/* flagged clauses: the accent redline strike wipes away as the scan passes */
+	.bp :global(.bp-strike) {
+		transform-origin: right center;
+	}
+	.bp :global(.bp-strike) {
+		animation-name: bp-strike-1;
+	}
+	.bp :global(.bp-clause-2 .bp-strike) {
+		animation-name: bp-strike-2;
+	}
+
+	/* pillar cards lift into focus, each earning a check in sequence */
+	.bp :global(.bp-pillar) {
+		opacity: 0.55;
+		transform: translateY(4px);
+	}
+	.bp :global(.bp-pillar-1) {
+		animation-name: bp-pillar-1;
+	}
+	.bp :global(.bp-pillar-2) {
+		animation-name: bp-pillar-2;
+	}
+	.bp :global(.bp-pillar-3) {
+		animation-name: bp-pillar-3;
+	}
+
+	.bp :global(.bp-check) {
+		opacity: 0;
+		transform: scale(0.4);
+	}
+	.bp :global(.bp-check-1) {
+		animation-name: bp-check-1;
+	}
+	.bp :global(.bp-check-2) {
+		animation-name: bp-check-2;
+	}
+	.bp :global(.bp-check-3) {
+		animation-name: bp-check-3;
+	}
+
+	/* signature draws itself along its own path length */
+	.bp :global(.bp-sign) {
+		stroke-dasharray: 100;
+		stroke-dashoffset: 100;
+		animation-name: bp-sign;
+	}
+
+	.bp :global(.bp-seal) {
+		opacity: 0;
+		transform: scale(0.6) rotate(-12deg);
+		animation-name: bp-seal;
+	}
+	.bp :global(.bp-seal-ring) {
+		animation: bp-seal-ring 9s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+	}
+
+	@keyframes bp-doc {
+		0% {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+		6%,
+		94% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+	}
+
+	@keyframes bp-scan {
+		0%,
+		8% {
+			opacity: 0;
+			top: -6%;
+		}
+		12% {
+			opacity: 1;
+		}
+		30% {
+			opacity: 1;
+			top: 94%;
+		}
+		34%,
+		100% {
+			opacity: 0;
+			top: 94%;
+		}
+	}
+	@keyframes bp-scan-line {
+		0%,
+		8% {
+			opacity: 0;
+			top: -4%;
+		}
+		12% {
+			opacity: 0.9;
+		}
+		30% {
+			opacity: 0.9;
+			top: 96%;
+		}
+		34%,
+		100% {
+			opacity: 0;
+			top: 96%;
+		}
+	}
+
+	/* clause 1 sits higher up, so it clears earlier in the sweep */
+	@keyframes bp-strike-1 {
+		0%,
+		15% {
+			transform: scaleX(1);
+			opacity: 1;
+		}
+		20%,
+		94% {
+			transform: scaleX(0);
+			opacity: 0;
+		}
+		99%,
+		100% {
+			transform: scaleX(1);
+			opacity: 1;
+		}
+	}
+	@keyframes bp-strike-2 {
+		0%,
+		24% {
+			transform: scaleX(1);
+			opacity: 1;
+		}
+		29%,
+		94% {
+			transform: scaleX(0);
+			opacity: 0;
+		}
+		99%,
+		100% {
+			transform: scaleX(1);
+			opacity: 1;
+		}
+	}
+
+	@keyframes bp-pillar-1 {
+		0%,
+		36% {
+			opacity: 0.55;
+			transform: translateY(4px);
+		}
+		42%,
+		94% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		99%,
+		100% {
+			opacity: 0.55;
+			transform: translateY(4px);
+		}
+	}
+	@keyframes bp-pillar-2 {
+		0%,
+		42% {
+			opacity: 0.55;
+			transform: translateY(4px);
+		}
+		48%,
+		94% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		99%,
+		100% {
+			opacity: 0.55;
+			transform: translateY(4px);
+		}
+	}
+	@keyframes bp-pillar-3 {
+		0%,
+		48% {
+			opacity: 0.55;
+			transform: translateY(4px);
+		}
+		54%,
+		94% {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		99%,
+		100% {
+			opacity: 0.55;
+			transform: translateY(4px);
+		}
+	}
+
+	@keyframes bp-check-1 {
+		0%,
+		38% {
+			opacity: 0;
+			transform: scale(0.4);
+		}
+		44%,
+		94% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: scale(0.4);
+		}
+	}
+	@keyframes bp-check-2 {
+		0%,
+		44% {
+			opacity: 0;
+			transform: scale(0.4);
+		}
+		50%,
+		94% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: scale(0.4);
+		}
+	}
+	@keyframes bp-check-3 {
+		0%,
+		50% {
+			opacity: 0;
+			transform: scale(0.4);
+		}
+		56%,
+		94% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: scale(0.4);
+		}
+	}
+
+	@keyframes bp-sign {
+		0%,
+		58% {
+			stroke-dashoffset: 100;
+		}
+		76%,
+		94% {
+			stroke-dashoffset: 0;
+		}
+		99%,
+		100% {
+			stroke-dashoffset: 100;
+		}
+	}
+
+	@keyframes bp-seal {
+		0%,
+		78% {
+			opacity: 0;
+			transform: scale(0.6) rotate(-12deg);
+		}
+		85%,
+		94% {
+			opacity: 1;
+			transform: scale(1) rotate(0deg);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: scale(0.6) rotate(-12deg);
+		}
+	}
+	@keyframes bp-seal-ring {
+		0%,
+		78% {
+			opacity: 0;
+			transform: scale(0.85);
+		}
+		82% {
+			opacity: 0.55;
+		}
+		94%,
+		100% {
+			opacity: 0;
+			transform: scale(2);
+		}
+	}
+
+	/* Reduced motion: freeze on the completed, signed & sealed state. */
+	@media (prefers-reduced-motion: reduce) {
+		.bp :global(.bp-doc),
+		.bp :global(.bp-scan),
+		.bp :global(.bp-scan-line),
+		.bp :global(.bp-strike),
+		.bp :global(.bp-check),
+		.bp :global(.bp-pillar),
+		.bp :global(.bp-sign),
+		.bp :global(.bp-seal),
+		.bp :global(.bp-seal-ring) {
+			animation: none !important;
+		}
+		.bp :global(.bp-doc) {
+			opacity: 1;
+			transform: none;
+		}
+		.bp :global(.bp-scan),
+		.bp :global(.bp-scan-line) {
+			opacity: 0;
+		}
+		.bp :global(.bp-strike) {
+			transform: scaleX(0);
+			opacity: 0;
+		}
+		.bp :global(.bp-check) {
+			opacity: 1;
+			transform: none;
+		}
+		.bp :global(.bp-pillar) {
+			opacity: 1;
+			transform: none;
+		}
+		.bp :global(.bp-sign) {
+			stroke-dashoffset: 0;
+		}
+		.bp :global(.bp-seal) {
+			opacity: 1;
+			transform: none;
+		}
+		.bp :global(.bp-seal-ring) {
+			opacity: 0;
+		}
+	}
+</style>

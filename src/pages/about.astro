@@ -6,6 +6,7 @@ import SectionHeading from '../components/common/SectionHeading.astro';
 import ButtonPrimary from '../components/common/ButtonPrimary.astro';
 import Icon from '../components/icons/Icon.astro';
 import CTASection from '../components/sections/CTASection.astro';
+import AboutPracticeGraphic from '../components/sections/AboutPracticeGraphic.astro';
 import { values } from '../data/values';
 
 // The brief's "Industries We Serve" is a set of business sectors, distinct in
@@ -71,14 +72,7 @@ const marqueeItems = [...industriesServed, ...industriesServed];
 				<div data-reveal style="transition-delay: 100ms" class="lg:col-span-5">
 					<div class="relative">
 						<div class="absolute -inset-2 -z-10 rounded-[1.75rem] bg-primary/5 blur-xl" aria-hidden="true"></div>
-						<img
-							src="https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=1200&q=80"
-							alt="A multidisciplinary team collaborating around a table with laptops"
-							width="1200"
-							height="1500"
-							loading="lazy"
-							class="aspect-[4/5] w-full rounded-2xl object-cover shadow-[var(--shadow-card)]"
-						/>
+						<AboutPracticeGraphic />
 					</div>
 				</div>
 			</div>

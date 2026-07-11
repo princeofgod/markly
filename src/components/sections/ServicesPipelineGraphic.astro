@@ -1,0 +1,234 @@
+---
+// Animated VECTOR illustration for the Services hero (a floating light panel on
+// the dark hero). Every engagement moves along one production line — AI draft →
+// expert review → delivered — with a token travelling the rail, each stage
+// lighting and checking in turn, and the final stage sealing. Loops. Real text
+// (accessible), brand tokens only, SVG icons. Motion is scoped + reduced-motion
+// guarded (collapses to the finished, delivered state).
+import Icon from '../icons/Icon.astro';
+
+interface Props {
+	class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const stages = [
+	{ icon: 'clipboard', label: 'AI draft' },
+	{ icon: 'scale', label: 'Expert review' },
+	{ icon: 'seal-check', label: 'Delivered' },
+] as const;
+---
+
+<div
+	class:list={[
+		'sp relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border-subtle bg-surface-alt shadow-[var(--shadow-lift)]',
+		className,
+	]}
+	role="img"
+	aria-label="Every engagement moves along one production line — drafted by AI, reviewed by a human expert, then delivered and sealed."
+>
+	<div class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/10 blur-3xl" aria-hidden="true"></div>
+
+	<div class="relative flex h-full flex-col gap-5 p-6 sm:p-7">
+		{/* header */}
+		<div class="flex items-center justify-between">
+			<span class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary/60">
+				<span class="h-px w-6 flex-none bg-accent" aria-hidden="true"></span>Engagement
+			</span>
+			<span class="rounded-full bg-primary/8 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-primary">
+				In production
+			</span>
+		</div>
+
+		<div class="flex flex-1 flex-col justify-center gap-4">
+			{/* the production rail: three stage nodes, a progress fill, a travelling token */}
+			<div class="relative">
+				<span class="absolute left-[16.66%] right-[16.66%] top-4 h-px -translate-y-1/2 bg-border-strong" aria-hidden="true"></span>
+				<span class="sp-fill absolute left-[16.66%] top-4 h-0.5 w-[66.68%] -translate-y-1/2 origin-left rounded-full bg-accent" aria-hidden="true"></span>
+				<span class="sp-token absolute left-[16.66%] top-4 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_0_4px_color-mix(in_oklab,var(--color-accent)_22%,transparent)]" aria-hidden="true"></span>
+
+				<div class="relative grid grid-cols-3">
+					{
+						stages.map((s, i) => (
+							<div class="flex flex-col items-center">
+								<span class={`sp-node sp-node-${i + 1} relative inline-flex h-8 w-8 items-center justify-center rounded-full border border-border-strong bg-surface text-primary`}>
+									<Icon name={s.icon} class="h-4 w-4" />
+									<span class={`sp-check sp-check-${i + 1} absolute -right-1 -top-1 inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-accent text-primary`}>
+										<Icon name="check" class="h-2.5 w-2.5" />
+									</span>
+								</span>
+							</div>
+						))
+					}
+				</div>
+			</div>
+
+			{/* stage labels */}
+			<div class="grid grid-cols-3">
+				{
+					stages.map((s, i) => (
+						<div class="flex flex-col items-center gap-0.5 text-center">
+							<span class="text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-primary/70">{s.label}</span>
+							<span class="text-[0.5rem] font-medium uppercase tracking-[0.08em] text-faint">Step 0{i + 1}</span>
+						</div>
+					))
+				}
+			</div>
+
+			{/* per-stage work preview — a few spec bars fill as each stage runs */}
+			<div class="grid grid-cols-3 gap-3">
+				{
+					stages.map((_s, i) => (
+						<div class="flex flex-col gap-1.5 rounded-lg border border-border-subtle bg-surface p-2.5">
+							<span class={`sp-bar sp-bar-${i + 1}a block h-1 w-full origin-left rounded-full bg-border-subtle`} aria-hidden="true" />
+							<span class={`sp-bar sp-bar-${i + 1}b block h-1 w-[80%] origin-left rounded-full bg-border-subtle`} aria-hidden="true" />
+							<span class={`sp-bar sp-bar-${i + 1}c block h-1 w-[60%] origin-left rounded-full bg-border-subtle`} aria-hidden="true" />
+						</div>
+					))
+				}
+			</div>
+		</div>
+
+		{/* footer */}
+		<div class="flex items-center gap-2 border-t border-border-subtle pt-3 text-xs leading-tight text-muted">
+			<Icon name="seal-check" class="h-4 w-4 flex-none text-accent" />
+			<span>AI-drafted, expert-reviewed, then delivered &mdash; every time.</span>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* One 9s loop: a token travels the rail while the progress fill advances; each
+	   stage node lights and checks as the token arrives, its spec bars fill, and
+	   the final stage seals. Every element shares the duration and starts together
+	   so the sequence stays in sync; each acts on its own slice of its keyframes. */
+	.sp :global(.sp-fill),
+	.sp :global(.sp-token),
+	.sp :global(.sp-node),
+	.sp :global(.sp-check),
+	.sp :global(.sp-bar) {
+		animation-duration: 9s;
+		animation-iteration-count: infinite;
+		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.sp :global(.sp-fill) {
+		transform: scaleX(0);
+		animation-name: sp-fill;
+	}
+	.sp :global(.sp-token) {
+		animation-name: sp-token;
+	}
+
+	/* nodes carry an accent border once reached; base is a neutral outline */
+	.sp :global(.sp-node) {
+		border-color: var(--color-border-strong);
+	}
+	.sp :global(.sp-node-1) { animation-name: sp-node-1; }
+	.sp :global(.sp-node-2) { animation-name: sp-node-2; }
+	.sp :global(.sp-node-3) { animation-name: sp-node-3; }
+
+	.sp :global(.sp-check) {
+		opacity: 0;
+		transform: scale(0.4);
+	}
+	.sp :global(.sp-check-1) { animation-name: sp-check-1; }
+	.sp :global(.sp-check-2) { animation-name: sp-check-2; }
+	.sp :global(.sp-check-3) { animation-name: sp-check-3; }
+
+	.sp :global(.sp-bar) {
+		transform: scaleX(0);
+	}
+	.sp :global(.sp-bar-1a) { animation-name: sp-bar-1; }
+	.sp :global(.sp-bar-1b) { animation-name: sp-bar-1; animation-delay: 0.15s; }
+	.sp :global(.sp-bar-1c) { animation-name: sp-bar-1; animation-delay: 0.3s; }
+	.sp :global(.sp-bar-2a) { animation-name: sp-bar-2; }
+	.sp :global(.sp-bar-2b) { animation-name: sp-bar-2; animation-delay: 0.15s; }
+	.sp :global(.sp-bar-2c) { animation-name: sp-bar-2; animation-delay: 0.3s; }
+	.sp :global(.sp-bar-3a) { animation-name: sp-bar-3; }
+	.sp :global(.sp-bar-3b) { animation-name: sp-bar-3; animation-delay: 0.15s; }
+	.sp :global(.sp-bar-3c) { animation-name: sp-bar-3; animation-delay: 0.3s; }
+
+	/* Progress fill grows as stages complete (0 → ½ → full). */
+	@keyframes sp-fill {
+		0%, 10% { transform: scaleX(0); }
+		40% { transform: scaleX(0.5); }
+		70%, 94% { transform: scaleX(1); }
+		99%, 100% { transform: scaleX(0); }
+	}
+
+	/* Token rides the rail between the three node centres. */
+	@keyframes sp-token {
+		0%, 8% { left: 16.66%; opacity: 0; }
+		12% { opacity: 1; }
+		40% { left: 50%; opacity: 1; }
+		70% { left: 83.34%; opacity: 1; }
+		76%, 94% { left: 83.34%; opacity: 0; }
+		99%, 100% { left: 16.66%; opacity: 0; }
+	}
+
+	@keyframes sp-node-1 {
+		0%, 8% { border-color: var(--color-border-strong); }
+		13%, 94% { border-color: color-mix(in oklab, var(--color-accent) 55%, transparent); }
+		99%, 100% { border-color: var(--color-border-strong); }
+	}
+	@keyframes sp-node-2 {
+		0%, 38% { border-color: var(--color-border-strong); }
+		43%, 94% { border-color: color-mix(in oklab, var(--color-accent) 55%, transparent); }
+		99%, 100% { border-color: var(--color-border-strong); }
+	}
+	@keyframes sp-node-3 {
+		0%, 68% { border-color: var(--color-border-strong); }
+		73%, 94% { border-color: color-mix(in oklab, var(--color-accent) 55%, transparent); }
+		99%, 100% { border-color: var(--color-border-strong); }
+	}
+
+	@keyframes sp-check-1 {
+		0%, 10% { opacity: 0; transform: scale(0.4); }
+		15%, 94% { opacity: 1; transform: scale(1); }
+		99%, 100% { opacity: 0; transform: scale(0.4); }
+	}
+	@keyframes sp-check-2 {
+		0%, 40% { opacity: 0; transform: scale(0.4); }
+		45%, 94% { opacity: 1; transform: scale(1); }
+		99%, 100% { opacity: 0; transform: scale(0.4); }
+	}
+	@keyframes sp-check-3 {
+		0%, 70% { opacity: 0; transform: scale(0.4); }
+		75%, 94% { opacity: 1; transform: scale(1); }
+		99%, 100% { opacity: 0; transform: scale(0.4); }
+	}
+
+	/* Spec bars fill as their stage runs. */
+	@keyframes sp-bar-1 {
+		0%, 6% { transform: scaleX(0); }
+		18%, 94% { transform: scaleX(1); }
+		99%, 100% { transform: scaleX(0); }
+	}
+	@keyframes sp-bar-2 {
+		0%, 36% { transform: scaleX(0); }
+		48%, 94% { transform: scaleX(1); }
+		99%, 100% { transform: scaleX(0); }
+	}
+	@keyframes sp-bar-3 {
+		0%, 66% { transform: scaleX(0); }
+		78%, 94% { transform: scaleX(1); }
+		99%, 100% { transform: scaleX(0); }
+	}
+
+	/* Reduced motion: freeze on the finished, delivered state. */
+	@media (prefers-reduced-motion: reduce) {
+		.sp :global(.sp-fill),
+		.sp :global(.sp-token),
+		.sp :global(.sp-node),
+		.sp :global(.sp-check),
+		.sp :global(.sp-bar) {
+			animation: none !important;
+		}
+		.sp :global(.sp-fill) { transform: scaleX(1); }
+		.sp :global(.sp-token) { opacity: 0; }
+		.sp :global(.sp-node) { border-color: color-mix(in oklab, var(--color-accent) 55%, transparent); }
+		.sp :global(.sp-check) { opacity: 1; transform: none; }
+		.sp :global(.sp-bar) { transform: scaleX(1); }
+	}
+</style>

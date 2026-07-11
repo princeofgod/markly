@@ -1,0 +1,292 @@
+---
+// Animated VECTOR illustration for the About "multidisciplinary practice" slot
+// (replaces the stock team photo). Five discipline lanes light up in turn and
+// draw a connector into a single AI + expert hub, which then seals — the brand's
+// thesis that many practice areas converge into one reviewed, countersigned
+// answer. Loops. Real text (accessible), brand tokens only, SVG icons. Motion is
+// scoped + reduced-motion guarded (collapses to the fully-converged state).
+import Icon from '../icons/Icon.astro';
+
+interface Props {
+	class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const disciplines = [
+	{ icon: 'shield', label: 'Data protection' },
+	{ icon: 'scale', label: 'IP & trademarks' },
+	{ icon: 'ledger', label: 'Corporate advisory' },
+	{ icon: 'lightbulb', label: 'Startup advisory' },
+	{ icon: 'users', label: 'Compliance training' },
+] as const;
+
+// SVG y-coordinate (viewBox 0..100) for each lane's connector, matching the
+// evenly-distributed chip centres on the left.
+const laneY = [6, 28, 50, 72, 94];
+---
+
+<div
+	class:list={[
+		'apg relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border-subtle bg-surface-alt shadow-[var(--shadow-lift)]',
+		className,
+	]}
+	role="img"
+	aria-label="Five practice areas — data protection, IP and trademarks, corporate advisory, startup advisory, and compliance training — converge into one AI-and-expert hub that reviews and countersigns the result."
+>
+	<div class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/10 blur-3xl" aria-hidden="true"></div>
+
+	<div class="relative flex h-full flex-col gap-4 p-6 sm:p-7">
+		{/* header */}
+		<div class="flex items-center justify-between">
+			<span class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary/60">
+				<span class="h-px w-6 flex-none bg-accent" aria-hidden="true"></span>The practice
+			</span>
+			<span class="rounded-full bg-primary/8 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-primary">
+				Multidisciplinary
+			</span>
+		</div>
+
+		{/* convergence field: five lanes → one hub */}
+		<div class="relative flex-1">
+			{/* connectors (behind the chips) */}
+			<svg class="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" aria-hidden="true">
+				{
+					laneY.map((y, i) => (
+						<path
+							class={`apg-line apg-line-${i + 1}`}
+							d={`M 52 ${y} L 88 50`}
+							stroke="var(--color-accent)"
+							stroke-width="0.7"
+							stroke-linecap="round"
+							pathLength="100"
+						/>
+					))
+				}
+			</svg>
+
+			{/* discipline chips, evenly distributed down the left */}
+			<div class="absolute inset-y-0 left-0 flex w-[56%] flex-col justify-between py-0.5">
+				{
+					disciplines.map((d, i) => (
+						<div class={`apg-chip apg-chip-${i + 1} relative flex items-center gap-2.5 rounded-lg border border-border-subtle bg-surface px-2.5 py-2`}>
+							<span class="apg-ico inline-flex h-7 w-7 flex-none items-center justify-center rounded-md bg-primary/8 text-primary">
+								<Icon name={d.icon} class="h-4 w-4" />
+							</span>
+							<span class="truncate text-[0.6rem] font-semibold uppercase leading-tight tracking-[0.08em] text-primary/60">
+								{d.label}
+							</span>
+							<span class="apg-dot absolute -right-1 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-accent"></span>
+						</div>
+					))
+				}
+			</div>
+
+			{/* the AI + expert hub — the convergence point */}
+			<div class="apg-hub absolute right-1 top-1/2 inline-flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-surface shadow-[var(--shadow-card)]">
+				<span class="apg-hub-ring pointer-events-none absolute inset-0 rounded-full bg-accent/40" aria-hidden="true"></span>
+				<Icon name="seal-check" class="h-7 w-7" />
+			</div>
+		</div>
+
+		{/* footer */}
+		<div class="flex items-center gap-2 border-t border-border-subtle pt-3 text-xs leading-tight text-muted">
+			<Icon name="seal-check" class="h-4 w-4 flex-none text-accent" />
+			<span>One multidisciplinary firm — AI-drafted, expert-reviewed.</span>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* One 9s loop: each discipline lane lights in turn and draws its connector
+	   into the hub; once all five have converged, the hub seals. Every element
+	   shares the duration and starts together, so the sequence stays in sync each
+	   loop; each element's action lives at its own slice of its keyframes. */
+	.apg :global(.apg-chip),
+	.apg :global(.apg-dot),
+	.apg :global(.apg-line),
+	.apg :global(.apg-hub-ring) {
+		animation-duration: 9s;
+		animation-iteration-count: infinite;
+		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	/* chips start muted, then light (accent border + brought forward) on their cue */
+	.apg :global(.apg-chip) {
+		opacity: 0.5;
+		border-color: var(--color-border-subtle);
+	}
+	.apg :global(.apg-chip-1) {
+		animation-name: apg-chip-1;
+	}
+	.apg :global(.apg-chip-2) {
+		animation-name: apg-chip-2;
+	}
+	.apg :global(.apg-chip-3) {
+		animation-name: apg-chip-3;
+	}
+	.apg :global(.apg-chip-4) {
+		animation-name: apg-chip-4;
+	}
+	.apg :global(.apg-chip-5) {
+		animation-name: apg-chip-5;
+	}
+
+	.apg :global(.apg-dot) {
+		opacity: 0;
+		transform: translateY(-50%) scale(0.4);
+	}
+	.apg :global(.apg-chip-1 .apg-dot) {
+		animation-name: apg-dot-1;
+	}
+	.apg :global(.apg-chip-2 .apg-dot) {
+		animation-name: apg-dot-2;
+	}
+	.apg :global(.apg-chip-3 .apg-dot) {
+		animation-name: apg-dot-3;
+	}
+	.apg :global(.apg-chip-4 .apg-dot) {
+		animation-name: apg-dot-4;
+	}
+	.apg :global(.apg-chip-5 .apg-dot) {
+		animation-name: apg-dot-5;
+	}
+
+	/* connectors draw themselves from lane → hub, then stay */
+	.apg :global(.apg-line) {
+		stroke-dasharray: 100;
+		stroke-dashoffset: 100;
+		opacity: 0.9;
+	}
+	.apg :global(.apg-line-1) {
+		animation-name: apg-line-1;
+	}
+	.apg :global(.apg-line-2) {
+		animation-name: apg-line-2;
+	}
+	.apg :global(.apg-line-3) {
+		animation-name: apg-line-3;
+	}
+	.apg :global(.apg-line-4) {
+		animation-name: apg-line-4;
+	}
+	.apg :global(.apg-line-5) {
+		animation-name: apg-line-5;
+	}
+
+	.apg :global(.apg-hub-ring) {
+		opacity: 0;
+		animation-name: apg-hub-ring;
+	}
+
+	/* Chip keyframes — each stays lit from its cue until the loop resets. */
+	@keyframes apg-chip-1 {
+		0%, 4% { opacity: 0.5; border-color: var(--color-border-subtle); }
+		9%, 94% { opacity: 1; border-color: color-mix(in oklab, var(--color-accent) 45%, transparent); }
+		99%, 100% { opacity: 0.5; border-color: var(--color-border-subtle); }
+	}
+	@keyframes apg-chip-2 {
+		0%, 16% { opacity: 0.5; border-color: var(--color-border-subtle); }
+		21%, 94% { opacity: 1; border-color: color-mix(in oklab, var(--color-accent) 45%, transparent); }
+		99%, 100% { opacity: 0.5; border-color: var(--color-border-subtle); }
+	}
+	@keyframes apg-chip-3 {
+		0%, 28% { opacity: 0.5; border-color: var(--color-border-subtle); }
+		33%, 94% { opacity: 1; border-color: color-mix(in oklab, var(--color-accent) 45%, transparent); }
+		99%, 100% { opacity: 0.5; border-color: var(--color-border-subtle); }
+	}
+	@keyframes apg-chip-4 {
+		0%, 40% { opacity: 0.5; border-color: var(--color-border-subtle); }
+		45%, 94% { opacity: 1; border-color: color-mix(in oklab, var(--color-accent) 45%, transparent); }
+		99%, 100% { opacity: 0.5; border-color: var(--color-border-subtle); }
+	}
+	@keyframes apg-chip-5 {
+		0%, 52% { opacity: 0.5; border-color: var(--color-border-subtle); }
+		57%, 94% { opacity: 1; border-color: color-mix(in oklab, var(--color-accent) 45%, transparent); }
+		99%, 100% { opacity: 0.5; border-color: var(--color-border-subtle); }
+	}
+
+	/* Feed dots pop when the lane connects. */
+	@keyframes apg-dot-1 {
+		0%, 6% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+		11%, 94% { opacity: 1; transform: translateY(-50%) scale(1); }
+		99%, 100% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+	}
+	@keyframes apg-dot-2 {
+		0%, 18% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+		23%, 94% { opacity: 1; transform: translateY(-50%) scale(1); }
+		99%, 100% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+	}
+	@keyframes apg-dot-3 {
+		0%, 30% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+		35%, 94% { opacity: 1; transform: translateY(-50%) scale(1); }
+		99%, 100% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+	}
+	@keyframes apg-dot-4 {
+		0%, 42% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+		47%, 94% { opacity: 1; transform: translateY(-50%) scale(1); }
+		99%, 100% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+	}
+	@keyframes apg-dot-5 {
+		0%, 54% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+		59%, 94% { opacity: 1; transform: translateY(-50%) scale(1); }
+		99%, 100% { opacity: 0; transform: translateY(-50%) scale(0.4); }
+	}
+
+	/* Connector draw — offset 100 (hidden) → 0 (drawn), staying until reset. */
+	@keyframes apg-line-1 {
+		0%, 6% { stroke-dashoffset: 100; }
+		14%, 94% { stroke-dashoffset: 0; }
+		99%, 100% { stroke-dashoffset: 100; }
+	}
+	@keyframes apg-line-2 {
+		0%, 18% { stroke-dashoffset: 100; }
+		26%, 94% { stroke-dashoffset: 0; }
+		99%, 100% { stroke-dashoffset: 100; }
+	}
+	@keyframes apg-line-3 {
+		0%, 30% { stroke-dashoffset: 100; }
+		38%, 94% { stroke-dashoffset: 0; }
+		99%, 100% { stroke-dashoffset: 100; }
+	}
+	@keyframes apg-line-4 {
+		0%, 42% { stroke-dashoffset: 100; }
+		50%, 94% { stroke-dashoffset: 0; }
+		99%, 100% { stroke-dashoffset: 100; }
+	}
+	@keyframes apg-line-5 {
+		0%, 54% { stroke-dashoffset: 100; }
+		62%, 94% { stroke-dashoffset: 0; }
+		99%, 100% { stroke-dashoffset: 100; }
+	}
+
+	/* Hub seals once all five lanes have converged. */
+	@keyframes apg-hub-ring {
+		0%, 64% { opacity: 0; transform: scale(0.85); }
+		70% { opacity: 0.6; }
+		84%, 100% { opacity: 0; transform: scale(1.9); }
+	}
+
+	/* Reduced motion: freeze on the fully-converged, sealed state. */
+	@media (prefers-reduced-motion: reduce) {
+		.apg :global(.apg-chip),
+		.apg :global(.apg-dot),
+		.apg :global(.apg-line),
+		.apg :global(.apg-hub-ring) {
+			animation: none !important;
+		}
+		.apg :global(.apg-chip) {
+			opacity: 1;
+			border-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
+		}
+		.apg :global(.apg-dot) {
+			opacity: 1;
+			transform: translateY(-50%) scale(1);
+		}
+		.apg :global(.apg-line) {
+			stroke-dashoffset: 0;
+		}
+		.apg :global(.apg-hub-ring) {
+			opacity: 0;
+		}
+	}
+</style>

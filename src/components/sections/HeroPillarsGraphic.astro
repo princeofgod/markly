@@ -1,0 +1,354 @@
+---
+// Animated VECTOR illustration for the home hero image slot (replaces the stock
+// photo). A light "exhibit" panel — a client brief feeds an AI assessment that
+// clears Markly's three pillars in sequence (Protecting innovation, Ensuring
+// compliance, Empowering growth), then a human expert countersigns with a seal.
+// The whole scene loops. Real text (accessible), brand tokens only, SVG icons.
+// Motion is scoped + reduced-motion guarded (collapses to the finished state).
+import Icon from '../icons/Icon.astro';
+
+interface Props {
+	class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const pillars = [
+	{ icon: 'shield', label: 'Protecting innovation' },
+	{ icon: 'scale', label: 'Ensuring compliance' },
+	{ icon: 'ledger', label: 'Empowering growth' },
+] as const;
+---
+
+<div
+	class:list={[
+		'hg relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border-subtle bg-surface-alt shadow-[var(--shadow-lift)]',
+		className,
+	]}
+	role="img"
+	aria-label="Markly assesses your brief against three pillars — protecting innovation, ensuring compliance, and empowering growth — then human experts countersign the result."
+>
+	<div class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-accent/10 blur-3xl" aria-hidden="true"></div>
+
+	<div class="relative flex h-full flex-col gap-4 p-6 sm:p-7">
+		{/* header */}
+		<div class="flex items-center justify-between">
+			<span class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary/60">
+				<span class="h-px w-6 flex-none bg-accent" aria-hidden="true"></span>AI + Human review
+			</span>
+			<span class="rounded-full bg-primary/8 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-primary">
+				Assessment
+			</span>
+		</div>
+
+		{/* main flow: brief → assessment scorecard */}
+		<div class="flex flex-1 items-stretch gap-3 sm:gap-4">
+			{/* client brief */}
+			<div class="hg-doc flex w-[32%] flex-none flex-col gap-2 rounded-xl border border-border-subtle bg-surface p-3">
+				<span class="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-primary/50">Your brief</span>
+				<span class="h-1.5 w-[85%] rounded-full bg-border-strong" aria-hidden="true"></span>
+				<span class="h-1.5 w-full rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[70%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[90%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+				<span class="h-1.5 w-[60%] rounded-full bg-border-subtle" aria-hidden="true"></span>
+			</div>
+
+			{/* connector */}
+			<div class="flex flex-none flex-col items-center justify-center" aria-hidden="true">
+				<span class="w-px flex-1 bg-border-strong"></span>
+				<span class="hg-node my-1 h-2.5 w-2.5 flex-none rounded-full bg-accent"></span>
+				<span class="w-px flex-1 bg-border-strong"></span>
+			</div>
+
+			{/* assessment scorecard */}
+			<div class="relative flex flex-1 flex-col justify-center gap-2.5 rounded-xl border border-border-subtle bg-surface p-3">
+				<span class="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-primary/50">Pillar assessment</span>
+				{
+					pillars.map((p, i) => (
+						<div class="flex items-center gap-2.5">
+							<span class="inline-flex h-7 w-7 flex-none items-center justify-center rounded-md bg-primary/8 text-primary">
+								<Icon name={p.icon} class="h-4 w-4" />
+							</span>
+							<div class="min-w-0 flex-1">
+								<span class="block truncate text-[0.6rem] font-semibold uppercase tracking-[0.1em] text-primary/55">
+									{p.label}
+								</span>
+								<span class="mt-1 block h-1.5 w-full overflow-hidden rounded-full bg-border-subtle">
+									<span class={`hg-fill hg-fill-${i + 1} block h-full w-full rounded-full bg-primary`} />
+								</span>
+							</div>
+							<span
+								class={`hg-check hg-check-${i + 1} inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-accent text-primary`}
+							>
+								<Icon name="check" class="h-3 w-3" />
+							</span>
+						</div>
+					))
+				}
+
+				{/* countersigned seal — stamps once all pillars clear */}
+				<span class="hg-seal absolute -bottom-3.5 -right-2.5 inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent text-primary shadow-[var(--shadow-card)]" aria-hidden="true">
+					<span class="hg-seal-ring pointer-events-none absolute inset-0 rounded-full bg-accent/40"></span>
+					<Icon name="seal-check" class="h-6 w-6" />
+				</span>
+			</div>
+		</div>
+
+		{/* footer */}
+		<div class="flex items-center gap-2 border-t border-border-subtle pt-3 text-xs leading-tight text-muted">
+			<Icon name="seal-check" class="h-4 w-4 flex-none text-accent" />
+			<span>AI-accelerated, reviewed &amp; countersigned by human experts.</span>
+		</div>
+	</div>
+</div>
+
+<style>
+	/* One 8.4s loop drives the whole scene: brief slides in, each pillar bar
+	   fills and earns a check in turn, then the human seal stamps. Every element
+	   shares the same duration and starts together, so the sequence stays in
+	   sync every loop; the action for each element lives at a different slice of
+	   its own keyframes. */
+	.hg :global(.hg-fill),
+	.hg :global(.hg-check),
+	.hg :global(.hg-seal),
+	.hg :global(.hg-doc) {
+		animation-duration: 8.4s;
+		animation-iteration-count: infinite;
+		animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.hg :global(.hg-doc) {
+		animation-name: hg-doc;
+	}
+
+	.hg :global(.hg-fill) {
+		transform: scaleX(0);
+		transform-origin: left center;
+	}
+	.hg :global(.hg-fill-1) {
+		animation-name: hg-fill-1;
+	}
+	.hg :global(.hg-fill-2) {
+		animation-name: hg-fill-2;
+	}
+	.hg :global(.hg-fill-3) {
+		animation-name: hg-fill-3;
+	}
+
+	.hg :global(.hg-check) {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	.hg :global(.hg-check-1) {
+		animation-name: hg-check-1;
+	}
+	.hg :global(.hg-check-2) {
+		animation-name: hg-check-2;
+	}
+	.hg :global(.hg-check-3) {
+		animation-name: hg-check-3;
+	}
+
+	.hg :global(.hg-seal) {
+		opacity: 0;
+		transform: scale(0.6);
+		animation-name: hg-seal;
+	}
+	.hg :global(.hg-seal-ring) {
+		animation: hg-seal-ring 8.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+	}
+
+	/* connector node keeps a gentle independent pulse so the panel always breathes */
+	.hg :global(.hg-node) {
+		animation: hg-node 2.4s ease-in-out infinite;
+	}
+
+	@keyframes hg-doc {
+		0% {
+			opacity: 0;
+			transform: translateX(-14px);
+		}
+		7% {
+			opacity: 1;
+			transform: translateX(0);
+		}
+		92% {
+			opacity: 1;
+			transform: translateX(0);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: translateX(-8px);
+		}
+	}
+
+	@keyframes hg-fill-1 {
+		0%,
+		14% {
+			transform: scaleX(0);
+		}
+		28%,
+		92% {
+			transform: scaleX(1);
+		}
+		99%,
+		100% {
+			transform: scaleX(0);
+		}
+	}
+	@keyframes hg-fill-2 {
+		0%,
+		30% {
+			transform: scaleX(0);
+		}
+		44%,
+		92% {
+			transform: scaleX(1);
+		}
+		99%,
+		100% {
+			transform: scaleX(0);
+		}
+	}
+	@keyframes hg-fill-3 {
+		0%,
+		46% {
+			transform: scaleX(0);
+		}
+		60%,
+		92% {
+			transform: scaleX(1);
+		}
+		99%,
+		100% {
+			transform: scaleX(0);
+		}
+	}
+
+	@keyframes hg-check-1 {
+		0%,
+		28% {
+			opacity: 0;
+			transform: scale(0.5);
+		}
+		34%,
+		92% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: scale(0.5);
+		}
+	}
+	@keyframes hg-check-2 {
+		0%,
+		44% {
+			opacity: 0;
+			transform: scale(0.5);
+		}
+		50%,
+		92% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: scale(0.5);
+		}
+	}
+	@keyframes hg-check-3 {
+		0%,
+		60% {
+			opacity: 0;
+			transform: scale(0.5);
+		}
+		66%,
+		92% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: scale(0.5);
+		}
+	}
+
+	@keyframes hg-seal {
+		0%,
+		64% {
+			opacity: 0;
+			transform: scale(0.6);
+		}
+		72%,
+		92% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		99%,
+		100% {
+			opacity: 0;
+			transform: scale(0.6);
+		}
+	}
+	@keyframes hg-seal-ring {
+		0%,
+		64% {
+			opacity: 0;
+			transform: scale(0.85);
+		}
+		68% {
+			opacity: 0.55;
+		}
+		82%,
+		100% {
+			opacity: 0;
+			transform: scale(2);
+		}
+	}
+
+	@keyframes hg-node {
+		0%,
+		100% {
+			transform: scale(1);
+			opacity: 0.85;
+		}
+		50% {
+			transform: scale(1.35);
+			opacity: 1;
+		}
+	}
+
+	/* Reduced motion: freeze on the completed, fully readable state. */
+	@media (prefers-reduced-motion: reduce) {
+		.hg :global(.hg-doc),
+		.hg :global(.hg-fill),
+		.hg :global(.hg-check),
+		.hg :global(.hg-seal),
+		.hg :global(.hg-seal-ring),
+		.hg :global(.hg-node) {
+			animation: none !important;
+		}
+		.hg :global(.hg-doc) {
+			opacity: 1;
+			transform: none;
+		}
+		.hg :global(.hg-fill) {
+			transform: scaleX(1);
+		}
+		.hg :global(.hg-check) {
+			opacity: 1;
+			transform: none;
+		}
+		.hg :global(.hg-seal) {
+			opacity: 1;
+			transform: none;
+		}
+		.hg :global(.hg-seal-ring) {
+			opacity: 0;
+		}
+	}
+</style>

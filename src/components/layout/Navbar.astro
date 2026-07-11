@@ -10,7 +10,7 @@ import markyLogo from '../../assets/markly-logo.png';
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 border-b border-border-subtle bg-surface-alt/95 backdrop-blur">
+<header class="nav-drop sticky top-0 z-50 border-b border-border-subtle bg-surface-alt/95 backdrop-blur">
 	<Container as="nav" class="flex h-20 items-center justify-between">
 		<a
 			href="/"
@@ -45,3 +45,28 @@ const currentPath = Astro.url.pathname;
 		<MobileMenu navigation={mainNavigation} />
 	</Container>
 </header>
+
+<style>
+	/* Load choreography: the bar falls into place from above as page content
+	   rises to meet it. One-shot, transform/opacity only. */
+	.nav-drop {
+		animation: nav-drop 0.9s var(--ease-out-quint, cubic-bezier(0.22, 1, 0.36, 1)) both;
+	}
+
+	@keyframes nav-drop {
+		from {
+			transform: translateY(-100%);
+			opacity: 0;
+		}
+		to {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.nav-drop {
+			animation: none;
+		}
+	}
+</style>

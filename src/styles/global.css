@@ -223,6 +223,52 @@ p {
 	animation: float-soft 13s var(--ease-out-expo) infinite;
 }
 
+/* Larger, obvious wandering paths for the extra hero shapes. These trace a wide
+   loop so the motion reads clearly, out of phase with the gentle bobbers above. */
+@keyframes float-drift {
+	0% {
+		transform: translate3d(0, 0, 0);
+	}
+	25% {
+		transform: translate3d(34px, -30px, 0);
+	}
+	50% {
+		transform: translate3d(12px, -58px, 0);
+	}
+	75% {
+		transform: translate3d(-28px, -24px, 0);
+	}
+	100% {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@keyframes float-orbit {
+	0% {
+		transform: translate3d(0, 0, 0);
+	}
+	25% {
+		transform: translate3d(-40px, 26px, 0);
+	}
+	50% {
+		transform: translate3d(-58px, -18px, 0);
+	}
+	75% {
+		transform: translate3d(-20px, -44px, 0);
+	}
+	100% {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.animate-drift {
+	animation: float-drift 12s ease-in-out infinite;
+}
+
+.animate-orbit {
+	animation: float-orbit 16s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	html {
 		scroll-behavior: auto;
@@ -232,7 +278,9 @@ p {
 	.animate-marquee,
 	.animate-aura,
 	.animate-float,
-	.animate-float-slow {
+	.animate-float-slow,
+	.animate-drift,
+	.animate-orbit {
 		animation: none;
 	}
 
