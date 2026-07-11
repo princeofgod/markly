@@ -11,7 +11,7 @@ import Icon from '../icons/Icon.astro';
 const stats = ['AI-powered drafting', 'Human expert review', 'Compliance across Africa & beyond'];
 ---
 
-<section class="hb relative flex min-h-[92dvh] items-center justify-center overflow-hidden bg-primary-950 px-6 pb-24 pt-32 md:py-24">
+<section class="hb relative flex min-h-[calc(100dvh-5rem)] items-center justify-center overflow-hidden bg-primary-950 px-6 pb-8 pt-16 md:pb-8 md:pt-8">
 	{/* ---- Layer A: drifting purple base ---- */}
 	<div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
 		<div class="hb-drift-a absolute -left-[10%] top-[8%] h-[38rem] w-[38rem] rounded-full bg-primary-700/40 blur-[130px]"></div>
@@ -24,12 +24,6 @@ const stats = ['AI-powered drafting', 'Human expert review', 'Compliance across 
 		<div class="hb-bloom-2 absolute left-1/2 top-1/2 h-[34rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/70 blur-[150px]"></div>
 	</div>
 
-	{/* ---- Layer C: the opaque overlay — a single frosted scrim that mutes the bloom
-	     in its center while it leaks vividly around the edges ---- */}
-	<div class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center" aria-hidden="true">
-		<div class="hb-breathe relative h-[min(72vh,600px)] w-[min(90vw,560px)] rounded-[2.5rem] border border-white/[0.12] bg-white/[0.06] backdrop-blur-2xl"></div>
-	</div>
-
 	{/* ---- Layer C2: thin ambient concentric ring for depth ---- */}
 	<div
 		class="pointer-events-none absolute left-1/2 top-1/2 z-20 h-[min(150vh,1100px)] w-[min(150vh,1100px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.07]"
@@ -37,15 +31,30 @@ const stats = ['AI-powered drafting', 'Human expert review', 'Compliance across 
 	>
 	</div>
 
-	{/* ---- Foreground: centered content ---- */}
-	<div class="relative z-30 flex max-w-3xl flex-col items-center text-center">
+	{/* ---- Foreground: centered content wrapped by the frosted scrim. The scrim is
+	     an inset-0 sibling of the content, so the opaque overlay always encloses
+	     the content at every breakpoint (its size follows the copy, not a fixed
+	     panel). It still mutes the bloom in its center while the color leaks around
+	     the edges. ---- */}
+	<div class="relative z-30 flex w-full max-w-3xl flex-col items-center px-6 py-9 text-center sm:py-14">
+		{/* Frosted scrim: height hugs the content (inset-y-0) so it can never be
+		   shorter than the copy on any breakpoint — the old fix for the mobile
+		   "panel smaller than its content" bug — while a fixed, narrower width lets
+		   the headline break past the card edges. That over-the-panel composition
+		   is the intent: the bloom is muted at center and leaks around the edges. */}
+		<div
+			class="hb-breathe pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-[min(92vw,34rem)] -translate-x-1/2 rounded-[2.5rem] border border-white/[0.12] bg-white/[0.06] backdrop-blur-2xl"
+			aria-hidden="true"
+		>
+		</div>
+
 		<span class="hb-in flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-surface/85">
 			<span class="hb-rule h-px w-8 flex-none bg-accent" aria-hidden="true"></span>
 			Powered by AI, guided by experts
 		</span>
 
 		<h1
-			class="hb-in mt-6 font-display text-[2.75rem] font-semibold leading-[1.05] tracking-[-0.02em] text-surface sm:text-6xl md:text-7xl"
+			class="hb-in mt-5 font-display text-[2.35rem] font-semibold leading-[1.05] tracking-[-0.02em] text-surface sm:mt-6 sm:text-6xl md:text-7xl"
 			style="animation-delay: 120ms"
 		>
 			Stay compliant, secure your brand, and grow <em class="not-italic text-accent">with confidence</em>.
@@ -56,7 +65,7 @@ const stats = ['AI-powered drafting', 'Human expert review', 'Compliance across 
 			supervised by human experts at every step.
 		</p>
 
-		<ul class="hb-in mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2" style="animation-delay: 340ms">
+		<ul class="hb-in mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 sm:mt-8" style="animation-delay: 340ms">
 			{
 				stats.map((s) => (
 					<li class="flex items-center gap-2 text-sm font-medium text-surface/90">
@@ -67,11 +76,11 @@ const stats = ['AI-powered drafting', 'Human expert review', 'Compliance across 
 			}
 		</ul>
 
-		<div class="hb-in mt-10 flex flex-col gap-4 sm:flex-row sm:items-center" style="animation-delay: 440ms">
+		<div class="hb-in mt-7 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-center" style="animation-delay: 440ms">
 			<ButtonPrimary href="/contact">Book a Consultation</ButtonPrimary>
 			<a
 				href="/services"
-				class="inline-flex items-center justify-center gap-2 rounded-md border border-surface/25 px-6 py-3 text-[0.95rem] font-semibold text-surface transition-colors duration-300 hover:border-surface/50 hover:bg-surface/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+				class="hidden items-center justify-center gap-2 rounded-md border border-surface/25 px-6 py-3 text-[0.95rem] font-semibold text-surface transition-colors duration-300 hover:border-surface/50 hover:bg-surface/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:inline-flex"
 			>
 				Explore Services
 			</a>

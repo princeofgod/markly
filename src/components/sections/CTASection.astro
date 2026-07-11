@@ -1,17 +1,24 @@
 ---
 import Container from '../layout/Container.astro';
 import ButtonPrimary from '../common/ButtonPrimary.astro';
-import ButtonSecondary from '../common/ButtonSecondary.astro';
 
 interface Props {
 	title: string;
 	subtitle?: string;
 	ctaLabel: string;
 	ctaHref: string;
+	note?: string;
 	image?: { src: string; alt: string };
 }
 
-const { title, subtitle, ctaLabel, ctaHref, image } = Astro.props;
+const {
+	title,
+	subtitle,
+	ctaLabel,
+	ctaHref,
+	note = 'No obligation — a free, no-pressure conversation.',
+	image,
+} = Astro.props;
 ---
 
 <section class="bg-surface py-16 md:py-24">
@@ -30,25 +37,22 @@ const { title, subtitle, ctaLabel, ctaHref, image } = Astro.props;
 			>
 			</div>
 
-			<div
-				class:list={[
-					'relative flex flex-col gap-8',
-					image && 'lg:grid lg:grid-cols-12 lg:items-center lg:gap-14',
-				]}
-			>
-				<div class:list={['flex flex-col gap-6', image ? 'lg:col-span-7' : 'max-w-2xl']}>
-					<h2 class="font-display text-3xl font-semibold leading-[1.12] md:text-[2.6rem]">
-						{title}
-					</h2>
-					{subtitle && <p class="max-w-[58ch] text-lg leading-[1.6] text-surface/75">{subtitle}</p>}
-					<div class="mt-2 flex flex-col gap-4 sm:flex-row sm:items-center">
-						<ButtonPrimary href={ctaHref}>{ctaLabel}</ButtonPrimary>
-						<ButtonSecondary href="/services" variant="inverted">Explore Services</ButtonSecondary>
-					</div>
-				</div>
-				{
-					image && (
-						<div class="lg:col-span-5">
+			{
+				image ? (
+					<div class="relative lg:grid lg:grid-cols-12 lg:items-center lg:gap-14">
+						<div class="flex flex-col gap-6 lg:col-span-7">
+							<h2 class="font-display text-3xl font-semibold leading-[1.12] md:text-[2.6rem]">
+								{title}
+							</h2>
+							{subtitle && (
+								<p class="max-w-[58ch] text-lg leading-[1.6] text-surface/75">{subtitle}</p>
+							)}
+							<div class="mt-2 flex flex-col items-start gap-3">
+								<ButtonPrimary href={ctaHref}>{ctaLabel}</ButtonPrimary>
+								{note && <p class="text-sm leading-relaxed text-surface/70">{note}</p>}
+							</div>
+						</div>
+						<div class="mt-10 lg:col-span-5 lg:mt-0">
 							<img
 								src={image.src}
 								alt={image.alt}
@@ -58,9 +62,26 @@ const { title, subtitle, ctaLabel, ctaHref, image } = Astro.props;
 								class="aspect-[4/3] w-full rounded-xl object-cover ring-1 ring-surface/15"
 							/>
 						</div>
-					)
-				}
-			</div>
+					</div>
+				) : (
+					<div class="relative flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between lg:gap-14">
+						<div class="flex flex-col gap-6 lg:max-w-2xl">
+							<h2 class="font-display text-3xl font-semibold leading-[1.12] md:text-[2.6rem]">
+								{title}
+							</h2>
+							{subtitle && (
+								<p class="max-w-[58ch] text-lg leading-[1.6] text-surface/75">{subtitle}</p>
+							)}
+						</div>
+						<div class="flex flex-none flex-col items-start gap-3 lg:items-end lg:text-right">
+							<ButtonPrimary href={ctaHref}>{ctaLabel}</ButtonPrimary>
+							{note && (
+								<p class="max-w-[30ch] text-sm leading-relaxed text-surface/70">{note}</p>
+							)}
+						</div>
+					</div>
+				)
+			}
 		</div>
 	</Container>
 </section>

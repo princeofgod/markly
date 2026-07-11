@@ -174,6 +174,82 @@ p {
 	--i: 5;
 }
 
+/* Converge reveal: paired columns enter from opposite edges and meet in the
+   center. The horizontal travel only applies at the lg breakpoint, where the
+   two columns actually sit side by side — below that they keep the default
+   vertical rise (a sideways slide on a stacked layout just reads as jitter).
+   Gated to no-preference so reduced-motion falls through to the static reset. */
+/* The converge columns are the two direct children of a [data-reveal-group]
+   grid, NOT [data-reveal] elements themselves. This is deliberate: at their
+   parked state each column sits fully off-screen (58vw), so if the observer
+   watched them directly they'd never intersect the viewport and would never
+   reveal — a parked-off-screen element is a blank element. Instead the observer
+   watches the grid, which stays in place (transforms don't move layout boxes),
+   and toggles .is-visible on it; the children glide in from that signal. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+	.js [data-reveal-group] > .reveal-converge-left,
+	.js [data-reveal-group] > .reveal-converge-right {
+		/* Big cinematic converge: each column starts fully off its own edge of the
+		   screen and glides in to meet in the center. The section is overflow-hidden
+		   and full-bleed, so the parked content stays clipped (no scrollbars) until
+		   it enters. The travel is viewport-relative (vw) so it clears the edge at
+		   any width — a percentage of the element's own width would need an
+		   ever-larger value as the side margins grow on wider screens. The long
+		   sweep rides a smooth ease-in-out over a longer duration, so it reads as a
+		   deliberate glide rather than a fast slide, with no rush at either end. */
+		transition:
+			opacity 0.7s var(--ease-out-quint),
+			transform 1.25s cubic-bezier(0.65, 0, 0.35, 1);
+	}
+	.js [data-reveal-group] > .reveal-converge-left {
+		transform: translateX(calc(-1 * var(--converge-shift, 58vw)));
+	}
+	.js [data-reveal-group] > .reveal-converge-right {
+		transform: translateX(var(--converge-shift, 58vw));
+	}
+	/* Both columns arrive together — override the group's per-child stagger so
+	   the two edges meet in the center symmetrically rather than one lagging. */
+	.js [data-reveal-group].is-visible > .reveal-converge-left,
+	.js [data-reveal-group].is-visible > .reveal-converge-right {
+		transform: translateX(0);
+		transition-delay: 0s;
+	}
+}
+
+/* Curtain-wipe reveal for the testimonials grid, large screens only. Where the
+   rest of the page uses a flat vertical rise, each card here unmasks from its
+   bottom edge upward via an animated clip-path inset — like an exhibit sliding
+   out from behind a mask — while drifting up a touch underneath. The inset
+   carries `round 0.75rem` (matching the card's rounded-xl) so the corners stay
+   soft through the whole wipe instead of snapping square. A 100ms per-card
+   stagger (driven by the group's :nth-child --i) sweeps the reveal left-to-right.
+
+   The cards are children of a [data-reveal-group], NOT [data-reveal] elements
+   themselves — this is required: Chrome's IntersectionObserver honours a
+   target's own clip-path, so a card parked at inset(100%) has zero intersection
+   area and would never trigger its own reveal (a self-clipped element is
+   invisible to the observer). Observing the unclipped grid instead keeps the
+   trigger alive while the children do the clipping.
+
+   Below lg the cards fall through to the group's default rise (a directional
+   wipe on a stacked single column has no axis to travel along); reduced-motion
+   falls through to the static reset at the end of this file. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+	.js [data-reveal-group] > .reveal-wipe {
+		transform: translateY(20px);
+		clip-path: inset(100% 0 0 0 round 0.75rem);
+		transition:
+			opacity 0.4s var(--ease-out-quint),
+			transform 0.9s var(--ease-out-quint),
+			clip-path 0.9s var(--ease-out-quint);
+	}
+	.js [data-reveal-group].is-visible > .reveal-wipe {
+		transform: translateY(0);
+		clip-path: inset(0 0 0 0 round 0.75rem);
+		transition-delay: calc(var(--i, 0) * 100ms);
+	}
+}
+
 /* Marquee for the industries register — duplicated track translated by half. */
 @keyframes marquee-scroll {
 	from {
