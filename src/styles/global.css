@@ -20,7 +20,8 @@
 	--color-primary: var(--color-brand-purple);
 	--color-accent: var(--color-brand-orange);
 	--color-surface: var(--color-brand-offwhite);
-	--color-surface-alt: #ffffff;
+	--color-surface-alt: #ffffff; /* elevated white — cards, nav, graphic panels, form fields */
+	--color-surface-sunken: #f1ecfa; /* recessed purple-tinted band — marks connective/utility sections apart from anchor statements. AA-safe: muted (#57607a) clears 4.5:1 on it */
 
 	/* Purple ramp for layered dark surfaces and tints */
 	--color-primary-950: #1a0942;
