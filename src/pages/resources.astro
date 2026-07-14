@@ -3,11 +3,14 @@ import MainLayout from '../layouts/MainLayout.astro';
 import Hero from '../components/sections/Hero.astro';
 import FAQSection from '../components/sections/FAQSection.astro';
 import CTASection from '../components/sections/CTASection.astro';
+import { faqs } from '../data/faq';
+import { buildFaqSchema } from '../lib/structuredData';
 ---
 
 <MainLayout
 	title="Resources"
 	description="Answers to common questions about Markly Africa's AI-powered compliance, trademark protection, data protection, and corporate advisory services."
+	jsonLd={buildFaqSchema(faqs)}
 >
 	<Hero
 		variant="compact"
