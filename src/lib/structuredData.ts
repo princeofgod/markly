@@ -16,7 +16,7 @@ export const organizationSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'ProfessionalService',
 	'@id': `${siteUrl}/#organization`,
-	name: 'Markly Africa',
+	name: company.legalName,
 	alternateName: company.name,
 	url: siteUrl,
 	logo: `${siteUrl}/apple-touch-icon.png`,

@@ -23,7 +23,7 @@ export function buildSeo({ title, description, ogImage, path }: BuildSeoOptions)
 	const canonicalPath = path === '/' ? '' : path;
 
 	return {
-		title: `${title} | ${company.name}`,
+		title: `${title} | ${company.legalName}`,
 		description: description ?? company.description,
 		canonicalUrl: `${siteUrl}${canonicalPath}`,
 		ogImage: ogImage ?? `${siteUrl}/og-image.png`,
