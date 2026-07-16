@@ -1,5 +1,12 @@
 ---
 import '../styles/global.css';
+// Self-hosted fonts (no Google CDN → no visitor-IP leak to Google, faster: no extra
+// connection). Only the weights actually used are loaded: Hanken 400/500/600, Petrona 500/600.
+import '@fontsource/hanken-grotesk/400.css';
+import '@fontsource/hanken-grotesk/500.css';
+import '@fontsource/hanken-grotesk/600.css';
+import '@fontsource/petrona/500.css';
+import '@fontsource/petrona/600.css';
 import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
 import { buildSeo } from '../lib/seo';
@@ -51,13 +58,6 @@ const structuredData = [organizationSchema, ...(jsonLd ? [jsonLd].flat() : [])];
 		<meta name="twitter:title" content={seo.title} />
 		<meta name="twitter:description" content={seo.description} />
 		<meta name="twitter:image" content={seo.ogImage} />
-
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Petrona:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600&display=swap"
-			rel="stylesheet"
-		/>
 
 		<meta name="generator" content={Astro.generator} />
 
