@@ -1,0 +1,31 @@
+---
+import { imageUrl } from '../../lib/sanity';
+
+/**
+ * Renders an inline `image` block from the CMS. The GROQ body projection resolves
+ * the asset ref to a real `url` + intrinsic dimensions, so this stays a dumb renderer.
+ * width/height are the intrinsic size — they reserve the right aspect ratio (no CLS)
+ * while `.article-body img` scales it to the column.
+ */
+interface Props {
+	node: { url?: string; alt?: string; width?: number; height?: number; caption?: string };
+}
+
+const { node } = Astro.props;
+---
+
+{
+	node?.url && (
+		<figure>
+			<img
+				src={imageUrl(node.url, { w: 1200 })}
+				alt={node.alt ?? ''}
+				width={node.width}
+				height={node.height}
+				loading="lazy"
+				decoding="async"
+			/>
+			{node.caption && <figcaption>{node.caption}</figcaption>}
+		</figure>
+	)
+}

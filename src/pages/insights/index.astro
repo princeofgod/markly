@@ -1,0 +1,64 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Container from '../../components/layout/Container.astro';
+import CTASection from '../../components/sections/CTASection.astro';
+import ArticleCard from '../../components/common/ArticleCard.astro';
+import { getArticles } from '../../lib/sanity';
+
+const articles = await getArticles();
+---
+
+<MainLayout
+	title="Insights on Compliance, IP & Data Protection"
+	description="Practical guidance on NDPA/NDPR compliance, trademark registration, intellectual property, and corporate governance for businesses in Nigeria and across Africa."
+>
+	<Hero
+		variant="compact"
+		tone="dark"
+		kicker="Insights"
+		title="Practical guidance on compliance, IP, and growth"
+		subtitle="Notes from our advisory team on data protection, regulatory compliance, intellectual property, and building businesses that scale with confidence."
+		primaryCta={{ label: 'Book a Consultation', href: '/contact' }}
+	/>
+
+	<section class="bg-surface py-20 md:py-28">
+		<Container>
+			{
+				articles.length > 0 ? (
+					<ul data-reveal-group class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+						{articles.map((article, i) => (
+							<li>
+								<ArticleCard article={article} priority={i < 3} />
+							</li>
+						))}
+					</ul>
+				) : (
+					<div data-reveal class="mx-auto max-w-xl text-center">
+						<h2 class="font-display text-2xl font-semibold text-primary md:text-3xl">
+							New insights are on the way
+						</h2>
+						<p class="mt-4 text-lg leading-[1.6] text-muted">
+							We're preparing practical guidance on data protection, compliance, and intellectual property.
+							In the meantime, our team is ready to answer your questions directly.
+						</p>
+						<a
+							href="/contact"
+							class="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors duration-300 hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+						>
+							Talk to our team
+							<span aria-hidden="true">&rarr;</span>
+						</a>
+					</div>
+				)
+			}
+		</Container>
+	</section>
+
+	<CTASection
+		title="Have a question these articles didn't answer?"
+		subtitle="Talk to our advisory team about compliance, intellectual property, and growth strategy tailored to your business."
+		ctaLabel="Book a Consultation"
+		ctaHref="/contact"
+	/>
+</MainLayout>

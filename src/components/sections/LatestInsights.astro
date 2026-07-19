@@ -1,0 +1,44 @@
+---
+import Container from '../layout/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import ButtonSecondary from '../common/ButtonSecondary.astro';
+import ArticleCard from '../common/ArticleCard.astro';
+import { getLatestArticles } from '../../lib/sanity';
+
+const articles = await getLatestArticles(3);
+---
+
+{/* Supporting content, so it sits in the connective tier (sm heading, tighter rhythm)
+    and stays visually subordinate to the anchor sections. Renders nothing at all until
+    there are published articles, so the homepage never shows an empty shell. */}
+{
+	articles.length > 0 && (
+		<section class="bg-surface py-16 md:py-20">
+			<Container class="flex flex-col gap-12">
+				<div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+					<SectionHeading
+						title="Latest insights"
+						subtitle="Practical guidance on data protection, compliance, and intellectual property from our advisory team."
+						size="sm"
+						class="mx-0"
+					/>
+					<div class="hidden flex-none md:block">
+						<ButtonSecondary href="/insights">View All Insights</ButtonSecondary>
+					</div>
+				</div>
+
+				<ul data-reveal-group class="grid grid-cols-1 gap-8 md:grid-cols-3">
+					{articles.map((article) => (
+						<li>
+							<ArticleCard article={article} />
+						</li>
+					))}
+				</ul>
+
+				<div class="flex justify-center md:hidden">
+					<ButtonSecondary href="/insights">View All Insights</ButtonSecondary>
+				</div>
+			</Container>
+		</section>
+	)
+}

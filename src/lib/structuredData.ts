@@ -52,3 +52,35 @@ export function buildFaqSchema(items: { question: string; answer: string }[]) {
 		})),
 	};
 }
+
+/**
+ * Builds a BlogPosting schema for an article. `publisher` (and a fallback `author`)
+ * reference the site-wide organization node by @id rather than duplicating it, so the
+ * two graphs link together instead of competing.
+ */
+export function buildArticleSchema(article: {
+	title: string;
+	excerpt: string;
+	slug: string;
+	publishedAt: string;
+	updatedAt?: string;
+	coverImage?: { url?: string };
+	author?: { name?: string };
+}) {
+	const url = `${siteUrl}/insights/${article.slug}`;
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'BlogPosting',
+		headline: article.title,
+		description: article.excerpt,
+		url,
+		mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+		datePublished: article.publishedAt,
+		dateModified: article.updatedAt ?? article.publishedAt,
+		image: [article.coverImage?.url || `${siteUrl}/og-image.png`],
+		author: article.author?.name
+			? { '@type': 'Person', name: article.author.name }
+			: { '@id': `${siteUrl}/#organization` },
+		publisher: { '@id': `${siteUrl}/#organization` },
+	};
+}

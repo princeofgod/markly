@@ -94,6 +94,120 @@ p {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Article body (long-form prose from the CMS)                        */
+/*  Hand-rolled on the brand tokens rather than a typography plugin, so */
+/*  CMS-authored copy inherits the same scale, rhythm and colour as the */
+/*  rest of the site instead of a generic prose default.                */
+/* ------------------------------------------------------------------ */
+.article-body {
+	color: var(--color-muted);
+	font-size: 1.0625rem;
+	line-height: 1.75;
+}
+
+.article-body > * + * {
+	margin-top: 1.35em;
+}
+
+.article-body h2,
+.article-body h3 {
+	font-family: var(--font-display);
+	color: var(--color-primary);
+	letter-spacing: -0.018em;
+	text-wrap: balance;
+}
+
+.article-body h2 {
+	margin-top: 2.4em;
+	font-size: 1.75rem;
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+.article-body h3 {
+	margin-top: 2em;
+	font-size: 1.3rem;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.article-body p {
+	text-wrap: pretty;
+}
+
+.article-body strong {
+	color: var(--color-ink);
+	font-weight: 600;
+}
+
+.article-body a {
+	color: var(--color-primary);
+	text-decoration: underline;
+	text-decoration-color: var(--color-accent);
+	text-underline-offset: 3px;
+	transition: color 0.2s var(--ease-out-quint);
+}
+
+.article-body a:hover {
+	color: var(--color-accent);
+}
+
+.article-body ul,
+.article-body ol {
+	padding-left: 1.4em;
+}
+
+.article-body li + li {
+	margin-top: 0.5em;
+}
+
+.article-body ul > li {
+	list-style: disc;
+}
+
+.article-body ol > li {
+	list-style: decimal;
+}
+
+.article-body ul > li::marker {
+	color: var(--color-accent);
+}
+
+.article-body ol > li::marker {
+	color: var(--color-accent);
+	font-weight: 600;
+}
+
+.article-body blockquote {
+	border-left: 2px solid var(--color-accent);
+	padding-left: 1.25em;
+	font-family: var(--font-display);
+	font-size: 1.25rem;
+	font-style: italic;
+	line-height: 1.5;
+	color: var(--color-primary);
+}
+
+.article-body img {
+	width: 100%;
+	height: auto;
+	border-radius: var(--radius-md);
+	border: 1px solid var(--color-border-subtle);
+}
+
+.article-body figure figcaption {
+	margin-top: 0.6em;
+	font-size: 0.875rem;
+	color: var(--color-faint);
+}
+
+.article-body hr {
+	border: 0;
+	border-top: 1px solid var(--color-border-subtle);
+	margin-block: 2.5em;
+}
+
+/* ------------------------------------------------------------------ */
 /*  Motion                                                             */
 /*  A single, well-behaved reveal grammar + a couple of entrance       */
 /*  gestures. Everything degrades to a static end-state under          */

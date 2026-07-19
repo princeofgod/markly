@@ -26,3 +26,6 @@ pnpm-debug.log*
 # Licensed Axiforma font files — do not commit
 brand/*
 
+
+# Sanity Studio runtime cache
+.sanity/

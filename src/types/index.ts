@@ -9,3 +9,5 @@ export type { CompanyInfo } from './company';
 export type { ValuePillar } from './valueProposition';
 export type { Differentiator } from './differentiator';
 export type { Step } from './step';
+export type { Article, ArticleCategory, Author, SanityImage } from './article';
+export { ARTICLE_CATEGORIES } from './article';
