@@ -1,0 +1,5 @@
+# Build command / publish dir stay configured in the Netlify UI. This only declares
+# where serverless functions live, so the contact-form endpoint deploys with the site.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

@@ -105,6 +105,12 @@ const contactRows = [
 					</div>
 
 					<form id="consultation-form-el" class="flex flex-col gap-6" novalidate>
+						{/* Honeypot: an off-screen field real users never see or fill. Bots that
+						    fill it are dropped server-side — no email sent, no cost incurred. */}
+						<div class="sr-only" aria-hidden="true">
+							<label for="website">Leave this field empty</label>
+							<input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+						</div>
 						<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
 							<div class="flex flex-col gap-2">
 								<label for="name" class="text-sm font-semibold text-primary">
@@ -267,13 +273,10 @@ const contactRows = [
 	</section>
 
 	<script>
-		// TODO: point FORM_ENDPOINT at a real backend before launch — e.g. a
-		// hosted form service (Formspree, Getform, Web3Forms) that accepts a
-		// POST of FormData and returns JSON, or an Astro server endpoint
-		// (`src/pages/api/contact.ts`) once an SSR adapter is added to
-		// astro.config.mjs. The site currently builds fully static, so there
-		// is no server to receive this POST yet.
-		const FORM_ENDPOINT = '';
+		// Posts to the Netlify Function (netlify/functions/contact.mjs), which emails the
+		// team + a confirmation to the client. The site stays fully static — the function
+		// deploys alongside it. Goes live once RESEND_API_KEY is set in the Netlify env.
+		const FORM_ENDPOINT = '/.netlify/functions/contact';
 
 		const form = document.querySelector<HTMLFormElement>('#consultation-form-el');
 
@@ -382,10 +385,16 @@ const contactRows = [
 				loadingState?.classList.add('inline-flex');
 
 				try {
+					const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+					// Send the human-readable service name, not the <option>'s slug value.
+					const serviceSelect = form.querySelector<HTMLSelectElement>('#service');
+					if (serviceSelect) {
+						data.service = serviceSelect.selectedOptions[0]?.textContent?.trim() || data.service;
+					}
 					const response = await fetch(FORM_ENDPOINT, {
 						method: 'POST',
-						headers: { Accept: 'application/json' },
-						body: new FormData(form),
+						headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+						body: JSON.stringify(data),
 					});
 					if (!response.ok) throw new Error('Request failed');
 					form.reset();
