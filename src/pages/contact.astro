@@ -274,8 +274,8 @@ const contactRows = [
 
 	<script>
 		// Posts to the Netlify Function (netlify/functions/contact.mjs), which emails the
-		// team + a confirmation to the client. The site stays fully static — the function
-		// deploys alongside it. Goes live once RESEND_API_KEY is set in the Netlify env.
+		// team + a confirmation to the client via Google Workspace SMTP. The site stays
+		// fully static. Goes live once SMTP_USER / SMTP_PASS are set in the Netlify env.
 		const FORM_ENDPOINT = '/.netlify/functions/contact';
 
 		const form = document.querySelector<HTMLFormElement>('#consultation-form-el');

@@ -5,12 +5,19 @@
 //   3. emails the Markly team (the critical path) with Reply-To = the client,
 //   4. sends the client a best-effort confirmation.
 //
+// Sends through Google Workspace (Gmail SMTP) — the team already receives here, and
+// Google already authorises marklyafrica.com for sending (SPF/DKIM), so no extra DNS.
+//
 // Env (Netlify → Site settings → Environment variables):
-//   RESEND_API_KEY   required — from resend.com, with marklyafrica.com verified as a sender domain
-//   CONTACT_FROM     optional — default "Markly Africa <hello@marklyafrica.com>"
-//   CONTACT_TEAM     optional — comma-separated, default "hello@…,woye.famojuro@…"
+//   SMTP_USER   required — the Workspace address that sends, e.g. hello@marklyafrica.com
+//   SMTP_PASS   required — a 16-char App Password for that account (2FA must be on)
+//   CONTACT_FROM  optional — default "Markly Africa <SMTP_USER>"
+//   CONTACT_TEAM  optional — comma-separated, default "hello@…,woye.famojuro@…"
+import nodemailer from 'nodemailer';
 
-const FROM = process.env.CONTACT_FROM || 'Markly Africa <hello@marklyafrica.com>';
+const SMTP_USER = process.env.SMTP_USER;
+const SMTP_PASS = (process.env.SMTP_PASS || '').replace(/\s+/g, ''); // App Passwords display with spaces
+const FROM = process.env.CONTACT_FROM || `Markly Africa <${SMTP_USER}>`;
 const TEAM = (process.env.CONTACT_TEAM || 'hello@marklyafrica.com,woye.famojuro@marklyafrica.com')
 	.split(',').map((s) => s.trim()).filter(Boolean);
 
@@ -18,16 +25,6 @@ const esc = (s = '') =>
 	String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const json = (status, body) =>
 	new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
-
-async function sendEmail(apiKey, payload) {
-	const res = await fetch('https://api.resend.com/emails', {
-		method: 'POST',
-		headers: { Authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
-		body: JSON.stringify(payload),
-	});
-	if (!res.ok) throw new Error(`Resend ${res.status}: ${await res.text().catch(() => '')}`);
-	return res.json();
-}
 
 export default async (req) => {
 	if (req.method !== 'POST') return json(405, { error: 'Method not allowed' });
@@ -53,11 +50,20 @@ export default async (req) => {
 		return json(422, { error: 'Please provide your name, a valid email, and the service you need.' });
 	}
 
-	const apiKey = process.env.RESEND_API_KEY;
-	if (!apiKey) {
-		console.error('RESEND_API_KEY is not set');
+	if (!SMTP_USER || !SMTP_PASS) {
+		console.error('SMTP_USER / SMTP_PASS not set');
 		return json(500, { error: 'Email service is not configured.' });
 	}
+
+	const transporter = nodemailer.createTransport({
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
+		auth: { user: SMTP_USER, pass: SMTP_PASS },
+		connectionTimeout: 10000,
+		greetingTimeout: 10000,
+		socketTimeout: 15000,
+	});
 
 	const rows = [
 		['Name', name], ['Email', email], ['Company', company || '—'],
@@ -87,10 +93,10 @@ export default async (req) => {
 
 	// Team notification is the critical path — fail the request only if this fails.
 	try {
-		await sendEmail(apiKey, {
+		await transporter.sendMail({
 			from: FROM,
 			to: TEAM,
-			reply_to: email,
+			replyTo: email,
 			subject: `New consultation request — ${name}`,
 			html: teamHtml,
 		});
@@ -101,10 +107,10 @@ export default async (req) => {
 
 	// Client confirmation is best-effort — a bounce here shouldn't error the user.
 	try {
-		await sendEmail(apiKey, {
+		await transporter.sendMail({
 			from: FROM,
-			to: [email],
-			reply_to: 'hello@marklyafrica.com',
+			to: email,
+			replyTo: 'hello@marklyafrica.com',
 			subject: "We've received your message — Markly Africa",
 			html: clientHtml,
 		});
