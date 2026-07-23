@@ -1,11 +1,10 @@
 ---
-import { Image } from 'astro:assets';
 import Container from './Container.astro';
 import MobileMenu from './MobileMenu.astro';
 import ButtonPrimary from '../common/ButtonPrimary.astro';
 import { mainNavigation } from '../../data/navigation';
 import { company } from '../../data/company';
-import markyLogo from '../../assets/markly-logo.png';
+import markyLogo from '../../assets/markly-logo.svg';
 
 // Compare paths slash-agnostically: the dev server serves `/services` while the
 // production host serves `/services/` (trailing slash), and an exact `===` match
@@ -21,7 +20,7 @@ const currentPath = stripSlash(Astro.url.pathname);
 			href="/"
 			class="rounded-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
 		>
-			<Image src={markyLogo} alt={company.name} class="h-7 w-auto sm:h-8" widths={[240, 480]} sizes="240px" />
+			<img src={markyLogo.src} alt={company.name} width="662" height="145" class="h-7 w-auto sm:h-8" />
 		</a>
 
 		<ul class="hidden items-center gap-6 md:flex lg:gap-8">
