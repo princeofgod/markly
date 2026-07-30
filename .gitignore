@@ -26,6 +26,10 @@ pnpm-debug.log*
 # Licensed Axiforma font files — do not commit
 brand/*
 
+# Local-only brand collateral and client handover docs — kept out of git
+new_brand/
+handover/
+
 
 # Sanity Studio runtime cache
 .sanity/

@@ -20,7 +20,11 @@ interface SeoResult {
  */
 export function buildSeo({ title, description, ogImage, path }: BuildSeoOptions): SeoResult {
 	const siteUrl = company.url.replace(/\/$/, '');
-	const canonicalPath = path === '/' ? '' : path;
+	// Astro (directory build) serves every route with a trailing slash and the sitemap
+	// lists them that way — so the canonical must match, including "/" for the homepage.
+	// Emitting the bare origin here made the home canonical disagree with the sitemap,
+	// which Google reads as a duplicate.
+	const canonicalPath = path.endsWith('/') ? path : `${path}/`;
 
 	return {
 		title: `${title} | ${company.legalName}`,
