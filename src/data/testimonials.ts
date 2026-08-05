@@ -3,22 +3,27 @@ import type { Testimonial } from '../types';
 export const testimonials: Testimonial[] = [
 	{
 		quote:
-			'Markly Africa helped us establish a robust data protection framework that significantly improved our compliance posture.',
-		author: 'Ngozi Adeyemi',
-		role: 'Compliance Manager',
-		company: 'Verdant Pay',
-	},
-	{
-		quote: 'Their trademark registration support enabled us to protect our brand in multiple markets with ease.',
-		author: 'Tunde Bakare',
-		role: 'Founder & CEO',
-		company: 'Harvestly',
+			'We had been putting off our compliance obligations because they felt overwhelming. Markly streamlined the entire process and kept us informed every step of the way. The combination of technology and expert legal review is exactly what businesses need.',
+		author: 'Anand',
+		role: 'Blockchain Developer',
+		company: 'DefiLords AI',
 	},
 	{
 		quote:
-			'The startup advisory team provided invaluable guidance that helped us secure investment and scale confidently.',
-		author: 'Amara Chukwu',
-		role: 'Startup Founder',
-		company: 'Lumi Health',
+			'Excellent communication, clear timelines, and exceptional professionalism. We always knew the status of our application and what to expect next.',
+		author: 'Idanimo',
+	},
+	{
+		quote:
+			'From our first consultation to the completion of our engagement, the service was outstanding. Transparent pricing, knowledgeable professionals, and an excellent client experience.',
+		author: 'Doyin Olanrewaju',
+		role: 'Founder',
+		company: 'Brandcrust Communications',
+	},
+	{
+		quote:
+			'Markly made what seemed like a complicated legal process incredibly simple. From our trademark filing to compliance guidance, everything was handled professionally and explained in plain language. Knowing experienced lawyers reviewed our application gave us complete confidence.',
+		author: 'Legal Officer',
+		company: 'Megamound Investment Limited',
 	},
 ];

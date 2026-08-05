@@ -2,39 +2,105 @@
 import Container from '../layout/Container.astro';
 import SectionHeading from '../common/SectionHeading.astro';
 import { testimonials } from '../../data/testimonials';
+
+// The track is duplicated so the animation can loop seamlessly (translateX -50%).
+// The second copy is decorative, so it's hidden from assistive tech.
+const loop = testimonials.map((t) => ({ t, clone: false })).concat(testimonials.map((t) => ({ t, clone: true })));
 ---
 
-<section class="bg-primary-950 py-16 text-surface md:py-24">
+<section class="overflow-hidden bg-primary-950 py-16 text-surface md:py-24">
 	<Container class="flex flex-col gap-12">
 		<SectionHeading title="Trusted by founders and compliance teams" tone="dark" class="mx-0" />
-
-		<div data-reveal-group class="grid grid-cols-1 gap-6 md:grid-cols-3">
-			{
-				testimonials.map((testimonial) => (
-					<figure
-						class="reveal-wipe flex h-full flex-col gap-6 rounded-xl border border-surface/12 bg-surface/[0.04] p-7 backdrop-blur-sm"
-					>
-						<blockquote class="font-display text-xl font-medium leading-[1.4] text-surface">
-							{testimonial.quote}
-						</blockquote>
-						<figcaption class="mt-auto flex items-center gap-3 border-t border-surface/12 pt-5">
-							<span
-								class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-full bg-accent font-display text-base font-semibold text-primary"
-								aria-hidden="true"
-							>
-								{testimonial.author.charAt(0)}
-							</span>
-							<span class="flex flex-col">
-								<span class="text-sm font-semibold text-surface">{testimonial.author}</span>
-								<span class="text-sm text-surface/60">
-									{testimonial.role}
-									{testimonial.company && <span> &middot; {testimonial.company}</span>}
-								</span>
-							</span>
-						</figcaption>
-					</figure>
-				))
-			}
-		</div>
 	</Container>
+
+	<div class="marquee mt-2">
+		<ul class="marquee__track">
+			{
+				loop.map(({ t, clone }) => {
+					const subtitle = [t.role, t.company].filter(Boolean).join(' · ');
+					return (
+						<li class="marquee__card" aria-hidden={clone ? 'true' : undefined}>
+							<figure class="flex h-full flex-col gap-6 rounded-xl border border-surface/12 bg-surface/[0.04] p-7 backdrop-blur-sm">
+								<blockquote class="font-display text-base font-medium leading-[1.5] text-surface md:text-lg">
+									{t.quote}
+								</blockquote>
+								<figcaption class="mt-auto flex items-center gap-3 border-t border-surface/12 pt-5">
+									<span
+										class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-full bg-accent font-display text-base font-semibold text-primary"
+										aria-hidden="true"
+									>
+										{t.author.charAt(0)}
+									</span>
+									<span class="flex flex-col">
+										<span class="text-sm font-semibold text-surface">{t.author}</span>
+										{subtitle && <span class="text-sm text-surface/60">{subtitle}</span>}
+									</span>
+								</figcaption>
+							</figure>
+						</li>
+					);
+				})
+			}
+		</ul>
+	</div>
 </section>
+
+<style>
+	.marquee {
+		overflow: hidden;
+		/* Soften the two edges so cards scroll in and out rather than cut off. */
+		-webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+		mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+	}
+
+	.marquee__track {
+		display: flex;
+		width: max-content;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		/* One copy scrolls fully out (-50%) as its duplicate takes its place. */
+		animation: marquee-scroll 46s linear infinite;
+	}
+
+	/* Pause on hover, and on keyboard focus for accessibility. */
+	.marquee:hover .marquee__track,
+	.marquee:focus-within .marquee__track {
+		animation-play-state: paused;
+	}
+
+	.marquee__card {
+		/* Each card owns its trailing gutter so the -50% loop is exact. */
+		flex: 0 0 auto;
+		width: 320px;
+		margin-right: 1.5rem;
+	}
+
+	@media (min-width: 768px) {
+		.marquee__card {
+			width: 400px;
+			margin-right: 2rem;
+		}
+	}
+
+	@keyframes marquee-scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	/* No autoplay for reduced-motion users — let them scroll the row by hand instead. */
+	@media (prefers-reduced-motion: reduce) {
+		.marquee {
+			overflow-x: auto;
+			-webkit-mask-image: none;
+			mask-image: none;
+		}
+		.marquee__track {
+			animation: none;
+		}
+	}
+</style>
