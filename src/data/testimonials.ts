@@ -22,7 +22,7 @@ export const testimonials: Testimonial[] = [
 	},
 	{
 		quote:
-			'Markly made what seemed like a complicated legal process incredibly simple. From our trademark filing to compliance guidance, everything was handled professionally and explained in plain language. Knowing experienced lawyers reviewed our application gave us complete confidence.',
+			'Markly made what seemed like a complicated legal process incredibly simple. From our trademark filing to compliance guidance, everything was handled professionally and explained in plain language. Knowing experienced professionals reviewed our application gave us complete confidence.',
 		author: 'Legal Officer',
 		company: 'Megamound Investment Limited',
 	},
